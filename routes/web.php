@@ -24,6 +24,11 @@ Route::get('/', function () {
     ]);
 });
 
+Route::inertia('/sign-in', 'Auth/SignIn')->name('sign-in');
+Route::inertia('/create-account', 'Auth/CreateAccount')->name('create-account');
+Route::inertia('/terms-of-service', 'TermsAndConditions')->name('terms-of-service');
+Route::inertia('/privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

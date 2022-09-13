@@ -1,3 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@400;700&family=Inter:wght@600;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    @apply font-body;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*:hover {
+    @apply transition duration-150 ease-in-out;
+}
+
+.base-wrapper {
+    @apply container mx-auto px-6;
+}
+
+.card-padding {
+    @apply px-5 py-3 lg:px-8 lg:py-4;
+}
+
+.narrow-wrapper {
+    @apply container max-w-5xl mx-auto px-6;
+}
+
+.v3dp__input_wrapper input {
+    @apply border border-gray-300 rounded-md px-2 py-1 w-full;
+}
+
+@screen xl {
+    .base-wrapper,
+    .narrow-wrapper {
+        @apply px-0;
+    }
+}
+
+@layer components {
+    .card-shadow {
+        box-shadow: 0px 5.4px 5.3px rgba(0, 0, 0, 0.02),
+            0px 18.1px 17.9px rgba(0, 0, 0, 0.03),
+            0px 81px 80px rgba(0, 0, 0, 0.05);
+    }
+}
