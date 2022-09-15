@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Collection;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,11 @@ Route::inertia('/create-account', 'Auth/CreateAccount')->name('create-account');
 Route::inertia('/terms-of-service', 'TermsAndConditions')->name('terms-of-service');
 Route::inertia('/privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/collections', function () {
+    return Inertia::render('User/Collections', [
+        'collections' => Collection::all()
+    ]);
+})->middleware(['auth', 'verified'])->name('collections');
 
 require __DIR__.'/auth.php';
+require __DIR__.'/collection.php';

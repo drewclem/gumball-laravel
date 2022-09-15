@@ -1,110 +1,266 @@
 <script setup>
-import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/inertia-vue3';
+import { ref } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
+
+import DashboardHeader from "@/Components/global/DashboardHeader.vue";
+import BaseLink from "@/Components/base/BaseLink.vue";
+import BaseModal from "@/Components/base/BaseModal.vue";
+import ScheduleCollection from "@/Components/dashboard/ScheduleCollection.vue";
+
+// icons
+import IconCollection from "@/Components/svg/IconCollection.vue";
+import IconInbox from "@/Components/svg/IconInbox.vue";
+import IconHeart from "@/Components/svg/IconHeart.vue";
+import IconTag from "@/Components/svg/IconTag.vue";
+import IconForm from "@/Components/svg/IconForm.vue";
+import IconUser from "@/Components/svg/IconUser.vue";
+import IconSchedule from "@/Components/svg/IconSchedule.vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
-    <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
-                <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo class="block h-9 w-auto" />
-                                </Link>
-                            </div>
+    <div class="min-h-screen">
+        <DashboardHeader :currentUser="$page.props.auth.user" />
 
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <!-- Settings Dropdown -->
-                            <div class="ml-3 relative">
-                                <Dropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
+        <main class="flex relative">
+            <div
+                class="
+                    hidden
+                    bg-white
+                    lg:flex
+                    h-full
+                    flex-col
+                    px-6
+                    py-12
+                    lg:w-[60]
+                "
+            >
+                <div class="flex-grow">
+                    <div class="flex flex-col space-y-5 mb-6 lg:mb-12">
+                        <BaseModal>
+                            <template #button>
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        group
+                                        px-3
+                                        py-0.5
+                                        font-display
+                                        text-center
+                                        rounded-md
+                                        transition
+                                        duration-150
+                                        text-white
+                                        ease-in-out
+                                        bg-green-500
+                                        hover:bg-green-600
+                                        border-2 border-transparent
+                                    "
+                                >
+                                    <IconSchedule
+                                        class="
+                                            text-white
+                                            w-4
+                                            h-4
+                                            opacity-75
+                                            mr-2
+                                        "
+                                    />
+                                    <span class="text-xs lg:text-base">
+                                        Schedule
+                                        <span class="hidden lg:inline-block">
+                                            window
                                         </span>
+                                    </span>
+                                </div>
+                            </template>
+
+                            <template #content>
+                                <ScheduleCollection />
+                            </template>
+                        </BaseModal>
+                    </div>
+
+                    <nav>
+                        <ul class="flex flex-col space-y-3">
+                            <li>
+                                <BaseLink class="group" href="dashboard">
+                                    <template #icon>
+                                        <IconCollection
+                                            :class="
+                                                $page.props.ziggy.location.includes(
+                                                    'collections'
+                                                )
+                                                    ? 'text-green-500'
+                                                    : 'group-hover:text-gray-400'
+                                            "
+                                            class="
+                                                text-gray-200
+                                                w-3
+                                                lg:w-5
+                                                h-3
+                                                lg:h-5
+                                            "
+                                        />
                                     </template>
-
-                                    <template #content>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
-                                        </DropdownLink>
+                                    Collections
+                                </BaseLink>
+                            </li>
+                            <li>
+                                <BaseLink class="group" href="/">
+                                    <template #icon>
+                                        <IconInbox
+                                            :class="
+                                                $page.props.ziggy.location.includes(
+                                                    'inbox'
+                                                )
+                                                    ? 'text-green-500'
+                                                    : 'group-hover:text-gray-400'
+                                            "
+                                            class="
+                                                text-gray-200
+                                                group-hover:text-gray-300
+                                                w-3
+                                                lg:w-5
+                                                h-3
+                                                lg:h-5
+                                            "
+                                        />
                                     </template>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <!-- Hamburger -->
-                        <div class="-mr-2 flex items-center sm:hidden">
-                            <button @click="showingNavigationDropdown = ! showingNavigationDropdown" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path :class="{'hidden': showingNavigationDropdown, 'inline-flex': ! showingNavigationDropdown }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                    <path :class="{'hidden': ! showingNavigationDropdown, 'inline-flex': showingNavigationDropdown }" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+                                    Inbox
+                                </BaseLink>
+                            </li>
+                            <li>
+                                <BaseLink class="group" href="/">
+                                    <template #icon>
+                                        <IconHeart
+                                            :class="
+                                                $page.props.ziggy.location.includes(
+                                                    'saved'
+                                                )
+                                                    ? 'text-green-500'
+                                                    : 'group-hover:text-gray-400'
+                                            "
+                                            class="
+                                                text-gray-200
+                                                group-hover:text-gray-300
+                                                w-3
+                                                lg:w-5
+                                                h-3
+                                                lg:h-5
+                                            "
+                                        />
+                                    </template>
+                                    Saved
+                                </BaseLink>
+                            </li>
+                            <li>
+                                <BaseLink class="group" href="/">
+                                    <template #icon>
+                                        <IconTag
+                                            :class="
+                                                $page.props.ziggy.location.includes(
+                                                    'tags'
+                                                )
+                                                    ? 'text-green-500'
+                                                    : 'group-hover:text-gray-400'
+                                            "
+                                            class="
+                                                text-gray-200
+                                                group-hover:text-gray-300
+                                                w-3
+                                                lg:w-5
+                                                h-3
+                                                lg:h-5
+                                            "
+                                        />
+                                    </template>
+                                    Tags
+                                </BaseLink>
+                            </li>
+                            <li>
+                                <BaseLink class="group" href="/">
+                                    <template #icon>
+                                        <IconForm
+                                            class="
+                                                text-gray-200
+                                                group-hover:text-gray-300
+                                                w-3
+                                                lg:w-5
+                                                h-3
+                                                lg:h-5
+                                            "
+                                        />
+                                    </template>
+                                    Live Form
+                                </BaseLink>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
 
-                <!-- Responsive Navigation Menu -->
-                <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
-                    <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
-                        </ResponsiveNavLink>
+                <footer class="flex flex-col space-y-3">
+                    <BaseLink class="group" href="/">
+                        <template #icon>
+                            <IconUser
+                                class="
+                                    text-gray-200
+                                    group-hover:text-gray-300
+                                    w-3
+                                    lg:w-5
+                                    h-3
+                                    lg:h-5
+                                "
+                            />
+                        </template>
+                        Account
+                    </BaseLink>
+
+                    <div class="base-wrapper mx-auto">
+                        <Link
+                            class="
+                                text-sm
+                                lg:text-base
+                                opacity-50
+                                hover:opacity-100
+                            "
+                            :href="route('logout')"
+                            method="post"
+                            as="button"
+                            theme="secondary"
+                        >
+                            Sign Out
+                        </Link>
                     </div>
+                </footer>
+            </div>
 
-                    <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">{{ $page.props.auth.user.name }}</div>
-                            <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-                        </div>
-
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
-                    </div>
+            <div
+                class="
+                    px-6
+                    py-12
+                    lg:px-20
+                    bg-gray-50
+                    flex-grow
+                    h-full
+                    overflow-y-scroll
+                "
+            >
+                <div class="max-w-4xl">
+                    <Transition name="fade">
+                        <slot />
+                    </Transition>
                 </div>
-            </nav>
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
 </template>
+
+<style scoped>
+main {
+    height: calc(100vh - 89.31px);
+    overflow: hidden;
+}
+</style>

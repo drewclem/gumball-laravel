@@ -18,9 +18,9 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->boolean('is_archived');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->boolean('is_archived')->default(false);
         });
     }
 
