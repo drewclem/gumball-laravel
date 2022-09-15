@@ -51,7 +51,7 @@ function togglePassword() {
     <div class="relative flex flex-col" :class="{ 'opacity-50': disabled }">
         <label class="font-display mb-2 text-sm" :for="id">
             <slot />
-            <span v-if="required">*</span>
+            <span class="text-red-500" v-if="required">*</span>
         </label>
 
         <input

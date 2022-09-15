@@ -118,7 +118,7 @@ ul li {
 </style>
 
 <template>
-    <section class="base-wrapper my-32 lg:my-52">
+    <section class="narrow-wrapper my-32 lg:my-52">
         <div v-if="showPricing" class="grid lg:grid-cols-5 gap-12 mb-12">
             <div class="flex flex-col space-y-6 lg:col-span-3">
                 <BaseHeading size="h3">
@@ -147,7 +147,7 @@ ul li {
                     </li>
                     <li>
                         <IconCheck class="h-5 w-5 text-green-500" />
-                        <p>Reference photo collection</p>
+                        <p>Collect reference material</p>
                     </li>
                     <li>
                         <IconCheck class="h-5 w-5 text-green-500" />

@@ -6,6 +6,7 @@ import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import BaseHeading from "@/Components/base/BaseHeading.vue";
 import BaseInput from "@/Components/base/BaseInput.vue";
+import InputError from "@/Components/InputError.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
 import WelcomeBack from "@/Components/svg/WelcomeBack.vue";
 
@@ -28,11 +29,12 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Sign in" />
     <DefaultLayout>
         <section>
             <div
                 class="
-                    max-w-3xl
+                    max-w-4xl
                     mx-auto
                     px-6
                     xl:px-0
@@ -42,7 +44,7 @@ const submit = () => {
                     items-center
                 "
             >
-                <form @submit.prevent="submit">
+                <form class="mt-12" @submit.prevent="submit">
                     <BaseHeading class="mb-5" size="h4" tag="h1"
                         >Welcome back!</BaseHeading
                     >
