@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Submission extends Model
 {
     use HasFactory;
+
+    public function collection() {
+        return $this->hasOne(Collection::class);
+    }
 }

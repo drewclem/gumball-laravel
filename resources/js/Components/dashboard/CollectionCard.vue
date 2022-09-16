@@ -79,8 +79,8 @@ function getYear(date) {
                 {{ formatOpenDates(collection.end_date) }}
             </template>
             <template #col-2>{{ getYear(collection.start_date) }}</template>
-            <!-- <template #col-3>{{ collection.requests_received }}</template>
-            <template #col-4>{{ collection.booked_requests }}</template> -->
+            <template #col-3>{{ collection.submissions_count }}</template>
+            <template #col-4>{{ collection.booked_count }}</template>
         </AccountCardGrid>
     </Link>
 </template>

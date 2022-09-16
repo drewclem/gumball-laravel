@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from "vue";
+import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 
 import GumballLogo from "@/Components/global/GumballLogo.vue";
@@ -78,13 +78,13 @@ function closeMenu() {
         "
     >
         <div id="top">
-            <router-link
+            <Link
                 v-if="currentUser"
-                :to="`/${currentUser.username}/collections`"
+                :href="`/${currentUser.username}/collections`"
                 class="block w-40 lg:w-48"
             >
                 <GumballLogo class="w-full" />
-            </router-link>
+            </Link>
         </div>
 
         <!-- Mobile nav -->

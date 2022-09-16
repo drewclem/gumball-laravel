@@ -6,6 +6,7 @@ import DashboardHeader from "@/Components/global/DashboardHeader.vue";
 import BaseLink from "@/Components/base/BaseLink.vue";
 import BaseModal from "@/Components/base/BaseModal.vue";
 import ScheduleCollection from "@/Components/dashboard/ScheduleCollection.vue";
+import OpenCollection from "@/Components/dashboard/OpenCollection.vue";
 
 // icons
 import IconCollection from "@/Components/svg/IconCollection.vue";
@@ -15,6 +16,7 @@ import IconTag from "@/Components/svg/IconTag.vue";
 import IconForm from "@/Components/svg/IconForm.vue";
 import IconUser from "@/Components/svg/IconUser.vue";
 import IconSchedule from "@/Components/svg/IconSchedule.vue";
+import IconLock from "@/Components/svg/IconLock.vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -71,7 +73,7 @@ const showingNavigationDropdown = ref(false);
                                     <span class="text-xs lg:text-base">
                                         Schedule
                                         <span class="hidden lg:inline-block">
-                                            window
+                                            collection
                                         </span>
                                     </span>
                                 </div>
@@ -79,6 +81,50 @@ const showingNavigationDropdown = ref(false);
 
                             <template #content>
                                 <ScheduleCollection />
+                            </template>
+                        </BaseModal>
+
+                        <BaseModal>
+                            <template #button>
+                                <div
+                                    class="
+                                        flex
+                                        items-center
+                                        group
+                                        px-3
+                                        py-0.5
+                                        font-display
+                                        text-center
+                                        rounded-md
+                                        transition
+                                        duration-150
+                                        text-white
+                                        ease-in-out
+                                        bg-blue-500
+                                        hover:bg-blue-600
+                                        border-2 border-transparent
+                                    "
+                                >
+                                    <IconLock
+                                        class="
+                                            text-white
+                                            w-4
+                                            h-4
+                                            opacity-75
+                                            mr-2
+                                        "
+                                    />
+                                    <span class="text-xs lg:text-base">
+                                        Open
+                                        <span class="hidden lg:inline-block">
+                                            collection
+                                        </span>
+                                    </span>
+                                </div>
+                            </template>
+
+                            <template #content>
+                                <OpenCollection />
                             </template>
                         </BaseModal>
                     </div>

@@ -29,7 +29,9 @@ import BaseButton from "@/Components/base/BaseButton.vue";
             <nav class="hidden lg:flex font-body items-center">
                 <div class="flex flex-col items-end">
                     <template v-if="$page.props.auth.user">
-                        <Link href="/">{{ $page.props.auth.user.name }}</Link>
+                        <Link href="collections">{{
+                            $page.props.auth.user.name
+                        }}</Link>
                     </template>
 
                     <div v-else>
