@@ -31,12 +31,7 @@ Route::inertia('/create-account', 'Auth/CreateAccount')->name('create-account');
 Route::inertia('/terms-of-service', 'TermsAndConditions')->name('terms-of-service');
 Route::inertia('/privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
 
-Route::resource('/collections', CollectionController::class)->only(['index', 'store'])->middleware(['auth', 'verified']);
-// Route::get('/collections', function () {
-//     return Inertia::render('User/Collections', [
-//         'collections' => Collection::all()
-//     ]);
-// })->middleware(['auth', 'verified'])->name('collections');
+Route::resource('/collections', CollectionController::class)->only(['index', 'store', 'show'])->middleware(['auth', 'verified']);
+// Route::resource('/collections/{collection}', CollectionController::class)->only(['show'])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
-require __DIR__.'/collection.php';

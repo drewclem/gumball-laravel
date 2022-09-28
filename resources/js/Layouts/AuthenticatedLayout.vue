@@ -92,25 +92,31 @@ const showingNavigationDropdown = ref(false);
                                         items-center
                                         group
                                         px-3
+                                        lg:px-6
                                         py-0.5
                                         font-display
                                         text-center
                                         rounded-md
+                                        border-2 border-transparent
                                         transition
                                         duration-150
-                                        text-white
                                         ease-in-out
-                                        bg-blue-500
-                                        hover:bg-blue-600
-                                        border-2 border-transparent
+                                        border-blue-500
+                                        text-black
+                                        hover:bg-blue-500
+                                        hover:text-white
+                                        mb-2
                                     "
                                 >
                                     <IconLock
                                         class="
-                                            text-white
-                                            w-4
-                                            h-4
-                                            opacity-75
+                                            text-blue-500
+                                            group-hover:text-white
+                                            w-3
+                                            lg:w-5
+                                            h-3
+                                            lg:h-5
+                                            opacity-50
                                             mr-2
                                         "
                                     />
@@ -132,7 +138,10 @@ const showingNavigationDropdown = ref(false);
                     <nav>
                         <ul class="flex flex-col space-y-3">
                             <li>
-                                <BaseLink class="group" href="dashboard">
+                                <BaseLink
+                                    class="group py-0.5"
+                                    href="/collections"
+                                >
                                     <template #icon>
                                         <IconCollection
                                             :class="
@@ -155,7 +164,7 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group" href="/">
+                                <BaseLink class="group py-0.5" href="/">
                                     <template #icon>
                                         <IconInbox
                                             :class="
@@ -179,7 +188,7 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group" href="/">
+                                <BaseLink class="group py-0.5" href="/">
                                     <template #icon>
                                         <IconHeart
                                             :class="
@@ -203,7 +212,7 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group" href="/">
+                                <BaseLink class="group py-0.5" href="/">
                                     <template #icon>
                                         <IconTag
                                             :class="
@@ -227,7 +236,7 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group" href="/">
+                                <BaseLink class="group py-0.5" href="/">
                                     <template #icon>
                                         <IconForm
                                             class="
@@ -248,7 +257,7 @@ const showingNavigationDropdown = ref(false);
                 </div>
 
                 <footer class="flex flex-col space-y-3">
-                    <BaseLink class="group" href="/">
+                    <BaseLink class="group py-0.5" href="/">
                         <template #icon>
                             <IconUser
                                 class="

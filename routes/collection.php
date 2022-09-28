@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\SubmissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function() {
