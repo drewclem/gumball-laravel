@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     status: String,

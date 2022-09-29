@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/inertia-vue3";
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import BaseImage from "@/Components/base/BaseImage.vue";
 import BaseHeading from "@/Components/base/BaseHeading.vue";

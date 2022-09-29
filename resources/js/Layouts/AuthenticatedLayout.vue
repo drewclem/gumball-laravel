@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
 
 import DashboardHeader from "@/Components/global/DashboardHeader.vue";
 import BaseLink from "@/Components/base/BaseLink.vue";

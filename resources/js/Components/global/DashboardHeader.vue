@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
 
 import GumballLogo from "@/Components/global/GumballLogo.vue";
 import GumballLogoMark from "@/Components/global/GumballLogoMark.vue";

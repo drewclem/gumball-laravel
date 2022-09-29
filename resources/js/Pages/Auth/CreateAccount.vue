@@ -1,6 +1,6 @@
 <script setup>
 // utils
-import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
 
 //components
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";

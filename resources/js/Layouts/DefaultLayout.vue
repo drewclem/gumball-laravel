@@ -1,6 +1,4 @@
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3";
-
 import GumballLogo from "@/Components/global/GumballLogo.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
 </script>

@@ -1,7 +1,6 @@
 <script setup>
 // utility
 import { ref, toRefs, onMounted } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
 
 // components
 import AccountCardGrid from "@/Components/dashboard/AccountCardGrid.vue";
