@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\SubmissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,12 +27,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::inertia('/sign-in', 'Auth/SignIn')->name('sign-in');
-Route::inertia('/create-account', 'Auth/CreateAccount')->name('create-account');
-Route::inertia('/terms-of-service', 'TermsAndConditions')->name('terms-of-service');
-Route::inertia('/privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
+Route::inertia('sign-in', 'Auth/SignIn')->name('sign-in');
+Route::inertia('create-account', 'Auth/CreateAccount')->name('create-account');
+Route::inertia('terms-of-service', 'TermsAndConditions')->name('terms-of-service');
+Route::inertia('privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
 
-Route::resource('/collections', CollectionController::class)->only(['index', 'store', 'show'])->middleware(['auth', 'verified']);
-// Route::resource('/collections/{collection}', CollectionController::class)->only(['show'])->middleware(['auth', 'verified']);
+Route::resource('collections', CollectionController::class)->only(['index', 'store', 'show'])->middleware(['auth', 'verified']);
+Route::resource('collections.submissions', SubmissionController::class)->only(['show'])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

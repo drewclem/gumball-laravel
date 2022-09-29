@@ -45,7 +45,7 @@ const filteredSubmissions = computed(() => {
     let dislikedSubmissions = [];
     let declinedSubmissions = [];
 
-    submissions.value.filter((submission) => {
+    props.submissions.filter((submission) => {
         if (submission.is_declined) declinedSubmissions.push(submission);
         if (submission.is_liked === -1 && !submission.is_declined)
             dislikedSubmissions.push(submission);
@@ -250,20 +250,27 @@ async function updateViewMode(e) {
                         lg:space-y-0
                     "
                 >
-                    <div class="flex justify-between w-full lg:w-auto">
+                    <div
+                        class="
+                            flex
+                            justify-between
+                            items-center
+                            w-full
+                            lg:w-auto
+                        "
+                    >
                         <BaseHeading size="h4" tag="h1"
                             >Collections</BaseHeading
                         >
 
-                        <button
+                        <Link
                             class="ml-6 opacity-60"
-                            type="button"
+                            href="/collections"
                             aria-label="Go back to account info page"
-                            @click="router.back()"
                         >
-                            <IconArrowLeft class="h-3 w-3 inline -mt-0.5" />
+                            <IconArrowLeft class="h-3 w-3 inline" />
                             Back
-                        </button>
+                        </Link>
                     </div>
 
                     <div
@@ -322,25 +329,28 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <!-- <div
-                    class="
-                        absolute
-                        top-0
-                        right-0
-                        flex
-                        justify-center
-                        items-center
-                        -mt-4
-                    "
-                >
-                    <KeywordSearch class="flex mr-4" v-model="searchPhrase" />
-                    <BaseSelect
-                        :options="currentUser.tags"
-                        v-model="filterWord"
+                    <div
+                        class="
+                            absolute
+                            top-0
+                            right-0
+                            flex
+                            justify-center
+                            items-center
+                            -mt-4
+                        "
                     >
-                        Filter
-                    </BaseSelect>
-                </div> -->
+                        <KeywordSearch
+                            class="flex mr-4"
+                            v-model="searchPhrase"
+                        />
+                        <!-- <BaseSelect
+                            :options="currentUser.tags"
+                            v-model="filterWord"
+                        >
+                            Filter
+                        </BaseSelect> -->
+                    </div>
                 </div>
 
                 <!-- <BaseSelect

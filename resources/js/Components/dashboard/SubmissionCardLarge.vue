@@ -62,8 +62,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <router-link
-        :to="`/${user.user_metadata.username}/collections/${submission.collection_id}/${submission.id}`"
+    <Link
+        :to="`/collections/${submission.collection_id}/${submission.id}`"
         class="
             relative
             bg-white
@@ -199,7 +199,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </router-link>
+    </Link>
 </template>
 
 <style scoped>

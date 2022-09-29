@@ -1,10 +1,40 @@
+<script setup>
+// components
+import AccountCardGrid from "@/components/dashboard/AccountCardGrid.vue";
+import IconThumbDown from "@/components/svg/IconThumbDown.vue";
+import IconThumbUp from "@/components/svg/IconThumbUp.vue";
+import IconDecline from "@/components/svg/IconDecline.vue";
+
+const props = defineProps({
+    submission: {
+        type: Object,
+        required: true,
+    },
+});
+
+// simple function to take the date returned from Supbase (yyyy-mm-dd) and format it to MMM-YY
+function formatDate(date) {
+    const dateObj = new Date(date);
+
+    const dateFormatted = new Date(
+        dateObj.getTime() - dateObj.getTimezoneOffset() * -60000
+    );
+
+    return `${dateFormatted.toLocaleString("default", {
+        month: "short",
+    })} ${dateFormatted.toLocaleString("default", {
+        day: "numeric",
+    })}`;
+}
+</script>
+
 <template>
-    <router-link
-        :to="`/${user.user_metadata.username}/collections/${submission.collection_id}/${submission.id}`"
+    <Link
+        :href="`/collections/${submission.collection_id}/submissions/${submission.id}`"
         class="relative flex w-full items-center"
     >
         <div
-            v-if="!submission.viewed"
+            v-if="!submission.is_viewed"
             class="absolute rounded-full bg-red-500 w-2 h-2 ml-3"
         />
         <div
@@ -51,7 +81,7 @@
 
                 <div class="relative col-span-2">
                     <p
-                        v-if="submission.booked"
+                        v-if="submission.is_booked"
                         class="
                             text-[8px]
                             lg:text-[10px]
@@ -95,35 +125,5 @@
                 </li>
             </ul>
         </div>
-    </router-link>
+    </Link>
 </template>
-
-<script setup>
-// components
-import AccountCardGrid from "@/components/dashboard/AccountCardGrid.vue";
-import IconThumbDown from "@/components/svg/IconThumbDown.vue";
-import IconThumbUp from "@/components/svg/IconThumbUp.vue";
-import IconDecline from "@/components/svg/IconDecline.vue";
-
-const props = defineProps({
-    submission: {
-        type: Object,
-        required: true,
-    },
-});
-
-// simple function to take the date returned from Supbase (yyyy-mm-dd) and format it to MMM-YY
-function formatDate(date) {
-    const dateObj = new Date(date);
-
-    const dateFormatted = new Date(
-        dateObj.getTime() - dateObj.getTimezoneOffset() * -60000
-    );
-
-    return `${dateFormatted.toLocaleString("default", {
-        month: "short",
-    })} ${dateFormatted.toLocaleString("default", {
-        day: "numeric",
-    })}`;
-}
-</script>

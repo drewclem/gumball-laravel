@@ -8,10 +8,10 @@ use Inertia\Inertia;
 
 class SubmissionController extends Controller
 {
-    public function index() {
+    public function show($collection_id, Submission $submission) {
 
-        return Inertia::render('User/Inbox', [
-            'submissions' => Submission::all(),
+        return Inertia::render('User/_submissionId', [
+            'submission' => $submission,
         ]);
     }
 }
