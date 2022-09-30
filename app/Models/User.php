@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function collections() {
         return $this->hasMany(Collection::class);
     }
+
+    public function tags() {
+        return $this->hasMany(Tag::class);
+    }
 }

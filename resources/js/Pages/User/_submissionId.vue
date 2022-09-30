@@ -324,15 +324,14 @@ async function declineSubmission() {
                 <div class="flex items-baseline">
                     <BaseHeading size="h4" tag="h1">Collections</BaseHeading>
 
-                    <button
+                    <Link
                         class="ml-6 opacity-60"
-                        type="button"
-                        aria-label="Go back to account info page"
-                        @click="router.back()"
+                        aria-label="View the list of submissions for this collection"
+                        :href="`/collections/${submission.collection_id}`"
                     >
                         <IconArrowLeft class="h-3 w-3 inline -mt-0.5" />
                         Back
-                    </button>
+                    </Link>
                 </div>
             </div>
 
