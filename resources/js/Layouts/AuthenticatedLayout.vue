@@ -193,9 +193,7 @@ const showingNavigationDropdown = ref(false);
                 class="px-6 py-12 lg:px-20 bg-gray-50 flex-grow h-full overflow-y-scroll"
             >
                 <div class="max-w-4xl">
-                    <Transition name="fade">
-                        <slot />
-                    </Transition>
+                    <slot />
                 </div>
             </div>
         </main>

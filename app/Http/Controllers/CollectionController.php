@@ -10,7 +10,7 @@ class CollectionController extends Controller
 {
     public function index() {
 
-        $collections = Collection::withCount(['submissions', 'booked'])->get();
+        $collections = Collection::withCount(['submissions', 'booked'])->orderBy('start_date', 'desc')->get();
 
         return Inertia::render('User/Collections', [
             'collections' => $collections,

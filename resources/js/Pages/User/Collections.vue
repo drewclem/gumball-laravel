@@ -19,31 +19,36 @@ const props = defineProps({
 </script>
 
 <template>
-    <Head title="Collections" />
     <div>
-        <div class="flex items-center justify-between mb-8">
-            <BaseHeading size="h4" tag="h1">Collections</BaseHeading>
-        </div>
-
+        <Head title="Collections" />
         <div>
-            <div
-                class="grid grid-cols-5 card-padding text-sm lg:text-base opacity-40 mb-4"
-            >
-                <p class="col-span-2">Open Dates</p>
-                <p>Year</p>
-                <p>Submissions</p>
-                <p class="ml-auto">Booked</p>
+            <div class="flex items-center justify-between mb-8">
+                <BaseHeading size="h4" tag="h1">Collections</BaseHeading>
             </div>
 
-            <div v-if="collections.length > 0" class="flex flex-col space-y-6">
-                <CollectionCard
-                    v-for="collection in collections"
-                    :key="collection.id"
-                    :collection="collection"
-                />
-            </div>
+            <div>
+                <div
+                    class="grid grid-cols-5 card-padding text-sm lg:text-base opacity-40 mb-4"
+                >
+                    <p class="col-span-2">Open Dates</p>
+                    <p>Year</p>
+                    <p>Submissions</p>
+                    <p class="ml-auto">Booked</p>
+                </div>
 
-            <p v-else>Looks like you haven't created a collection yet!</p>
+                <div
+                    v-if="collections.length > 0"
+                    class="flex flex-col space-y-6"
+                >
+                    <CollectionCard
+                        v-for="collection in collections"
+                        :key="collection.id"
+                        :collection="collection"
+                    />
+                </div>
+
+                <p v-else>Looks like you haven't created a collection yet!</p>
+            </div>
         </div>
     </div>
 </template>

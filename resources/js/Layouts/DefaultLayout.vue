@@ -50,19 +50,21 @@ import BaseButton from "@/Components/base/BaseButton.vue";
         </main>
 
         <footer class="bg-gray-50 py-8">
-            <div class="flex justify-between items-center base-wrapper">
-                <a href="#top">
+            <div
+                class="flex flex-col lg:flex-row space-y-6 lg:justify-between items-center base-wrapper"
+            >
+                <a href="block #top ">
                     <GumballLogo class="w-56" />
                 </a>
 
                 <nav class="text-sm">
                     <ul class="flex flex-row items-center">
-                        <Link :href="route('terms-of-service')" class="mr-4">
+                        <router-link class="mr-4" to="/terms-and-conditions">
                             Terms and Conditions
-                        </Link>
-                        <Link :href="route('privacy-policy')">
-                            Privacy Policy
-                        </Link>
+                        </router-link>
+                        <router-link to="/privacy-policy"
+                            >Privacy Policy</router-link
+                        >
                     </ul>
                 </nav>
             </div>
