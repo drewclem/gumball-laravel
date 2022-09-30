@@ -6,16 +6,7 @@ import BaseButton from "@/Components/base/BaseButton.vue";
 <template>
     <div class="flex flex-col min-h-screen">
         <header
-            class="
-                base-wrapper
-                w-full
-                flex
-                items-center
-                justify-between
-                py-6
-                z-50
-                top-0
-            "
+            class="base-wrapper w-full flex items-center justify-between py-6 z-50 top-0"
         >
             <div>
                 <Link href="/">

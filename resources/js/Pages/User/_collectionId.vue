@@ -49,8 +49,10 @@ const filteredSubmissions = computed(() => {
         if (submission.is_declined) declinedSubmissions.push(submission);
         if (submission.is_liked === -1 && !submission.is_declined)
             dislikedSubmissions.push(submission);
-        if (submission.is_liked === 1 && !submission.is_declined) likedSubmissions.push(submission);
-        if (submission.is_liked === 0 && !submission.is_declined) midSubmissions.push(submission);
+        if (submission.is_liked === 1 && !submission.is_declined)
+            likedSubmissions.push(submission);
+        if (submission.is_liked === 0 && !submission.is_declined)
+            midSubmissions.push(submission);
     });
 
     const sortedSubmissions = [
@@ -193,7 +195,9 @@ async function closeCollection() {
     const currentDate = new Date();
     const currentDateFormatted = formatDate(currentDate);
 
-    if (window.confirm("Are you sure you want to close this collection today?")) {
+    if (
+        window.confirm("Are you sure you want to close this collection today?")
+    ) {
         const { error } = await supabase
             .from("collections")
             .update({ end_date: currentDateFormatted })
@@ -228,11 +232,13 @@ async function updateViewMode(e) {
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 items-end lg:items-center justify-between mb-8"
             >
-                <div class="flex flex-col lg:flex-row w-full space-y-2 lg:space-y-0">
-                    <div class="flex justify-between items-center w-full lg:w-auto">
-                        <BaseHeading
-                            size="h4"
-                            tag="h1"
+                <div
+                    class="flex flex-col lg:flex-row w-full space-y-2 lg:space-y-0"
+                >
+                    <div
+                        class="flex justify-between items-center w-full lg:w-auto"
+                    >
+                        <BaseHeading size="h4" tag="h1"
                             >Collections</BaseHeading
                         >
 
@@ -286,7 +292,9 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <div class="absolute top-0 right-0 flex justify-center items-center -mt-4">
+                    <div
+                        class="absolute top-0 right-0 flex justify-center items-center -mt-4"
+                    >
                         <KeywordSearch
                             class="flex mr-4"
                             v-model="searchPhrase"
@@ -343,7 +351,9 @@ async function updateViewMode(e) {
                         >
                             Uh oh!
                         </BaseHeading>
-                        <BaseText> Looks like we couldn't find anything. </BaseText>
+                        <BaseText>
+                            Looks like we couldn't find anything.
+                        </BaseText>
                         <BaseText size="small">Check for typos!</BaseText>
                     </div>
 

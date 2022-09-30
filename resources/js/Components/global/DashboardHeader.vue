@@ -65,16 +65,7 @@ function closeMenu() {
 
 <template>
     <header
-        class="
-            px-6
-            py-3
-            lg:p-6
-            flex
-            justify-between
-            w-full
-            items-center
-            border-b-2 border-gray-100
-        "
+        class="px-6 py-3 lg:p-6 flex justify-between w-full items-center border-b-2 border-gray-100"
     >
         <div id="top">
             <Link
@@ -116,18 +107,7 @@ function closeMenu() {
                         >
                             <div @click="closeMenu">
                                 <button
-                                    class="
-                                        flex
-                                        justify-center
-                                        items-center
-                                        bg-white
-                                        rounded-full
-                                        ml-4
-                                        mr-4
-                                        mt-4
-                                        h-12
-                                        w-12
-                                    "
+                                    class="flex justify-center items-center bg-white rounded-full ml-4 mr-4 mt-4 h-12 w-12"
                                     ref="closeButtonRef"
                                     @click="closeMenu"
                                     type="button"

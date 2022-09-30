@@ -46,8 +46,10 @@ const filteredSubmissions = computed(() => {
         if (submission.is_declined) declinedSubmissions.push(submission);
         if (submission.is_liked === -1 && !submission.is_declined)
             dislikedSubmissions.push(submission);
-        if (submission.is_liked === 1 && !submission.is_declined) likedSubmissions.push(submission);
-        if (submission.is_liked === 0 && !submission.is_declined) midSubmissions.push(submission);
+        if (submission.is_liked === 1 && !submission.is_declined)
+            likedSubmissions.push(submission);
+        if (submission.is_liked === 0 && !submission.is_declined)
+            midSubmissions.push(submission);
     });
 
     const sortedSubmissions = [
@@ -82,11 +84,7 @@ const filteredSubmissions = computed(() => {
     <div class="max-w-4xl">
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center">
-                <BaseHeading
-                    size="h4"
-                    tag="h1"
-                    >Favorites</BaseHeading
-                >
+                <BaseHeading size="h4" tag="h1">Favorites</BaseHeading>
 
                 <div
                     class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm ml-6"
@@ -142,7 +140,9 @@ const filteredSubmissions = computed(() => {
         </div>
 
         <div>
-            <div class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4">
+            <div
+                class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4"
+            >
                 <p class="col-span-2">Name</p>
                 <p class="col-span-2">Email</p>
                 <p>Phone</p>
@@ -155,10 +155,7 @@ const filteredSubmissions = computed(() => {
                 </div>
 
                 <div v-else-if="!filteredSubmissions.length">
-                    <BaseHeading
-                        class="text-red-500 mb-5"
-                        size="h3"
-                        tag="h2"
+                    <BaseHeading class="text-red-500 mb-5" size="h3" tag="h2"
                         >Uh oh!</BaseHeading
                     >
                     <BaseText>Looks like we couldn't find anything.</BaseText>

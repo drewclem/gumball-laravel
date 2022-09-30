@@ -1,19 +1,19 @@
 <template>
-  <label class="flex items-center">
-    <input
-      type="radio"
-      :name="group.inputName"
-      :value="value"
-      :checked="checked"
-      :disabled="disabled"
-      v-on="listeners"
-      @change="change"
-    />
-    <span class="ml-2">
-      <!-- @slot The radio button’s label. Should contain text. -->
-      <slot />
-    </span>
-  </label>
+    <label class="flex items-center">
+        <input
+            type="radio"
+            :name="group.inputName"
+            :value="value"
+            :checked="checked"
+            :disabled="disabled"
+            v-on="listeners"
+            @change="change"
+        />
+        <span class="ml-2">
+            <!-- @slot The radio button’s label. Should contain text. -->
+            <slot />
+        </span>
+    </label>
 </template>
 
 <script>

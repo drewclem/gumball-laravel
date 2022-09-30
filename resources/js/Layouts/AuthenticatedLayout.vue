@@ -26,48 +26,17 @@ const showingNavigationDropdown = ref(false);
 
         <main class="flex relative">
             <div
-                class="
-                    hidden
-                    bg-white
-                    lg:flex
-                    h-full
-                    flex-col
-                    px-6
-                    py-12
-                    lg:w-[60]
-                "
+                class="hidden bg-white lg:flex h-full flex-col px-6 py-12 lg:w-[60]"
             >
                 <div class="flex-grow">
                     <div class="flex flex-col space-y-5 mb-6 lg:mb-12">
                         <BaseModal>
                             <template #button>
                                 <div
-                                    class="
-                                        flex
-                                        items-center
-                                        group
-                                        px-3
-                                        py-0.5
-                                        font-display
-                                        text-center
-                                        rounded-md
-                                        transition
-                                        duration-150
-                                        text-white
-                                        ease-in-out
-                                        bg-green-500
-                                        hover:bg-green-600
-                                        border-2 border-transparent
-                                    "
+                                    class="flex items-center group px-3 py-0.5 font-display text-center rounded-md transition duration-150 text-white ease-in-out bg-green-500 hover:bg-green-600 border-2 border-transparent"
                                 >
                                     <IconSchedule
-                                        class="
-                                            text-white
-                                            w-4
-                                            h-4
-                                            opacity-75
-                                            mr-2
-                                        "
+                                        class="text-white w-4 h-4 opacity-75 mr-2"
                                     />
                                     <span class="text-xs lg:text-base">
                                         Schedule
@@ -86,38 +55,10 @@ const showingNavigationDropdown = ref(false);
                         <BaseModal>
                             <template #button>
                                 <div
-                                    class="
-                                        flex
-                                        items-center
-                                        group
-                                        px-3
-                                        lg:px-6
-                                        py-0.5
-                                        font-display
-                                        text-center
-                                        rounded-md
-                                        border-2 border-transparent
-                                        transition
-                                        duration-150
-                                        ease-in-out
-                                        border-blue-500
-                                        text-black
-                                        hover:bg-blue-500
-                                        hover:text-white
-                                        mb-2
-                                    "
+                                    class="flex items-center group px-3 lg:px-6 py-0.5 font-display text-center rounded-md border-2 border-transparent transition duration-150 ease-in-out border-blue-500 text-black hover:bg-blue-500 hover:text-white mb-2"
                                 >
                                     <IconLock
-                                        class="
-                                            text-blue-500
-                                            group-hover:text-white
-                                            w-3
-                                            lg:w-5
-                                            h-3
-                                            lg:h-5
-                                            opacity-50
-                                            mr-2
-                                        "
+                                        class="text-blue-500 group-hover:text-white w-3 lg:w-5 h-3 lg:h-5 opacity-50 mr-2"
                                     />
                                     <span class="text-xs lg:text-base">
                                         Open
@@ -150,13 +91,7 @@ const showingNavigationDropdown = ref(false);
                                                     ? 'text-green-500'
                                                     : 'group-hover:text-gray-400'
                                             "
-                                            class="
-                                                text-gray-200
-                                                w-3
-                                                lg:w-5
-                                                h-3
-                                                lg:h-5
-                                            "
+                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
                                         />
                                     </template>
                                     Collections
@@ -173,13 +108,7 @@ const showingNavigationDropdown = ref(false);
                                                     ? 'text-green-500'
                                                     : 'group-hover:text-gray-400'
                                             "
-                                            class="
-                                                text-gray-200
-                                                w-3
-                                                lg:w-5
-                                                h-3
-                                                lg:h-5
-                                            "
+                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
                                         />
                                     </template>
                                     Inbox
@@ -199,13 +128,7 @@ const showingNavigationDropdown = ref(false);
                                                     ? 'text-green-500'
                                                     : 'group-hover:text-gray-400'
                                             "
-                                            class="
-                                                text-gray-200
-                                                w-3
-                                                lg:w-5
-                                                h-3
-                                                lg:h-5
-                                            "
+                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
                                         />
                                     </template>
                                     Favorites
@@ -222,13 +145,7 @@ const showingNavigationDropdown = ref(false);
                                                     ? 'text-green-500'
                                                     : 'group-hover:text-gray-400'
                                             "
-                                            class="
-                                                text-gray-200
-                                                w-3
-                                                lg:w-5
-                                                h-3
-                                                lg:h-5
-                                            "
+                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
                                         />
                                     </template>
                                     Tags
@@ -238,14 +155,7 @@ const showingNavigationDropdown = ref(false);
                                 <BaseLink class="group py-0.5" href="/">
                                     <template #icon>
                                         <IconForm
-                                            class="
-                                                text-gray-200
-                                                group-hover:text-gray-300
-                                                w-3
-                                                lg:w-5
-                                                h-3
-                                                lg:h-5
-                                            "
+                                            class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5"
                                         />
                                     </template>
                                     Live Form
@@ -259,14 +169,7 @@ const showingNavigationDropdown = ref(false);
                     <BaseLink class="group py-0.5" href="/">
                         <template #icon>
                             <IconUser
-                                class="
-                                    text-gray-200
-                                    group-hover:text-gray-300
-                                    w-3
-                                    lg:w-5
-                                    h-3
-                                    lg:h-5
-                                "
+                                class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5"
                             />
                         </template>
                         Account
@@ -274,12 +177,7 @@ const showingNavigationDropdown = ref(false);
 
                     <div class="base-wrapper mx-auto">
                         <Link
-                            class="
-                                text-sm
-                                lg:text-base
-                                opacity-50
-                                hover:opacity-100
-                            "
+                            class="text-sm lg:text-base opacity-50 hover:opacity-100"
                             :href="route('logout')"
                             method="post"
                             as="button"
@@ -292,15 +190,7 @@ const showingNavigationDropdown = ref(false);
             </div>
 
             <div
-                class="
-                    px-6
-                    py-12
-                    lg:px-20
-                    bg-gray-50
-                    flex-grow
-                    h-full
-                    overflow-y-scroll
-                "
+                class="px-6 py-12 lg:px-20 bg-gray-50 flex-grow h-full overflow-y-scroll"
             >
                 <div class="max-w-4xl">
                     <Transition name="fade">

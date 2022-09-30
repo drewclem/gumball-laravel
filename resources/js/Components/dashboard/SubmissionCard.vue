@@ -38,27 +38,11 @@ function formatDate(date) {
             class="absolute rounded-full bg-red-500 w-2 h-2 ml-3"
         />
         <div
-            class="
-                card-padding card-shadow
-                text-sm
-                lg:text-base
-                bg-white
-                rounded-lg
-                w-full
-                overflow-hidden
-            "
+            class="card-padding card-shadow text-sm lg:text-base bg-white rounded-lg w-full overflow-hidden"
         >
             <div class="relative grid grid-cols-6 gap-2">
                 <div
-                    class="
-                        absolute
-                        left-0
-                        flex
-                        items-center
-                        h-full
-                        ml-0.5
-                        lg:ml-1
-                    "
+                    class="absolute left-0 flex items-center h-full ml-0.5 lg:ml-1"
                 >
                     <IconDecline
                         v-if="submission.is_declined"
@@ -82,14 +66,7 @@ function formatDate(date) {
                 <div class="relative col-span-2">
                     <p
                         v-if="submission.is_booked"
-                        class="
-                            text-[8px]
-                            lg:text-[10px]
-                            text-blue-500
-                            bottom-0
-                            -mb-[12px]
-                            absolute
-                        "
+                        class="text-[8px] lg:text-[10px] text-blue-500 bottom-0 -mb-[12px] absolute"
                     >
                         Booked
                     </p>
@@ -112,13 +89,7 @@ function formatDate(date) {
             >
                 <li
                     v-for="tag in submission.tags"
-                    class="
-                        px-2
-                        py-0.5
-                        bg-blue-100
-                        text-blue-500 text-xs
-                        rounded-full
-                    "
+                    class="px-2 py-0.5 bg-blue-100 text-blue-500 text-xs rounded-full"
                     :key="tag.id"
                 >
                     {{ tag.label }}

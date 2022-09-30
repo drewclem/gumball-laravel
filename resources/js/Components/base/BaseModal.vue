@@ -11,18 +11,7 @@
             <div class="modal-wrapper" @keydown.esc="closeModal">
                 <div class="modal-content card-shadow">
                     <button
-                        class="
-                            absolute
-                            shadow-md
-                            bg-red-500
-                            -mt-3
-                            -ml-3
-                            p-1
-                            rounded-full
-                            left-0
-                            top-0
-                            text-white
-                        "
+                        class="absolute shadow-md bg-red-500 -mt-3 -ml-3 p-1 rounded-full left-0 top-0 text-white"
                         @click="closeModal"
                         ref="closeButtonRef"
                         type="button"
