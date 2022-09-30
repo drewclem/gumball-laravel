@@ -187,12 +187,15 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group py-0.5" href="/">
+                                <BaseLink
+                                    class="group py-0.5"
+                                    href="/favorites"
+                                >
                                     <template #icon>
                                         <IconHeart
                                             :class="
                                                 $page.props.ziggy.location.includes(
-                                                    'saved'
+                                                    'favorites'
                                                 )
                                                     ? 'text-green-500'
                                                     : 'group-hover:text-gray-400'
@@ -207,7 +210,7 @@ const showingNavigationDropdown = ref(false);
                                             "
                                         />
                                     </template>
-                                    Saved
+                                    Favorites
                                 </BaseLink>
                             </li>
                             <li>

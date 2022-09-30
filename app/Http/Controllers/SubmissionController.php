@@ -14,4 +14,12 @@ class SubmissionController extends Controller
             'submission' => $submission,
         ]);
     }
+
+    public function favorites() {
+        $submissions = Submission::where('is_saved', 1)->get();
+
+        return Inertia::render('User/Favorites', [
+            'submissions' => $submissions,
+        ]);
+    }
 }
