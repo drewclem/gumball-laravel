@@ -79,7 +79,7 @@ function closeMenu() {
         <div id="top">
             <Link
                 v-if="currentUser"
-                :href="`/${currentUser.username}/collections`"
+                href="/collections"
                 class="block w-40 lg:w-48"
             >
                 <GumballLogo class="w-full" />
