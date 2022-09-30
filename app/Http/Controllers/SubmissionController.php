@@ -22,4 +22,12 @@ class SubmissionController extends Controller
             'submissions' => $submissions,
         ]);
     }
+
+    public function inbox() {
+        $submissions = Submission::all();
+
+        return Inertia::render('User/Inbox', [
+            'submissions' => $submissions,
+        ]);
+    }
 }

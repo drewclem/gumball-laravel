@@ -49,10 +49,8 @@ const filteredSubmissions = computed(() => {
         if (submission.is_declined) declinedSubmissions.push(submission);
         if (submission.is_liked === -1 && !submission.is_declined)
             dislikedSubmissions.push(submission);
-        if (submission.is_liked === 1 && !submission.is_declined)
-            likedSubmissions.push(submission);
-        if (submission.is_liked === 0 && !submission.is_declined)
-            midSubmissions.push(submission);
+        if (submission.is_liked === 1 && !submission.is_declined) likedSubmissions.push(submission);
+        if (submission.is_liked === 0 && !submission.is_declined) midSubmissions.push(submission);
     });
 
     const sortedSubmissions = [
@@ -195,9 +193,7 @@ async function closeCollection() {
     const currentDate = new Date();
     const currentDateFormatted = formatDate(currentDate);
 
-    if (
-        window.confirm("Are you sure you want to close this collection today?")
-    ) {
+    if (window.confirm("Are you sure you want to close this collection today?")) {
         const { error } = await supabase
             .from("collections")
             .update({ end_date: currentDateFormatted })
@@ -230,36 +226,13 @@ async function updateViewMode(e) {
     <AuthenticatedLayout>
         <div class="max-w-4xl">
             <div
-                class="
-                    flex flex-col
-                    lg:flex-row
-                    space-y-6
-                    lg:space-y-0
-                    items-end
-                    lg:items-center
-                    justify-between
-                    mb-8
-                "
+                class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 items-end lg:items-center justify-between mb-8"
             >
-                <div
-                    class="
-                        flex flex-col
-                        lg:flex-row
-                        w-full
-                        space-y-2
-                        lg:space-y-0
-                    "
-                >
-                    <div
-                        class="
-                            flex
-                            justify-between
-                            items-center
-                            w-full
-                            lg:w-auto
-                        "
-                    >
-                        <BaseHeading size="h4" tag="h1"
+                <div class="flex flex-col lg:flex-row w-full space-y-2 lg:space-y-0">
+                    <div class="flex justify-between items-center w-full lg:w-auto">
+                        <BaseHeading
+                            size="h4"
+                            tag="h1"
                             >Collections</BaseHeading
                         >
 
@@ -274,17 +247,7 @@ async function updateViewMode(e) {
                     </div>
 
                     <div
-                        class="
-                            bg-white
-                            rounded-full
-                            px-4
-                            py-2
-                            shadow-inner
-                            flex
-                            space-x-6
-                            text-sm
-                            lg:ml-6
-                        "
+                        class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6"
                     >
                         <!-- <div class="flex space-x-2 items-center text-sm">
                         <p class="text-blue-500">Message</p>
@@ -298,13 +261,7 @@ async function updateViewMode(e) {
                     </div> -->
 
                         <button
-                            class="
-                                flex
-                                space-x-1
-                                text-red-500
-                                opacity-75
-                                hover:opacity-100
-                            "
+                            class="flex space-x-1 text-red-500 opacity-75 hover:opacity-100"
                             @click="deleteCollection"
                         >
                             <IconDelete class="h-4 w-4 mr-2" />
@@ -329,17 +286,7 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <div
-                        class="
-                            absolute
-                            top-0
-                            right-0
-                            flex
-                            justify-center
-                            items-center
-                            -mt-4
-                        "
-                    >
+                    <div class="absolute top-0 right-0 flex justify-center items-center -mt-4">
                         <KeywordSearch
                             class="flex mr-4"
                             v-model="searchPhrase"
@@ -363,18 +310,7 @@ async function updateViewMode(e) {
 
                 <input
                     ref="search"
-                    class="
-                        lg:hidden
-                        py-2
-                        px-4
-                        border border-gray-300
-                        rounded-full
-                        h-[34px]
-                        w-full
-                        bg-transparent
-                        focus:bg-white
-                        focus:border-gray-500
-                    "
+                    class="lg:hidden py-2 px-4 border border-gray-300 rounded-full h-[34px] w-full bg-transparent focus:bg-white focus:border-gray-500"
                     type="text"
                     placeholder="Search"
                     v-model="searchPhrase"
@@ -383,18 +319,7 @@ async function updateViewMode(e) {
 
             <div>
                 <div
-                    class="
-                        grid grid-cols-6
-                        px-5
-                        gap-2
-                        py-3
-                        lg:px-8
-                        text-sm
-                        lg:text-base
-                        lg:py-4
-                        opacity-40
-                        mb-4
-                    "
+                    class="grid grid-cols-6 px-5 gap-2 py-3 lg:px-8 text-sm lg:text-base lg:py-4 opacity-40 mb-4"
                 >
                     <p class="col-span-2">Name</p>
                     <p class="col-span-2">Email</p>
@@ -418,9 +343,7 @@ async function updateViewMode(e) {
                         >
                             Uh oh!
                         </BaseHeading>
-                        <BaseText>
-                            Looks like we couldn't find anything.
-                        </BaseText>
+                        <BaseText> Looks like we couldn't find anything. </BaseText>
                         <BaseText size="small">Check for typos!</BaseText>
                     </div>
 

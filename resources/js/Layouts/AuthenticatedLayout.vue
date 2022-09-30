@@ -163,7 +163,7 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group py-0.5" href="/">
+                                <BaseLink class="group py-0.5" href="/inbox">
                                     <template #icon>
                                         <IconInbox
                                             :class="
@@ -175,7 +175,6 @@ const showingNavigationDropdown = ref(false);
                                             "
                                             class="
                                                 text-gray-200
-                                                group-hover:text-gray-300
                                                 w-3
                                                 lg:w-5
                                                 h-3
@@ -202,7 +201,6 @@ const showingNavigationDropdown = ref(false);
                                             "
                                             class="
                                                 text-gray-200
-                                                group-hover:text-gray-300
                                                 w-3
                                                 lg:w-5
                                                 h-3
@@ -226,7 +224,6 @@ const showingNavigationDropdown = ref(false);
                                             "
                                             class="
                                                 text-gray-200
-                                                group-hover:text-gray-300
                                                 w-3
                                                 lg:w-5
                                                 h-3

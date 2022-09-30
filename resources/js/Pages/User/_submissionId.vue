@@ -1,13 +1,6 @@
 <script setup>
 // utils
-import {
-    onBeforeMount,
-    onMounted,
-    ref,
-    nextTick,
-    reactive,
-    computed,
-} from "vue";
+import { onBeforeMount, onMounted, ref, nextTick, reactive, computed } from "vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { storeToRefs } from "pinia";
@@ -96,10 +89,7 @@ async function applyTag(tagId) {
 }
 
 async function deleteTag(relationId) {
-    const { error } = await supabase
-        .from("tag_relations")
-        .delete()
-        .match({ id: relationId });
+    const { error } = await supabase.from("tag_relations").delete().match({ id: relationId });
 
     if (error) {
         alert("Oops! Something went wrong. Please try again.");
@@ -198,15 +188,9 @@ async function deleteSubmission() {
             "Are you sure you want to delete this submission? This is an irreversible action."
         )
     ) {
-        await supabase
-            .from("submission-uploads")
-            .delete()
-            .match({ submission_id: submissionId });
+        await supabase.from("submission-uploads").delete().match({ submission_id: submissionId });
 
-        const { error } = await supabase
-            .from("submissions")
-            .delete()
-            .match({ id: submissionId });
+        const { error } = await supabase.from("submissions").delete().match({ id: submissionId });
 
         if (error) {
             alert(error.message);
@@ -322,7 +306,11 @@ async function declineSubmission() {
         <div class="max-w-4xl">
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-baseline">
-                    <BaseHeading size="h4" tag="h1">Collections</BaseHeading>
+                    <BaseHeading
+                        size="h4"
+                        tag="h1"
+                        >Collections</BaseHeading
+                    >
 
                     <Link
                         class="ml-6 opacity-60"
@@ -339,17 +327,29 @@ async function declineSubmission() {
                 <!-- left side -->
                 <div class="text-sm w-44 flex flex-col space-y-5">
                     <div>
-                        <BaseHeading size="h5" tag="h2">Name</BaseHeading>
+                        <BaseHeading
+                            size="h5"
+                            tag="h2"
+                            >Name</BaseHeading
+                        >
                         <p>{{ submission.name }}</p>
                     </div>
 
                     <div>
-                        <BaseHeading size="h5" tag="h2">Email</BaseHeading>
+                        <BaseHeading
+                            size="h5"
+                            tag="h2"
+                            >Email</BaseHeading
+                        >
                         <p>{{ submission.email }}</p>
                     </div>
 
                     <div>
-                        <BaseHeading size="h5" tag="h2">Phone</BaseHeading>
+                        <BaseHeading
+                            size="h5"
+                            tag="h2"
+                            >Phone</BaseHeading
+                        >
                         <p>{{ submission.phone }}</p>
                     </div>
 
@@ -367,14 +367,7 @@ async function declineSubmission() {
                                 />
 
                                 <button
-                                    class="
-                                        bg-green-100
-                                        text-green-700
-                                        p-1
-                                        rounded-full
-                                        mt-2
-                                        ml-auto
-                                    "
+                                    class="bg-green-100 text-green-700 p-1 rounded-full mt-2 ml-auto"
                                     v-if="newTag.length > 0 && isUnique"
                                     @click="createTag"
                                 >
@@ -409,31 +402,17 @@ async function declineSubmission() {
                                 :key="tag.id"
                             >
                                 <div
-                                    class="
-                                        bg-gray-50
-                                        py-1
-                                        px-3
-                                        rounded-full
-                                        flex
-                                        space-x-2
-                                        items-center
-                                    "
+                                    class="bg-gray-50 py-1 px-3 rounded-full flex space-x-2 items-center"
                                 >
                                     <span>
                                         {{ tag.label }}
                                     </span>
 
                                     <button
-                                        class="
-                                            border border-gray-400
-                                            rounded-full
-                                            p-0.5
-                                        "
+                                        class="border border-gray-400 rounded-full p-0.5"
                                         @click="deleteTag(tag.relation_id)"
                                     >
-                                        <span class="sr-only"
-                                            >Delete tag {{ tag.label }}</span
-                                        >
+                                        <span class="sr-only">Delete tag {{ tag.label }}</span>
                                         <IconClose class="h-3 w-3" />
                                     </button>
                                 </div>
@@ -448,11 +427,7 @@ async function declineSubmission() {
                     >
                         <IconHeart
                             class="h-5 w-5 mr-2 -mt-px"
-                            :class="
-                                submission.saved
-                                    ? 'text-red-500'
-                                    : 'text-gray-300'
-                            "
+                            :class="submission.saved ? 'text-red-500' : 'text-gray-300'"
                         />
                         <span v-if="!submission.saved">Save</span>
                         <span v-else>Saved</span>
@@ -462,19 +437,8 @@ async function declineSubmission() {
 
                     <a
                         :href="`mailto:${submission.email}`"
-                        class="
-                            py-0.5
-                            border-2 border-green-500
-                            hover:bg-green-500
-                            hover:text-white
-                            text-center
-                            rounded-md
-                        "
-                        :class="
-                            submission.booked
-                                ? 'opacity-50 pointer-events-none'
-                                : ''
-                        "
+                        class="py-0.5 border-2 border-green-500 hover:bg-green-500 hover:text-white text-center rounded-md"
+                        :class="submission.booked ? 'opacity-50 pointer-events-none' : ''"
                         :disabled="submission.booked"
                     >
                         Reply
@@ -482,17 +446,8 @@ async function declineSubmission() {
 
                     <button
                         type="button"
-                        class="
-                            py-0.5
-                            border-2 border-blue-500
-                            hover:bg-blue-500
-                            hover:text-white
-                            text-center
-                            rounded-md
-                        "
-                        :class="`${
-                            submission.booked ? 'bg-blue-500 text-white' : ''
-                        }`"
+                        class="py-0.5 border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-center rounded-md"
+                        :class="`${submission.booked ? 'bg-blue-500 text-white' : ''}`"
                         @click="markAsBooked"
                         :disabled="submission.is_declined"
                     >
@@ -502,30 +457,20 @@ async function declineSubmission() {
 
                     <div class="relative">
                         <p class="text-xs opacity-50 mb-3">
-                            Automatically sends an email notifying your client
-                            they won't be selected this round.
+                            Automatically sends an email notifying your client they won't be
+                            selected this round.
                         </p>
                         <button
                             type="button"
-                            class="
-                                py-0.5
-                                border-2 border-gray-300
-                                text-center
-                                rounded-md
-                                w-full
-                                mb-6
-                            "
+                            class="py-0.5 border-2 border-gray-300 text-center rounded-md w-full mb-6"
                             :class="{
-                                'hover:border-gray-400':
-                                    !submission.is_declined,
+                                'hover:border-gray-400': !submission.is_declined,
                             }"
                             @click="declineSubmission"
                             :disabled="submission.is_declined || isSubmitting"
                         >
                             <span v-if="isSubmitting">Sending...</span>
-                            <span v-else-if="submission.is_declined"
-                                >Declined</span
-                            >
+                            <span v-else-if="submission.is_declined">Declined</span>
                             <span v-else>Decline</span>
                         </button>
                         <p
@@ -549,11 +494,15 @@ async function declineSubmission() {
 
                 <!-- right side -->
                 <div class="order-first lg:order-last lg:w-3/4">
-                    <div
-                        class="card-shadow bg-white p-8 lg:p-12 rounded-lg mb-8"
-                    >
-                        <div class="flex justify-between" items-center>
-                            <BaseHeading size="h5" tag="h2" class="mb-5"
+                    <div class="card-shadow bg-white p-8 lg:p-12 rounded-lg mb-8">
+                        <div
+                            class="flex justify-between"
+                            items-center
+                        >
+                            <BaseHeading
+                                size="h5"
+                                tag="h2"
+                                class="mb-5"
                                 >Message</BaseHeading
                             >
 
@@ -597,35 +546,33 @@ async function declineSubmission() {
                                 </button>
                             </div>
                         </div>
-                        <div class="richtext" v-html="submission.message" />
+                        <div
+                            class="richtext"
+                            v-html="submission.message"
+                        />
                     </div>
 
                     <div
                         v-if="images.length > 0"
                         class="card-shadow bg-white p-8 lg:p-12 rounded-lg"
                     >
-                        <BaseHeading size="h5" tag="h2" class="mb-5">
+                        <BaseHeading
+                            size="h5"
+                            tag="h2"
+                            class="mb-5"
+                        >
                             Reference media
                         </BaseHeading>
 
-                        <ul
-                            class="
-                                grid grid-cols-2
-                                lg:grid-cols-4
-                                gap-4
-                                lg:gap-8
-                            "
-                        >
-                            <li v-for="(image, index) in images" :key="index">
+                        <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+                            <li
+                                v-for="(image, index) in images"
+                                :key="index"
+                            >
                                 <BaseModal>
                                     <template #button>
                                         <BaseImage
-                                            class="
-                                                img-list
-                                                hover:scale-150
-                                                ease-in-out
-                                                transform
-                                            "
+                                            class="img-list hover:scale-150 ease-in-out transform"
                                             :src="image"
                                             alt="Img thumbnail"
                                         />

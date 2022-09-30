@@ -1,6 +1,5 @@
 <script>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-
 export default {
     layout: AuthenticatedLayout,
 };
@@ -13,14 +12,16 @@ import { Head } from "@inertiajs/inertia-vue3";
 
 // components
 import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseSelect from "@/components/base/BaseSelect.vue";
 import BaseText from "@/components/base/BaseText.vue";
-import BaseCheckboxToggle from "@/components/base/BaseCheckboxToggle.vue";
-import SubmissionCard from "@/components/dashboard/SubmissionCard.vue";
-import SubmissionCardLarge from "@/components/dashboard/SubmissionCardLarge.vue";
-import KeywordSearch from "@/components/dashboard/KeywordSearch.vue";
-import IconSearch from "@/components/svg/IconSearch.vue";
+import BaseChecboxToggle from "@/components/base/BaseCheckboxToggle.vue";
 import CopyShareLink from "@/components/dashboard/CopyShareLink.vue";
+import SubmissionCardLarge from "@/components/dashboard/SubmissionCardLarge.vue";
+import SubmissionCard from "@/components/dashboard/SubmissionCard.vue";
+import KeywordSearch from "@/components/dashboard/KeywordSearch.vue";
+import BaseSelect from "@/components/base/BaseSelect.vue";
+
+const searchPhrase = ref(null);
+const filterWord = ref(null);
 
 const props = defineProps({
     submissions: {
@@ -33,16 +34,13 @@ const props = defineProps({
  * Filter through submissions
  */
 
-const searchPhrase = ref(null);
-const filterWord = ref(null);
-
 const filteredSubmissions = computed(() => {
     let likedSubmissions = [];
     let midSubmissions = [];
     let dislikedSubmissions = [];
     let declinedSubmissions = [];
 
-    props?.submissions.filter((submission) => {
+    props.submissions.filter((submission) => {
         if (submission.is_declined) declinedSubmissions.push(submission);
         if (submission.is_liked === -1 && !submission.is_declined)
             dislikedSubmissions.push(submission);
@@ -58,34 +56,96 @@ const filteredSubmissions = computed(() => {
     ];
 
     return sortedSubmissions.filter((submission) => {
-        if (searchPhrase.value === null) return submission;
-        const filter = searchPhrase.value.toLowerCase();
+        let matched = false;
 
-        const email = submission.email?.toLowerCase();
-        const name = submission.name?.toLowerCase();
-        const message = submission.message?.toLowerCase();
+        if (
+            (searchPhrase.value === null || searchPhrase.value === "") &&
+            (filterWord.value === null || filterWord.value === "null")
+        )
+            return submission;
 
         if (
             searchPhrase.value !== null &&
-            (email.includes(filter) ||
-                name.includes(filter) ||
-                message.includes(filter) ||
-                submission.phone.includes(filter))
-        )
-            return submission;
+            (filterWord.value === null || filterWord.value === "null")
+        ) {
+            const search = searchPhrase.value.toLowerCase();
+
+            const email = submission.email?.toLowerCase();
+            const name = submission.name?.toLowerCase();
+            const message = submission.message?.toLowerCase();
+
+            if (
+                email.includes(search) ||
+                name.includes(search) ||
+                message.includes(search) ||
+                submission.phone.includes(search)
+            ) {
+                matched = true;
+            }
+        }
+
+        if (
+            filterWord.value !== null &&
+            (searchPhrase.value === null || searchPhrase.value === "")
+        ) {
+            const filter = filterWord.value.toLowerCase();
+            const email = submission.email?.toLowerCase();
+            const name = submission.name?.toLowerCase();
+            const message = submission.message?.toLowerCase();
+
+            submission.tags.filter((tag) => {
+                const label = tag.label.toLowerCase();
+                if (label.includes(filter)) matched = true;
+            });
+        }
+
+        if (
+            (filterWord.value !== null || filterWord.value !== "null") &&
+            (searchPhrase.value !== null || searchPhrase.value !== "")
+        ) {
+            const search = searchPhrase?.value?.toLowerCase();
+            const filter = filterWord?.value?.toLowerCase();
+
+            const email = submission.email?.toLowerCase();
+            const name = submission.name?.toLowerCase();
+            const message = submission.message?.toLowerCase();
+
+            submission.tags.filter((tag) => {
+                const label = tag.label.toLowerCase();
+                if (
+                    label.includes(filter) &&
+                    (email.includes(search) ||
+                        name.includes(search) ||
+                        message.includes(search) ||
+                        submission.phone.includes(search))
+                )
+                    matched = true;
+            });
+        }
+
+        if (matched) return submission;
     });
 });
+
+async function updateViewMode(e) {
+    if (window.confirm("Would you like to set this as your default view?")) {
+        const { error } = await supabase
+            .from("profiles")
+            .update({ default_view: e })
+            .match({ id: currentUser.id });
+    }
+}
 </script>
 
 <template>
-    <Head title="Favorites" />
+    <Head title="Inbox" />
     <div class="max-w-4xl">
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center">
                 <BaseHeading
                     size="h4"
                     tag="h1"
-                    >Favorites</BaseHeading
+                    >Inbox</BaseHeading
                 >
 
                 <div
@@ -93,7 +153,7 @@ const filteredSubmissions = computed(() => {
                 >
                     <!-- <div class="flex space-x-2 items-center text-sm">
                         <p class="text-blue-500">Message</p>
-                        <BaseCheckboxToggle
+                        <BaseChecboxToggle
                             id="`viewMode`"
                             v-model:checked="currentUser.default_view"
                             :modelValue="currentUser.default_view"
@@ -151,7 +211,8 @@ const filteredSubmissions = computed(() => {
 
             <div class="flex flex-col space-y-6">
                 <div v-if="!submissions.length">
-                    <p class="mb-5">No saved submissions</p>
+                    <p class="mb-5">No submissions yet! Share that link!</p>
+                    <CopyShareLink />
                 </div>
 
                 <div v-else-if="!filteredSubmissions.length">
@@ -195,7 +256,7 @@ const filteredSubmissions = computed(() => {
             </div>
 
             <div class="flex flex-col space-y-8">
-                <div v-if="!savedSubmissions.length">
+                <div v-if="!allSubmissions.length">
                     <p class="mb-5">No submissions yet! Share that link!</p>
                     <CopyShareLink />
                 </div>

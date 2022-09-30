@@ -36,5 +36,6 @@ Route::inertia('privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
 Route::resource('collections', CollectionController::class)->only(['index', 'store', 'show'])->middleware(['auth', 'verified']);
 Route::resource('collections.submissions', SubmissionController::class)->only(['show'])->middleware(['auth', 'verified']);
 Route::get('favorites', [SubmissionController::class, 'favorites'])->middleware(['auth', 'verified']);
+Route::get('inbox', [SubmissionController::class, 'inbox'])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
