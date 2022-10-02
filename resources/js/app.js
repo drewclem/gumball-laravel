@@ -7,7 +7,6 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import { createPinia } from "pinia";
 import piniaPersist from "pinia-plugin-persist";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -16,7 +15,7 @@ const pinia = createPinia();
 pinia.use(piniaPersist);
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => `${title} | Heygumball`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,

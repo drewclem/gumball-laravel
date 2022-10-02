@@ -34,7 +34,7 @@ function formatDate(date) {
         class="relative flex w-full items-center"
     >
         <div
-            v-if="!submission.is_viewed"
+            v-if="!submission.has_viewed"
             class="absolute rounded-full bg-red-500 w-2 h-2 ml-3"
         />
         <div

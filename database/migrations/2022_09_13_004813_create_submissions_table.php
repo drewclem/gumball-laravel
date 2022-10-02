@@ -24,11 +24,11 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->mediumText('message');
-            $table->boolean('has_viewed');
-            $table->boolean('is_saved');
-            $table->boolean('is_booked');
-            $table->boolean('is_liked');
-            $table->boolean('is_declined');
+            $table->boolean('has_viewed')->default(false);
+            $table->boolean('is_saved')->default(false);
+            $table->boolean('is_booked')->default(false);
+            $table->boolean('is_liked')->default(false);
+            $table->boolean('is_declined')->default(false);
         });
     }
 

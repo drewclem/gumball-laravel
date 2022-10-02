@@ -15,7 +15,8 @@ import {
     reactive,
     computed,
 } from "vue";
-import { Head } from "@inertiajs/inertia-vue3";
+import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 import { storeToRefs } from "pinia";
 
 // components
@@ -114,113 +115,40 @@ async function deleteTag(relationId) {
     }
 }
 
+const setHasViewed = () => {
+    Inertia.put(route("submission.markViewed", props.submission));
+};
+
+if (!props.submission.has_viewed) setHasViewed();
+
 // toggle saving the submission
-async function saveSubmission() {
-    const { error } = await supabase
-        .from("submissions")
-        .update({ saved: !submission.value.saved })
-        .match({ id: submission.value.id });
+const favorite = useForm({
+    is_saved: !props.submission.is_saved,
+});
 
-    if (error) {
-        alert("Oops! Something went wrong.");
-    }
+const toggleFavorite = () => {
+    favorite.post(route("submission.favorite", props.submission));
+};
 
-    await fetchSubmission();
-    await setCollections();
-    await setSavedSubmissions();
-}
-
-async function dislikeSubmission() {
-    if (submission.value.is_liked !== -1) {
-        const { error } = await supabase
-            .from("submissions")
-            .update({ is_liked: -1 })
-            .match({ id: submission.value.id });
-
-        if (error) {
-            alert("Oops! Something went wrong.");
-        }
-    } else {
-        const { error } = await supabase
-            .from("submissions")
-            .update({ is_liked: 0 })
-            .match({ id: submission.value.id });
-
-        if (error) {
-            alert("Oops! Something went wrong.");
-        }
-    }
-
-    await fetchSubmission();
-    await setCollections();
-    await setSavedSubmissions();
-}
-
-async function likeSubmission() {
-    if (submission.value.is_liked !== 1) {
-        const { error } = await supabase
-            .from("submissions")
-            .update({ is_liked: 1 })
-            .match({ id: submission.value.id });
-
-        if (error) {
-            alert("Oops! Something went wrong.");
-        }
-    } else {
-        const { error } = await supabase
-            .from("submissions")
-            .update({ is_liked: 0 })
-            .match({ id: submission.value.id });
-
-        if (error) {
-            alert("Oops! Something went wrong.");
-        }
-    }
-
-    await fetchSubmission();
-    await setCollections();
-    await setSavedSubmissions();
-}
 // toggle saving the submission
-async function markAsBooked() {
-    const { error } = await supabase
-        .from("submissions")
-        .update({ booked: !submission.value.booked })
-        .match({ id: submissionId });
+const book = useForm({
+    is_booked: !props.submission.is_booked,
+});
 
-    if (error) {
-        alert("Oops! Something went wrong.");
-    }
+const toggleBooked = () => {
+    book.post(route("submission.book", props.submission));
+};
 
-    await fetchSubmission();
-    await setCollections();
-    await setSavedSubmissions();
-}
+async function dislikeSubmission() {}
+
+async function likeSubmission() {}
+// toggle saving the submission
+async function markAsBooked() {}
 
 // delete submission
-async function deleteSubmission() {
-    if (
-        window.confirm(
-            "Are you sure you want to delete this submission? This is an irreversible action."
-        )
-    ) {
-        await supabase
-            .from("submission-uploads")
-            .delete()
-            .match({ submission_id: submissionId });
-
-        const { error } = await supabase
-            .from("submissions")
-            .delete()
-            .match({ id: submissionId });
-
-        if (error) {
-            alert(error.message);
-        } else {
-            router.back();
-        }
-    }
-}
+const deleteSubmission = () => {
+    Inertia.delete(route("submission.delete", props.submission));
+};
 
 /**
  * Submission images
@@ -366,7 +294,7 @@ async function declineSubmission() {
                             <li>
                                 <input
                                     type="text"
-                                    class="p-2"
+                                    class="p-2 border-none"
                                     placeholder="Add a tag"
                                     v-model="newTag"
                                     @focus="showAllTags = true"
@@ -428,22 +356,24 @@ async function declineSubmission() {
                         </ul>
                     </div>
 
-                    <button
-                        class="flex text-base"
-                        @click="saveSubmission"
-                        :disabled="submission.is_declined"
-                    >
-                        <IconHeart
-                            class="h-5 w-5 mr-2 -mt-px"
-                            :class="
-                                submission.saved
-                                    ? 'text-red-500'
-                                    : 'text-gray-300'
-                            "
-                        />
-                        <span v-if="!submission.saved">Save</span>
-                        <span v-else>Saved</span>
-                    </button>
+                    <form @submit.prevent="toggleFavorite">
+                        <button
+                            class="flex text-base"
+                            type="submit"
+                            :disabled="submission.is_declined"
+                        >
+                            <IconHeart
+                                class="h-5 w-5 mr-2 -mt-px"
+                                :class="
+                                    submission.is_saved
+                                        ? 'text-red-500'
+                                        : 'text-gray-300'
+                                "
+                            />
+                            <span v-if="!submission.is_saved">Favorite</span>
+                            <span v-else>Favorited</span>
+                        </button>
+                    </form>
 
                     <hr />
 
@@ -460,18 +390,25 @@ async function declineSubmission() {
                         Reply
                     </a>
 
-                    <button
-                        type="button"
-                        class="py-0.5 border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-center rounded-md"
-                        :class="`${
-                            submission.booked ? 'bg-blue-500 text-white' : ''
-                        }`"
-                        @click="markAsBooked"
-                        :disabled="submission.is_declined"
+                    <form
+                        class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-center rounded-md"
+                        @submit.prevent="toggleBooked"
                     >
-                        <span v-if="!submission.booked">Mark as booked</span>
-                        <span v-else>Booked</span>
-                    </button>
+                        <button
+                            type="submit"
+                            :class="`${
+                                submission.is_booked
+                                    ? 'bg-blue-500 text-white'
+                                    : ''
+                            } h-full w-full py-1`"
+                            :disabled="submission.is_declined"
+                        >
+                            <span v-if="!submission.is_booked"
+                                >Mark as booked</span
+                            >
+                            <span v-else>Booked</span>
+                        </button>
+                    </form>
 
                     <div class="relative">
                         <p class="text-xs opacity-50 mb-3">

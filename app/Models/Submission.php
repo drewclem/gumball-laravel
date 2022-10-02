@@ -9,6 +9,20 @@ class Submission extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'collection_id',
+        'user_id',
+        'name',
+        'email',
+        'phone',
+        'message',
+        'has_viewed',
+        'is_saved',
+        'is_declined',
+        'is_booked',
+        'is_liked'
+    ];
+
     public function collection() {
         return $this->hasOne(Collection::class);
     }

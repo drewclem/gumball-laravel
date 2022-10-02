@@ -29,7 +29,7 @@ function incrementStep() {
 }
 
 const submit = () => {
-    form.post(route("collection"), {
+    form.post(route("collections.store"), {
         onFinish: () => (state.step = 3),
     });
 };
