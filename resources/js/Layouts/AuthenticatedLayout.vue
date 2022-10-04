@@ -55,17 +55,12 @@ const showingNavigationDropdown = ref(false);
                         <BaseModal>
                             <template #button>
                                 <div
-                                    class="flex items-center group px-3 lg:px-6 py-0.5 font-display text-center rounded-md border-2 border-transparent transition duration-150 ease-in-out border-blue-500 text-black hover:bg-blue-500 hover:text-white mb-2"
+                                    class="flex items-center px-3 lg:px-6 py-0.5 font-display text-xs lg:text-base text-center rounded-md border-2 border-transparent transition duration-150 ease-in-out border-blue-500 text-black group-hover:bg-blue-500 group-hover:text-white mb-2"
                                 >
                                     <IconLock
                                         class="text-blue-500 group-hover:text-white w-3 lg:w-5 h-3 lg:h-5 opacity-50 mr-2"
                                     />
-                                    <span class="text-xs lg:text-base">
-                                        Open
-                                        <span class="hidden lg:inline-block">
-                                            collection
-                                        </span>
-                                    </span>
+                                    Open collection
                                 </div>
                             </template>
 

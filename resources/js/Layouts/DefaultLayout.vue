@@ -19,7 +19,7 @@ import BaseButton from "@/Components/base/BaseButton.vue";
                 <div class="flex flex-col items-end">
                     <template v-if="$page.props.auth.user">
                         <Link href="collections">{{
-                            $page.props.auth.user.name
+                            $page.props.auth.user.username
                         }}</Link>
                     </template>
 

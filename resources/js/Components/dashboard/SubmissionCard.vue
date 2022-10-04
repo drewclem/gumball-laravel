@@ -31,7 +31,7 @@ function formatDate(date) {
 <template>
     <Link
         :href="`/collections/${submission.collection_id}/submissions/${submission.id}`"
-        class="relative flex w-full items-center"
+        class="relative flex w-full items-center transform hover:scale-[102%] transition"
     >
         <div
             v-if="!submission.has_viewed"

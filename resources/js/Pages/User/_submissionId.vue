@@ -7,17 +7,9 @@ export default {
 
 <script setup>
 // utils
-import {
-    onBeforeMount,
-    onMounted,
-    ref,
-    nextTick,
-    reactive,
-    computed,
-} from "vue";
+import { ref } from "vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
-import { storeToRefs } from "pinia";
 
 // components
 import BaseHeading from "@/components/base/BaseHeading.vue";
@@ -142,8 +134,6 @@ const toggleBooked = () => {
 async function dislikeSubmission() {}
 
 async function likeSubmission() {}
-// toggle saving the submission
-async function markAsBooked() {}
 
 // delete submission
 const deleteSubmission = () => {
@@ -227,26 +217,6 @@ async function declineSubmission() {
     await setCollections();
     await setSavedSubmissions();
 }
-
-// onBeforeMount(async () => {
-//     await fetchSubmission();
-
-//     // update submission when viewed for the first time
-//     if (!submission?.value?.viewed) {
-//         const { error } = await supabase
-//             .from("submissions")
-//             .update({ viewed: true })
-//             .match({ id: submissionId });
-
-//         if (error) {
-//             alert("Oops! Something went wrong.");
-//         }
-//     }
-// });
-
-// onMounted(() => {
-//     retrieveImages();
-// });
 </script>
 
 <template>

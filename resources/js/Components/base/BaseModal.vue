@@ -1,6 +1,6 @@
 <template>
     <button
-        class="open-button"
+        class="open-button group"
         @click="openModal"
         ref="openButtonRef"
         type="button"
