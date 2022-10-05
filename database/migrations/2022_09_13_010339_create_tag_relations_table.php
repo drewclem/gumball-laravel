@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tags_relations', function (Blueprint $table) {
+        Schema::create('tag_relations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('tag_id');

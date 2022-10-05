@@ -5,5 +5,6 @@ use App\Http\Controllers\SubmissionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function() {
-  Route::post('collection', [CollectionController::class, 'store'])->name('collection');
+  Route::resource('collections.submissions', SubmissionController::class)->only(['show', 'update', 'favorite']);
+  Route::resource('collections', CollectionController::class)->only(['index', 'store', 'show']);
 });

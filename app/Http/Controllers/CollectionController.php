@@ -11,11 +11,11 @@ class CollectionController extends Controller
     public function index() {
 
         $collections = Collection::withCount(['submissions', 'booked'])->where('user_id', auth()->id())->orderBy('start_date', 'desc')->get();
-        $active = Collection::active()->withCount(['submissions', 'booked'])->get();
+        $active = Collection::active()->withCount(['submissions', 'booked'])->where('user_id', auth()->id())->get();
 
         return Inertia::render('User/Collections', [
             'collections' => $collections,
-            'active' => $active[0],
+            'active' => $active,
         ]);
     }
 

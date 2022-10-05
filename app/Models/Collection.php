@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class Collection extends Model
 {
@@ -35,7 +34,6 @@ class Collection extends Model
     public function scopeActive() {
         $current_date = Carbon::now()->toDateTimeString();
         
-        // $active = DB::table('collections')->whereRaw('? between start_date and end_date', [$current_date])->get();
         $active = Collection::whereRaw('? between start_date and end_date', [$current_date]);
 
         return $active;

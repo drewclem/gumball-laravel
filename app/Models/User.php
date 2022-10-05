@@ -45,11 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function collections() {
-        return $this->hasMany(Collection::class);
-    }
-
-    public function tags() {
-        return $this->hasMany(Tag::class);
+    public function scopeTags() {
+        return $this->hasMany(Tag::class)->where('user_id', auth()->id());
     }
 }

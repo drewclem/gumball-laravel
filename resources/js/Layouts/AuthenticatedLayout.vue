@@ -130,7 +130,7 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group py-0.5" href="/">
+                                <BaseLink class="group py-0.5" href="/tags">
                                     <template #icon>
                                         <IconTag
                                             :class="

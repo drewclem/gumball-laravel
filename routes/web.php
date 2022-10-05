@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubmissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,15 +31,11 @@ Route::inertia('create-account', 'Auth/CreateAccount')->name('create-account');
 Route::inertia('terms-of-service', 'TermsAndConditions')->name('terms-of-service');
 Route::inertia('privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
 
-Route::resource('collections.submissions', SubmissionController::class)->only(['show', 'update', 'favorite'])->middleware(['auth', 'verified']);
-Route::resource('collections', CollectionController::class)->only(['index', 'store', 'show'])->middleware(['auth', 'verified']);
-
-Route::post('submission/favorite/{submission}', [SubmissionController::class, 'favorite'])->middleware(['auth', 'verified'])->name('submission.favorite');
-Route::post('submission/book/{submission}', [SubmissionController::class, 'book'])->middleware(['auth', 'verified'])->name('submission.book');
-Route::put('submission/markViewed/{submission}', [SubmissionController::class, 'markViewed'])->middleware(['auth', 'verified'])->name('submission.markViewed');
-Route::delete('submission/delete/{submission}', [SubmissionController::class, 'delete'])->middleware(['auth', 'verified'])->name('submission.delete');
-
 Route::get('favorites', [SubmissionController::class, 'showFavorites'])->middleware(['auth', 'verified'])->name('favorites');
 Route::get('inbox', [SubmissionController::class, 'inbox'])->middleware(['auth', 'verified'])->name('inbox');
 
+Route::get('tags', [TagController::class, 'index'])->middleware(['auth', 'verified'])->name('tags');
+
+require __DIR__.'/submission.php';
+require __DIR__.'/collection.php';
 require __DIR__.'/auth.php';

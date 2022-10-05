@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
+
+    public function usage() {
+        return $this->hasMany(TagRelation::class);
+    }
 }
