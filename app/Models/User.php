@@ -48,4 +48,9 @@ class User extends Authenticatable
     public function scopeTags() {
         return $this->hasMany(Tag::class)->where('user_id', auth()->id());
     }
+
+    public function scopeAvailDates() {
+        $dates = [];
+        return $dates;
+    }
 }

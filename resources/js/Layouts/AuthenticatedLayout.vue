@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 import DashboardHeader from "@/Components/global/DashboardHeader.vue";
 import BaseLink from "@/Components/base/BaseLink.vue";
@@ -17,7 +17,22 @@ import IconUser from "@/Components/svg/IconUser.vue";
 import IconSchedule from "@/Components/svg/IconSchedule.vue";
 import IconLock from "@/Components/svg/IconLock.vue";
 
-const showingNavigationDropdown = ref(false);
+const props = defineProps({
+    unavail_dates: {
+        type: Array,
+    },
+    global_active: {
+        type: Array,
+    },
+});
+
+const hasActive = computed(() => props.global_active.length > 0);
+
+const disabledDates = computed(() => {
+    const datesArray = props.unavail_dates.map((date) => new Date(date));
+
+    return datesArray;
+});
 </script>
 
 <template>
@@ -48,11 +63,13 @@ const showingNavigationDropdown = ref(false);
                             </template>
 
                             <template #content>
-                                <ScheduleCollection />
+                                <ScheduleCollection
+                                    :disabled-dates="disabledDates"
+                                />
                             </template>
                         </BaseModal>
 
-                        <BaseModal>
+                        <BaseModal :disabled="hasActive">
                             <template #button>
                                 <div
                                     class="flex items-center px-3 lg:px-6 py-0.5 font-display text-xs lg:text-base text-center rounded-md border-2 border-transparent transition duration-150 ease-in-out border-blue-500 text-black group-hover:bg-blue-500 group-hover:text-white mb-2"
@@ -147,7 +164,10 @@ const showingNavigationDropdown = ref(false);
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink class="group py-0.5" href="/">
+                                <BaseLink
+                                    class="group py-0.5"
+                                    :href="`/${$page.props.auth.user.username}`"
+                                >
                                     <template #icon>
                                         <IconForm
                                             class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5"

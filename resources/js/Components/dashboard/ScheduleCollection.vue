@@ -12,6 +12,12 @@ import IconArrowLeft from "@/Components/svg/IconArrowLeft.vue";
 import Datepicker from "vue3-datepicker";
 import CopyShareLink from "@/Components/dashboard/CopyShareLink.vue";
 
+const props = defineProps({
+    disabledDates: {
+        type: Array,
+    },
+});
+
 const state = reactive({
     step: 0,
 });
@@ -51,7 +57,7 @@ const submit = () => {
                         class="mb-6"
                         v-model="form.start_date"
                         :lower-limit="currentDate"
-                        :disabled-dates="disabledDates"
+                        :disabled-dates="{ dates: props.disabledDates }"
                     />
                 </div>
 
@@ -61,7 +67,7 @@ const submit = () => {
                         class="mb-6"
                         v-model="form.end_date"
                         :lower-limit="tomorrowDate"
-                        :disabled-dates="disabledDates"
+                        :disabled-dates="{ dates: props.disabledDates }"
                     />
                 </div>
             </div>
