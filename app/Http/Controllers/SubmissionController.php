@@ -39,24 +39,54 @@ class SubmissionController extends Controller
     }
     
     // Toggle whether the submission is favorited or not
-    public function favorite(Request $request, Submission $submission) {
-        $submission->update([
-            'is_saved' => $request->is_saved
-        ]);
-
-        return redirect()->back();
-
+    public function favorite(Submission $submission) {
+        if($submission->is_saved === 0){
+            $submission->update([
+                'is_saved' => 1
+            ]);
+        } else {
+            $submission->update([
+                'is_saved' => 0
+            ]);
+        }
     }
 
     // Mark submission as booked
     public function book(Request $request, Submission $submission) {
 
-        $submission->update([
-            'is_booked' => $request->is_booked
-        ]);
+        if($submission->is_booked === 0){
+            $submission->update([
+                'is_booked' => 1
+            ]);
+        } else {
+            $submission->update([
+                'is_booked' => 0
+            ]);
+        }
+    }
 
-        return redirect()->back();
+    public function like(Submission $submission) {
+        if($submission->is_liked === 0){
+            $submission->update([
+                'is_liked' => 1
+            ]);
+        } else {
+            $submission->update([
+                'is_liked' => 0
+            ]);
+        }
+    }
 
+    public function dislike(Submission $submission) {
+        if($submission->is_liked === 0){
+            $submission->update([
+                'is_liked' => -1
+            ]);
+        } else {
+            $submission->update([
+                'is_liked' => 0
+            ]);
+        }
     }
 
     // Returns all submissions that have been favorited

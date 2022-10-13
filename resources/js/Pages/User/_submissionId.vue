@@ -113,31 +113,27 @@ const setHasViewed = () => {
 
 if (!props.submission.has_viewed) setHasViewed();
 
-// toggle saving the submission
-const favorite = useForm({
-    is_saved: !props.submission.is_saved,
-});
-
 const toggleFavorite = () => {
-    favorite.post(route("submission.favorite", props.submission));
+    Inertia.put(route("submission.favorite", props.submission));
 };
-
-// toggle saving the submission
-const book = useForm({
-    is_booked: !props.submission.is_booked,
-});
 
 const toggleBooked = () => {
-    book.post(route("submission.book", props.submission));
+    Inertia.put(route("submission.book", props.submission));
 };
 
-async function dislikeSubmission() {}
+async function dislikeSubmission() {
+    Inertia.put(route("submission.dislike", props.submission));
+}
 
-async function likeSubmission() {}
+async function likeSubmission() {
+    Inertia.put(route("submission.like", props.submission));
+}
 
 // delete submission
 const deleteSubmission = () => {
-    Inertia.delete(route("submission.delete", props.submission));
+    if (window.confirm("This can't be undone! Are you sure?")) {
+        Inertia.delete(route("submission.delete", props.submission));
+    }
 };
 
 /**
