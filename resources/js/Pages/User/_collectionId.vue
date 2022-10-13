@@ -7,7 +7,7 @@ export default {
 
 <script setup>
 // utils
-import { ref, onMounted, onBeforeMount, computed, nextTick } from "vue";
+import { ref, computed, nextTick } from "vue";
 import { Head } from "@inertiajs/inertia-vue3";
 
 // components
@@ -35,7 +35,6 @@ const props = defineProps({
     },
     submissions: {
         type: Array,
-        default: () => [],
     },
 });
 
@@ -112,122 +111,41 @@ const filteredSubmissions = computed(() => {
             });
         }
 
-        if (
-            (filterWord.value !== null || filterWord.value !== "null") &&
-            (searchPhrase.value !== null || searchPhrase.value !== "")
-        ) {
-            const search = searchPhrase?.value?.toLowerCase();
-            const filter = filterWord?.value?.toLowerCase();
+        // if (
+        //     (filterWord !== null || filterWord !== "null") &&
+        //     (searchPhrase !== null || searchPhrase !== "")
+        // ) {
+        //     const search = searchPhrase?.value?.toLowerCase();
+        //     const filter = filterWord?.value?.toLowerCase();
 
-            const email = submission.email?.toLowerCase();
-            const name = submission.name?.toLowerCase();
-            const message = submission.message?.toLowerCase();
+        //     const email = submission.email?.toLowerCase();
+        //     const name = submission.name?.toLowerCase();
+        //     const message = submission.message?.toLowerCase();
 
-            submission.tags.filter((tag) => {
-                const label = tag.label.toLowerCase();
-                if (
-                    label.includes(filter) &&
-                    (email.includes(search) ||
-                        name.includes(search) ||
-                        message.includes(search) ||
-                        submission.phone.includes(search))
-                )
-                    matched = true;
-            });
-        }
+        //     submission.tags.filter((tag) => {
+        //         const label = tag.label.toLowerCase();
+        //         if (
+        //             label.includes(filter) &&
+        //             (email.includes(search) ||
+        //                 name.includes(search) ||
+        //                 message.includes(search) ||
+        //                 submission.phone.includes(search))
+        //         )
+        //             matched = true;
+        //     });
+        // }
 
         if (matched) return submission;
     });
 });
 
-async function archiveCollection() {
-    if (window.confirm("Are you sure you want to archive this collection?")) {
-        const { error } = await supabase
-            .from("collections")
-            .update({ archived: true })
-            .match({ id: collection_id });
+async function archiveCollection() {}
 
-        if (error) {
-            alert(error.message);
-        } else {
-            setCollections();
-            router.back();
-        }
-    }
-}
+async function deleteCollection() {}
 
-async function deleteCollection() {
-    if (
-        window.confirm(
-            "Are you sure you want to delete this collection? This is an irreversible action and all submissions will be lost permanently."
-        )
-    ) {
-        let assetError = null;
-        submissions.value.forEach(async (submission) => {
-            const { error } = await supabase
-                .from("submission-uploads")
-                .delete()
-                .match({ submission_id: submission.id });
+async function closeCollection() {}
 
-            if (error) {
-                assetError = error;
-            }
-        });
-
-        if (assetError !== null) {
-            alert(assetError.message);
-        } else {
-            const deleteSubmissions = await supabase
-                .from("submissions")
-                .delete()
-                .match({ collection_id: collection_id });
-
-            const { error } = await supabase
-                .from("collections")
-                .delete()
-                .match({ id: collection_id });
-
-            if (error) {
-                alert(error.message);
-            } else {
-                setCollections();
-                router.back();
-            }
-        }
-    }
-}
-
-async function closeCollection() {
-    const currentDate = new Date();
-    const currentDateFormatted = formatDate(currentDate);
-
-    if (
-        window.confirm("Are you sure you want to close this collection today?")
-    ) {
-        const { error } = await supabase
-            .from("collections")
-            .update({ end_date: currentDateFormatted })
-            .match({ id: collection_id });
-
-        if (error) {
-            alert(error.message);
-        } else {
-            setCollections();
-            nextTick(() => {
-                router.back();
-            });
-        }
-    }
-}
-
-async function updateViewMode(e) {
-    if (window.confirm("Would you like to set this as your default view?")) {
-        const { error } = await supabase
-            .from("profiles")
-            .update({ default_view: e })
-            .match({ id: currentUser.value?.id });
-    }
-}
+async function updateViewMode(e) {}
 </script>
 
 <template>
@@ -280,20 +198,13 @@ async function updateViewMode(e) {
                             <span>Delete</span>
                         </button>
 
-                        <!-- <button
-                        v-if="currentCollection.end_date === null"
-                        class="
-                            flex
-                            space-x-1
-                            text-blue-500
-                            opacity-75
-                            hover:opacity-100
-                        "
-                        @click="closeCollection"
-                    >
-                        <IconLockClosed class="h-4 w-4 mr-2" />
-                        <span>Close</span>
-                    </button> -->
+                        <button
+                            class="flex space-x-1 text-blue-500 opacity-75 hover:opacity-100"
+                            @click="closeCollection"
+                        >
+                            <IconLockClosed class="h-4 w-4 mr-2" />
+                            <span>Close</span>
+                        </button>
                     </div>
                 </div>
 

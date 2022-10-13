@@ -101,29 +101,29 @@ const filteredSubmissions = computed(() => {
             });
         }
 
-        if (
-            (filterWord.value !== null || filterWord.value !== "null") &&
-            (searchPhrase.value !== null || searchPhrase.value !== "")
-        ) {
-            const search = searchPhrase?.value?.toLowerCase();
-            const filter = filterWord?.value?.toLowerCase();
+        // if (
+        //     (filterWord.value !== null || filterWord.value !== "null") &&
+        //     (searchPhrase.value !== null || searchPhrase.value !== "")
+        // ) {
+        //     const search = searchPhrase?.value?.toLowerCase();
+        //     const filter = filterWord?.value?.toLowerCase();
 
-            const email = submission.email?.toLowerCase();
-            const name = submission.name?.toLowerCase();
-            const message = submission.message?.toLowerCase();
+        //     const email = submission.email?.toLowerCase();
+        //     const name = submission.name?.toLowerCase();
+        //     const message = submission.message?.toLowerCase();
 
-            submission.tags.filter((tag) => {
-                const label = tag.label.toLowerCase();
-                if (
-                    label.includes(filter) &&
-                    (email.includes(search) ||
-                        name.includes(search) ||
-                        message.includes(search) ||
-                        submission.phone.includes(search))
-                )
-                    matched = true;
-            });
-        }
+        //     submission.tags.filter((tag) => {
+        //         const label = tag.label.toLowerCase();
+        //         if (
+        //             label.includes(filter) &&
+        //             (email.includes(search) ||
+        //                 name.includes(search) ||
+        //                 message.includes(search) ||
+        //                 submission.phone.includes(search))
+        //         )
+        //             matched = true;
+        //     });
+        // }
 
         if (matched) return submission;
     });
@@ -164,25 +164,20 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <!-- <div
-                    class="
-                        absolute
-                        top-0
-                        right-0
-                        flex
-                        justify-center
-                        items-center
-                        -mt-4
-                    "
-                >
-                    <KeywordSearch class="flex mr-4" v-model="searchPhrase" />
-                    <BaseSelect
+                    <div
+                        class="absolute top-0 right-0 flex justify-center items-center -mt-4"
+                    >
+                        <KeywordSearch
+                            class="flex mr-4"
+                            v-model="searchPhrase"
+                        />
+                        <!-- <BaseSelect
                         :options="currentUser.tags"
                         v-model="filterWord"
                     >
                         Filter
-                    </BaseSelect>
-                </div> -->
+                    </BaseSelect> -->
+                    </div>
                 </div>
 
                 <!-- <BaseSelect
@@ -191,13 +186,13 @@ async function updateViewMode(e) {
                 v-model="filterWord"
             >
                 Filter
-            </BaseSelect>
+            </BaseSelect>-->
 
-            <KeywordSearch
-                class="lg:hidden"
-                v-model="searchPhrase"
-                :value="searchPhrase"
-            /> -->
+                <KeywordSearch
+                    class="lg:hidden"
+                    v-model="searchPhrase"
+                    :value="searchPhrase"
+                />
             </div>
 
             <div>

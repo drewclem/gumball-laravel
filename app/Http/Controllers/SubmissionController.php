@@ -25,6 +25,9 @@ class SubmissionController extends Controller
             'collection_id' => $request->collection_id,
             'user_id'=> $request->user_id,
         ]);
+
+
+        return redirect()->back();
     }
 
     // Shows a single submission

@@ -9,6 +9,7 @@ export default {
 // components
 import BaseHeading from "@/components/base/BaseHeading.vue";
 import IconClose from "@/components/svg/IconClose.vue";
+import { Head } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     tags: {
@@ -47,6 +48,7 @@ async function deleteTag(tagId) {
 
 <template>
     <div class="max-w-4xl">
+        <Head title="Tags" />
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center">
                 <BaseHeading size="h4" tag="h1">Tags</BaseHeading>

@@ -1,34 +1,3 @@
-<template>
-    <div class="relative flex items-center" @keydown.esc="closeSearch">
-        <transition name="search" appear>
-            <input
-                ref="search"
-                v-if="state.isOpen"
-                class="py-2 px-4 border border-gray-500 rounded-full mr-3 h-[34px] lg:w-64"
-                type="text"
-                placeholder="Search"
-                :value="modelValue"
-                @input="$emit('update:modelValue', $event.target.value)"
-            />
-        </transition>
-
-        <button
-            ref="searchButton"
-            class="rounded-full h-full border border-gray-500 p-2 opacity-50 hover:opacity-100"
-            :class="{ 'bg-white opacity-100': state.isOpen }"
-            type="button"
-            @click="toggleSearch"
-        >
-            <transition v-if="!state.isOpen" name="fade" appear>
-                <IconSearch class="w-4 h-4 text-gray-500" />
-            </transition>
-            <transition v-else name="fade" appear>
-                <IconClose class="w-4 h-4 text-gray-500" />
-            </transition>
-        </button>
-    </div>
-</template>
-
 <script setup>
 // utils
 import { ref, nextTick, reactive } from "vue";
@@ -68,6 +37,37 @@ function closeSearch() {
     searchButton.value.focus();
 }
 </script>
+
+<template>
+    <div class="relative flex items-center" @keydown.esc="closeSearch">
+        <transition name="search" appear>
+            <input
+                ref="search"
+                v-if="state.isOpen"
+                class="py-2 px-4 border border-gray-500 rounded-full mr-3 h-[34px] lg:w-64"
+                type="text"
+                placeholder="Search"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
+            />
+        </transition>
+
+        <button
+            ref="searchButton"
+            class="rounded-full h-full border border-gray-500 p-2 opacity-50 hover:opacity-100"
+            :class="{ 'bg-white opacity-100': state.isOpen }"
+            type="button"
+            @click="toggleSearch"
+        >
+            <transition v-if="!state.isOpen" name="fade" appear>
+                <IconSearch class="w-4 h-4 text-gray-500" />
+            </transition>
+            <transition v-else name="fade" appear>
+                <IconClose class="w-4 h-4 text-gray-500" />
+            </transition>
+        </button>
+    </div>
+</template>
 
 <style scoped>
 .search-enter-active,

@@ -40,16 +40,16 @@ const form = useForm({
     toc: false,
     recaptcha: false,
     collection_id: props.collection[0].id,
-    user_id: props.user.id
+    user_id: props.user.id,
 });
 
 const submit = () => {
-    form.post(route('submission.store'), {
-        onFinish: () => form.reset()
-    })
-}
+    form.post(route("submission.store"), {
+        onFinish: () => form.reset(),
+    });
+};
 
-const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY
+const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const hasCollection = computed(() => {
     return props.collection.length > 0;
@@ -58,6 +58,7 @@ const hasCollection = computed(() => {
 
 <template>
     <div class="relative">
+        <Head :title="user.username" />
         <div class="absolute bg-gray-100 top-0 w-full h-56" />
 
         <transition name="fade" appear>
@@ -251,10 +252,7 @@ const hasCollection = computed(() => {
                                     class="w-full"
                                     theme="tertiary"
                                     type="submit"
-                                    :disabled="
-                                        form.processing === 'submitting' ||
-                                        !form.toc 
-                                    "
+                                    :disabled="form.processing || !form.toc"
                                 >
                                     Submit
                                 </BaseButton>
