@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LiveFormController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubmissionController;
 use Illuminate\Foundation\Application;
@@ -39,3 +40,5 @@ Route::get('tags', [TagController::class, 'index'])->middleware(['auth', 'verifi
 require __DIR__.'/submission.php';
 require __DIR__.'/collection.php';
 require __DIR__.'/auth.php';
+
+Route::get('/{username}', [LiveFormController::class, 'index']);

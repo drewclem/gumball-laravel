@@ -38,21 +38,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-        $collectionDates = Collection::where('user_id', $request->user()->id)->get(['start_date', 'end_date']);
-        $active = Collection::active()->where('user_id', $request->user()->id)->get();
-
         $unavailDates = [];
+        $active = null;
+        
+        if($request->user()) {
 
-        $interval = new DateInterval('P1D');
-
-        foreach($collectionDates as $date) {
-            $currentDate = $date->start_date;
-
-            while($currentDate <= $date->end_date) {
-                array_push($unavailDates, date($currentDate));
-                $currentDate->add($interval);
-            }
-        };
+            $collectionDates = Collection::where('user_id', $request->user()->id)->get(['start_date', 'end_date']);
+            $active = Collection::active()->where('user_id', $request->user()->id)->get();
+            
+            
+            $interval = new DateInterval('P1D');
+            
+            foreach($collectionDates as $date) {
+                $currentDate = $date->start_date;
+                
+                while($currentDate <= $date->end_date) {
+                    array_push($unavailDates, date($currentDate));
+                    $currentDate->add($interval);
+                }
+            };
+        }
 
         return array_merge(parent::share($request), [
 

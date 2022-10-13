@@ -25,7 +25,7 @@ import BaseDropzone from "@/components/base/BaseDropzone.vue";
 import BaseFilePreview from "@/components/base/BaseFilePreview.vue";
 
 const props = defineProps({
-    collection: Object,
+    collection: Array,
     user: Object,
 });
 
@@ -40,6 +40,12 @@ const form = useForm({
     toc: false,
     recaptcha: false,
 });
+
+const submit = () => {
+    form.post(route('submission'), {
+        onFinish: () => form.reset()
+    })
+}
 
 const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY
 
@@ -87,7 +93,7 @@ const hasCollection = computed(() => {
                             Read first:
                         </BaseHeading>
 
-                        <div v-html="currentUser.prescreen" />
+                        <div v-html="user.prescreen" />
 
                         <div>
                             <BaseButton
@@ -102,7 +108,7 @@ const hasCollection = computed(() => {
                     <div v-else>
                         <form
                             class="flex flex-col gap-8"
-                            @submit.prevent="submitForm"
+                            @submit.prevent="submit"
                         >
                             <div class="relative">
                                 <BaseInput v-model="form.name" required>
