@@ -40,29 +40,25 @@ function formatDate(date) {
         <div
             class="card-padding card-shadow text-sm lg:text-base bg-white rounded-lg w-full overflow-hidden"
         >
+            <div
+                class="absolute left-0 top-0 flex items-center h-full ml-0.5 lg:ml-1"
+            >
+                <IconDecline
+                    v-if="submission.is_declined"
+                    class="transform scale-50 lg:scale-75 text-gray-300"
+                />
+                <IconThumbDown
+                    v-else-if="
+                        submission.is_liked === -1 && !submission.is_declined
+                    "
+                    class="transform scale-50 lg:scale-75 text-red-300"
+                />
+                <IconThumbUp
+                    v-if="submission.is_liked === 1 && !submission.is_declined"
+                    class="transform scale-50 lg:scale-75 text-green-300"
+                />
+            </div>
             <div class="relative grid grid-cols-6 gap-2">
-                <div
-                    class="absolute left-0 flex items-center h-full ml-0.5 lg:ml-1"
-                >
-                    <IconDecline
-                        v-if="submission.is_declined"
-                        class="transform scale-50 lg:scale-75 text-gray-300"
-                    />
-                    <IconThumbDown
-                        v-else-if="
-                            submission.is_liked === -1 &&
-                            !submission.is_declined
-                        "
-                        class="transform scale-50 lg:scale-75 text-red-300"
-                    />
-                    <IconThumbUp
-                        v-if="
-                            submission.is_liked === 1 && !submission.is_declined
-                        "
-                        class="transform scale-50 lg:scale-75 text-green-300"
-                    />
-                </div>
-
                 <div class="relative col-span-2">
                     <p
                         v-if="submission.is_booked"
