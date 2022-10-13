@@ -7,7 +7,7 @@ export default {
 
 <script setup>
 // utils
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import useFileList from "@/utils/file-list";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
@@ -39,13 +39,15 @@ const form = useForm({
     images: [],
     toc: false,
     recaptcha: false,
-    collection_id: props.collection[0].id,
+    collection_id: props?.collection[0]?.id,
     user_id: props.user.id,
 });
 
+const step = ref(1);
+
 const submit = () => {
     form.post(route("submission.store"), {
-        onFinish: () => form.reset(),
+        onFinish: () => (step.value = 2),
     });
 };
 
@@ -88,9 +90,24 @@ const hasCollection = computed(() => {
                 <div
                     class="card-shadow bg-white rounded-xl mx-6 lg:mx-0 p-6 lg:p-11"
                 >
+                    <div v-if="!hasCollection">
+                        <BaseHeading
+                            tag="h2"
+                            size="h3"
+                            class="text-red-500 mb-5"
+                        >
+                            Uh oh!
+                        </BaseHeading>
+
+                        <BaseText>
+                            It looks like their books are currently closed.
+                        </BaseText>
+                        <BaseText>Please try again later.</BaseText>
+                    </div>
+
                     <div
                         class="flex flex-col space-y-6"
-                        v-if="hasCollection && user.prescreen !== null"
+                        v-else-if="hasCollection && user.prescreen !== null"
                     >
                         <BaseHeading size="h3" tag="h2">
                             Read first:
@@ -110,6 +127,7 @@ const hasCollection = computed(() => {
 
                     <div v-else>
                         <form
+                            v-if="step === 1"
                             class="flex flex-col gap-8"
                             @submit.prevent="submit"
                         >
@@ -259,7 +277,7 @@ const hasCollection = computed(() => {
                             </div>
                         </form>
 
-                        <!-- <div v-else-if="formState === 'submitted'">
+                        <div v-else>
                             <BaseHeading
                                 tag="h2"
                                 size="h3"
@@ -269,27 +287,10 @@ const hasCollection = computed(() => {
                             </BaseHeading>
 
                             <BaseText>
-                                <span>
-                                    {{ `@${username}` }}
-                                </span>
+                                <span> @{{ user.username }} </span>
                                 will be in touch!</BaseText
                             >
-                        </div> -->
-
-                        <!-- <div v-else>
-                            <BaseHeading
-                                tag="h2"
-                                size="h3"
-                                class="text-red-500 mb-5"
-                            >
-                                Uh oh!
-                            </BaseHeading>
-
-                            <BaseText>
-                                It looks like their books are currently closed.
-                            </BaseText>
-                            <BaseText>Please try again later.</BaseText>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

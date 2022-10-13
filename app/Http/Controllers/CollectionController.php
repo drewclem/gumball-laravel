@@ -35,6 +35,15 @@ class CollectionController extends Controller
         return redirect('/collections');
     }
 
+    public function close(Request $request, Collection $collection) {
+
+        $collection->update([
+            'end_date'=> $request->end_date
+        ]);
+
+        return redirect('collections');
+    }
+
     public function scheduled_dates() {
         // return every start_end and end_date as well as any dates between them
     }
@@ -46,5 +55,12 @@ class CollectionController extends Controller
             'collection' => $collection,
             'submissions' => $submissions,
         ]); 
+    }
+
+    public function destroy(Collection $collection) {
+        // dd($collection);
+        $collection->delete();
+
+        return redirect('collections');
     }
 }

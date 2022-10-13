@@ -9,6 +9,8 @@ export default {
 // utils
 import { ref, computed, nextTick } from "vue";
 import { Head } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
+import { useDates } from "@/utils/dates";
 
 // components
 import BaseHeading from "@/Components/base/BaseHeading.vue";
@@ -26,6 +28,20 @@ import IconArrowLeft from "@/Components/svg/IconArrowLeft.vue";
 import IconArchive from "@/Components/svg/IconArchive.vue";
 import IconDelete from "@/Components/svg/IconDelete.vue";
 import IconLockClosed from "@/Components/svg/IconLockClosed.vue";
+
+const { currentDate } = useDates();
+
+const isOpen = computed(() => {
+    const current = new Date(currentDate);
+    const end = new Date(props.collection.end_date);
+
+    const currentformatted = current.getMilliseconds();
+    const endFormatted = end.getMilliseconds();
+
+    return current < end;
+});
+
+console.log(isOpen.value);
 
 const copySuccess = ref(false);
 
@@ -141,9 +157,26 @@ const filteredSubmissions = computed(() => {
 
 async function archiveCollection() {}
 
-async function deleteCollection() {}
+async function deleteCollection() {
+    if (
+        window.confirm(
+            "Are you sure? This will remove any entries from this collection too!"
+        )
+    ) {
+        Inertia.delete(route("collections.destroy", props.collection));
+    }
+}
 
-async function closeCollection() {}
+async function closeCollection() {
+    if (window.confirm("Are you sure? This can't be undone!")) {
+        Inertia.put(
+            route("collections.close", [
+                props.collection,
+                { end_date: currentDate },
+            ])
+        );
+    }
+}
 
 async function updateViewMode(e) {}
 </script>
@@ -199,6 +232,7 @@ async function updateViewMode(e) {}
                         </button>
 
                         <button
+                            v-if="isOpen"
                             class="flex space-x-1 text-blue-500 opacity-75 hover:opacity-100"
                             @click="closeCollection"
                         >

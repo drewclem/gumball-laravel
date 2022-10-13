@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('subscription_active')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('prescreen')->nullable();
             $table->string('password');
             $table->boolean('terms')->default(false);
             $table->rememberToken();

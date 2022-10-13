@@ -20,8 +20,8 @@ const props = defineProps({
     },
 });
 
-const reducedCollections = props.collections.filter((collection) => {
-    return collection.id !== props.active[0].id;
+const reducedCollections = props?.collections.filter((collection) => {
+    return collection?.id !== props.active[0]?.id;
 });
 </script>
 

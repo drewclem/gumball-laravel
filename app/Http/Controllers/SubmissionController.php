@@ -52,7 +52,7 @@ class SubmissionController extends Controller
     }
 
     // Mark submission as booked
-    public function book(Request $request, Submission $submission) {
+    public function book(Submission $submission) {
 
         if($submission->is_booked === 0){
             $submission->update([
