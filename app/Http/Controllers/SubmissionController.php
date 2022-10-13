@@ -8,6 +8,25 @@ use Inertia\Inertia;
 
 class SubmissionController extends Controller
 {
+    // Save a submission
+    public function store(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string',
+            'message' => 'required|string'
+        ]);
+
+        Submission::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+            'collection_id' => $request->collection_id,
+            'user_id'=> $request->user_id,
+        ]);
+    }
+
     // Shows a single submission
     public function show($collection_id, Submission $submission) {
 

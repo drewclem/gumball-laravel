@@ -42,3 +42,4 @@ require __DIR__.'/collection.php';
 require __DIR__.'/auth.php';
 
 Route::get('/{username}', [LiveFormController::class, 'index']);
+Route::post('submission', [SubmissionController::class, 'store'])->name('submission.store');

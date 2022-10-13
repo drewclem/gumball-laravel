@@ -39,10 +39,12 @@ const form = useForm({
     images: [],
     toc: false,
     recaptcha: false,
+    collection_id: props.collection[0].id,
+    user_id: props.user.id
 });
 
 const submit = () => {
-    form.post(route('submission'), {
+    form.post(route('submission.store'), {
         onFinish: () => form.reset()
     })
 }
@@ -224,7 +226,7 @@ const hasCollection = computed(() => {
                                 <input
                                     id="terms"
                                     name="terms"
-                                    v-model="form.terms"
+                                    v-model="form.toc"
                                     type="checkbox"
                                     class="mr-1"
                                 />
@@ -251,8 +253,7 @@ const hasCollection = computed(() => {
                                     type="submit"
                                     :disabled="
                                         form.processing === 'submitting' ||
-                                        !form.toc ||
-                                        !form.recaptcha
+                                        !form.toc 
                                     "
                                 >
                                     Submit
