@@ -29,20 +29,6 @@ import IconArchive from "@/Components/svg/IconArchive.vue";
 import IconDelete from "@/Components/svg/IconDelete.vue";
 import IconLockClosed from "@/Components/svg/IconLockClosed.vue";
 
-const { currentDate } = useDates();
-
-const isOpen = computed(() => {
-    const current = new Date(currentDate);
-    const end = new Date(props.collection.end_date);
-
-    const currentformatted = current.getMilliseconds();
-    const endFormatted = end.getMilliseconds();
-
-    return current < end;
-});
-
-console.log(isOpen.value);
-
 const copySuccess = ref(false);
 
 const props = defineProps({
@@ -53,6 +39,22 @@ const props = defineProps({
         type: Array,
     },
 });
+
+const { currentDate } = useDates();
+
+const isOpen = computed(() => {
+    const current = new Date(currentDate);
+    const end = new Date(props.collection.end_date);
+
+    const currentformatted = current.getMilliseconds();
+    const endFormatted = end.getMilliseconds();
+    console.log("current", current);
+    console.log("end", end);
+
+    return current < end;
+});
+
+console.log(isOpen.value);
 
 /**
  * Submission filtering
@@ -169,12 +171,7 @@ async function deleteCollection() {
 
 async function closeCollection() {
     if (window.confirm("Are you sure? This can't be undone!")) {
-        Inertia.put(
-            route("collections.close", [
-                props.collection,
-                { end_date: currentDate },
-            ])
-        );
+        Inertia.put(route("collections.close", [props.collection]));
     }
 }
 
@@ -195,9 +192,9 @@ async function updateViewMode(e) {}
                     <div
                         class="flex justify-between items-center w-full lg:w-auto"
                     >
-                        <BaseHeading size="h4" tag="h1"
-                            >Collections</BaseHeading
-                        >
+                        <BaseHeading size="h4" tag="h1">
+                            Collections
+                        </BaseHeading>
 
                         <Link
                             class="ml-6 opacity-60"

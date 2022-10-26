@@ -7,7 +7,7 @@ export default {
 
 <script setup>
 // utils
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 
@@ -17,7 +17,7 @@ import BaseButton from "@/components/base/BaseButton.vue";
 import BaseImage from "@/components/base/BaseImage.vue";
 import BaseInput from "@/components/base/BaseInput.vue";
 import BaseModal from "@/components/base/BaseModal.vue";
-import AccountCreateTag from "@/components/dashboard/AccountCreateTag.vue";
+// import AccountCreateTag from "@/components/dashboard/AccountCreateTag.vue";
 
 import IconHeart from "@/components/svg/IconHeart.vue";
 import IconThumbDown from "@/components/svg/IconThumbDown.vue";
@@ -30,81 +30,68 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    tags: {
+        type: Array,
+        default: () => [],
+    },
+    user_tags: {
+        type: Array,
+    },
 });
 
-const tags = ref([]);
 const newTag = ref("");
 const isUnique = ref(true);
 const showAllTags = ref(false);
 const images = ref([]);
 
 // check against new tag input to see if current phrase already exists as a tag
-// const matchedTags = computed(() => {
-//     const input = newTag.value.toLowerCase();
-//     const filteredTags = [];
+const matchedTags = computed(() => {
+    const input = newTag.value.toLowerCase();
+    const filteredTags = [];
 
-//     currentUser.value.tags.filter((tag) => {
-//         if (showAllTags.value && input.length === 0) {
-//             filteredTags.push(tag);
-//         } else {
-//             const formatted = tag.label?.toLowerCase();
+    props.user_tags.filter((tag) => {
+        if (showAllTags.value && input.length === 0) {
+            filteredTags.push(tag);
+        } else {
+            const formatted = tag.label?.toLowerCase();
 
-//             if (input.length > 0 && formatted.includes(input)) {
-//                 filteredTags.push(tag);
+            if (input.length > 0 && formatted.includes(input)) {
+                filteredTags.push(tag);
 
-//                 input.length === formatted.length
-//                     ? (isUnique.value = false)
-//                     : (isUnique.value = true);
-//             }
-//         }
-//     });
+                input.length === formatted.length
+                    ? (isUnique.value = false)
+                    : (isUnique.value = true);
+            }
+        }
+    });
 
-//     return filteredTags;
-// });
+    return filteredTags;
+});
 
 async function createTag() {
-    const { data, error } = await supabase.from("tags").insert([
-        {
-            label: newTag.value.toLowerCase(),
-            user_id: currentUser.value.id,
-        },
-    ]);
-
-    if (error) {
-        alert("Oops! Something went wrong. Please try again.");
-    } else {
-        applyTag(data[0].id);
-        newTag.value = "";
-    }
+    Inertia.put(
+        route("tags.store", [
+            { submission_id: props.submission.id, label: newTag.value },
+        ])
+    );
+    newTag.value = "";
 }
 
 async function applyTag(tagId) {
-    const { error } = await supabase.from("tag_relations").insert([
-        {
-            tag_id: tagId,
-            submission_id: submission.value.id,
-        },
-    ]);
+    Inertia.put(
+        route("tag_relation.store", [
+            {
+                submission_id: props.submission.id,
+                tag_id: tagId,
+            },
+        ])
+    );
 
-    if (error) {
-        alert("Oops! Something went wrong. Please try again.");
-    } else {
-        newTag.value = "";
-        fetchSubmission();
-    }
+    newTag.value = "";
 }
 
 async function deleteTag(relationId) {
-    const { error } = await supabase
-        .from("tag_relations")
-        .delete()
-        .match({ id: relationId });
-
-    if (error) {
-        alert("Oops! Something went wrong. Please try again.");
-    } else {
-        fetchSubmission();
-    }
+    Inertia.delete(route("tag_relation.delete", { id: relationId }));
 }
 
 const setHasViewed = () => {
@@ -255,12 +242,12 @@ async function declineSubmission() {
 
                     <hr />
 
-                    <div class="bg-white rounded-lg p-2 shadow-inner">
+                    <div>
                         <ul>
                             <li>
                                 <input
                                     type="text"
-                                    class="p-2 border-none"
+                                    class="border border-gray-300 rounded-md px-2 py-1 mb-2"
                                     placeholder="Add a tag"
                                     v-model="newTag"
                                     @focus="showAllTags = true"
@@ -269,12 +256,12 @@ async function declineSubmission() {
                                 <button
                                     class="bg-green-100 text-green-700 p-1 rounded-full mt-2 ml-auto"
                                     v-if="newTag.length > 0 && isUnique"
-                                    @click="createTag"
+                                    @click="createTag(newTag)"
                                 >
                                     Create
                                 </button>
 
-                                <!-- <ul
+                                <ul
                                     v-if="
                                         matchedTags.length > 0 &&
                                         newTag.length > 0
@@ -293,7 +280,7 @@ async function declineSubmission() {
                                             {{ tag.label }}
                                         </button>
                                     </li>
-                                </ul> -->
+                                </ul>
                             </li>
 
                             <li
@@ -302,7 +289,7 @@ async function declineSubmission() {
                                 :key="tag.id"
                             >
                                 <div
-                                    class="bg-gray-50 py-1 px-3 rounded-full flex space-x-2 items-center"
+                                    class="bg-blue-100 py-1 px-3 rounded-full flex space-x-2 items-center"
                                 >
                                     <span>
                                         {{ tag.label }}
@@ -310,11 +297,11 @@ async function declineSubmission() {
 
                                     <button
                                         class="border border-gray-400 rounded-full p-0.5"
-                                        @click="deleteTag(tag.relation_id)"
+                                        @click="deleteTag(tag.tag_relation_id)"
                                     >
-                                        <span class="sr-only"
-                                            >Delete tag {{ tag.label }}</span
-                                        >
+                                        <span class="sr-only">
+                                            Delete tag {{ tag.label }}
+                                        </span>
                                         <IconClose class="h-3 w-3" />
                                     </button>
                                 </div>

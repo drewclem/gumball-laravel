@@ -10,6 +10,7 @@ export default {
 import BaseHeading from "@/components/base/BaseHeading.vue";
 import IconClose from "@/components/svg/IconClose.vue";
 import { Head } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     tags: {
@@ -19,29 +20,9 @@ const props = defineProps({
     },
 });
 
-async function deleteTag(tagId) {
-    reload.value = true;
-    if (
-        window.confirm(
-            "Are you sure you want to delete this tag? This will remove it and any reference to it permanently."
-        )
-    ) {
-        const references = await supabase
-            .from("tag_relations")
-            .delete()
-            .match({ tag_id: tagId });
-
-        if (references.error) {
-            alert("Oops! Something went wrong. Please try again.");
-        } else {
-            const { error } = await supabase
-                .from("tags")
-                .delete()
-                .match({ id: tagId });
-
-            setUser(currentUser.id);
-            reload.value = false;
-        }
+async function deleteTag(id) {
+    if (window.confirm("This can't be undone! Are you sure?")) {
+        Inertia.delete(route("tags.delete", { id: id }));
     }
 }
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Collection;
+use App\Models\Tag;
 use Carbon\Carbon;
 use DateInterval;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ class HandleInertiaRequests extends Middleware
 
             $collectionDates = Collection::where('user_id', $request->user()->id)->get(['start_date', 'end_date']);
             $active = Collection::active()->where('user_id', $request->user()->id)->get();
+            $tags = Tag::where('user_id', $request->user()->id)->get();
             
             
             $interval = new DateInterval('P1D');
@@ -65,6 +67,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'unavail_dates' => $unavailDates,
+            'user_tags' => $tags,
             'global_active' => $active,
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class TagRelation extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'submission_id',
+        'tag_id'
+    ];
 }

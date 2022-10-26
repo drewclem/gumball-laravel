@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Collection;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class CollectionController extends Controller
 {
@@ -35,11 +36,14 @@ class CollectionController extends Controller
         return redirect('/collections');
     }
 
-    public function close(Request $request, Collection $collection) {
+    public function close(Collection $collection) {
+
+        $current_date = Carbon::now()->toDateTimeString();
 
         $collection->update([
-            'end_date'=> $request->end_date
+            'end_date'=> $current_date
         ]);
+
 
         return redirect('collections');
     }

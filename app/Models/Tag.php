@@ -9,6 +9,11 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'label'
+    ];
+
     public function usage() {
         return $this->hasMany(TagRelation::class);
     }

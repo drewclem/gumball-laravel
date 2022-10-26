@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class SubmissionController extends Controller
@@ -33,8 +34,12 @@ class SubmissionController extends Controller
     // Shows a single submission
     public function show($collection_id, Submission $submission) {
 
+        // none of this is right
+        $tags = DB::table('tag_relations')->where('submission_id', $submission->id)->select('tag_relations.id as tag_relation_id', 'tag_relations.tag_id', 'tag_relations.submission_id', 'tags.label')->join('tags', 'tag_relations.tag_id', '=', 'tags.id')->get();
+
         return Inertia::render('User/_submissionId', [
             'submission' => $submission,
+            'tags' => $tags,
         ]);
     }
     

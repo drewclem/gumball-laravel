@@ -26,4 +26,8 @@ class Submission extends Model
     public function collection() {
         return $this->hasOne(Collection::class);
     }
+
+    public function tags() {
+        return $this->hasMany(TagRelation::class);
+    }
 }

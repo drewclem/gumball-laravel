@@ -3,6 +3,7 @@
 use App\Http\Controllers\LiveFormController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\TagRelationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,6 +37,10 @@ Route::get('favorites', [SubmissionController::class, 'showFavorites'])->middlew
 Route::get('inbox', [SubmissionController::class, 'inbox'])->middleware(['auth', 'verified'])->name('inbox');
 
 Route::get('tags', [TagController::class, 'index'])->middleware(['auth', 'verified'])->name('tags');
+Route::put('tags', [TagController::class, 'store'])->middleware(['auth', 'verified'])->name('tags.store');
+Route::delete('tags', [TagController::class, 'delete'])->middleware(['auth', 'verified'])->name('tags.delete');
+Route::put('tag_relation', [TagRelationController::class, 'store'])->middleware(['auth', 'verified'])->name('tag_relation.store');
+Route::delete('tag_relation', [TagRelationController::class, 'delete'])->middleware(['auth', 'verified'])->name('tag_relation.delete');
 
 require __DIR__.'/submission.php';
 require __DIR__.'/collection.php';
