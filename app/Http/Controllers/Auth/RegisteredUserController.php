@@ -19,6 +19,13 @@ class RegisteredUserController extends Controller
      *
      * @return \Inertia\Response
      */
+
+
+
+    public function index() {
+        return Inertia::render('User/Settings');
+    }
+
     public function create()
     {
         return Inertia::render('Auth/Register');
@@ -55,5 +62,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+    
+    public function update(Request $request) {
+        return Inertia::render('User/SettingsEdit');
     }
 }

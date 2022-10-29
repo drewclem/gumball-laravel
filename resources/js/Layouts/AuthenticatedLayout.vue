@@ -181,7 +181,7 @@ const disabledDates = computed(() => {
                 </div>
 
                 <footer class="flex flex-col space-y-3">
-                    <BaseLink class="group py-0.5" href="/">
+                    <BaseLink class="group py-0.5" href="/settings">
                         <template #icon>
                             <IconUser
                                 class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5"

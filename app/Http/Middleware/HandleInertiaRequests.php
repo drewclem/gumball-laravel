@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
     {
         $unavailDates = [];
         $active = null;
+        $tags = [];
         
         if($request->user()) {
 

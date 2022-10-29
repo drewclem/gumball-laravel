@@ -4,6 +4,7 @@ use App\Http\Controllers\LiveFormController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TagRelationController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -41,6 +42,8 @@ Route::put('tags', [TagController::class, 'store'])->middleware(['auth', 'verifi
 Route::delete('tags', [TagController::class, 'delete'])->middleware(['auth', 'verified'])->name('tags.delete');
 Route::put('tag_relation', [TagRelationController::class, 'store'])->middleware(['auth', 'verified'])->name('tag_relation.store');
 Route::delete('tag_relation', [TagRelationController::class, 'delete'])->middleware(['auth', 'verified'])->name('tag_relation.delete');
+Route::get('settings', [RegisteredUserController::class, 'index'])->middleware(['auth', 'verified'])->name('settings');
+Route::get('settings/edit', [RegisteredUserController::class, 'update'])->middleware(['auth', 'verified'])->name('settings.update');
 
 require __DIR__.'/submission.php';
 require __DIR__.'/collection.php';
