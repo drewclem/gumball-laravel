@@ -235,8 +235,8 @@ let stripe = null;
 
                     <div>
                         <h2 class="info-heading">Full Name</h2>
-                        <p v-if="auth.user && auth.user.full_name">
-                            {{ auth.user.full_name }}
+                        <p v-if="auth.user && auth.user.name">
+                            {{ auth.user.name }}
                         </p>
                         <p v-else>--</p>
                     </div>

@@ -6,8 +6,7 @@ export default {
 </script>
 
 <script setup>
-// utils
-import { onMounted, reactive, watchEffect } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 // components
 import BaseImage from "@/components/base/BaseImage.vue";
@@ -26,33 +25,38 @@ const props = defineProps({
     },
 });
 
-const userForm = reactive({
-    username: null,
-    full_name: null,
-    email: null,
-    instagram_url: null,
-    tiktok_url: null,
-    twitter_url: null,
-    facebook_url: null,
-    prescreen: null,
-    decline_response: null,
-    submitting: false,
+const form = useForm({
+    username: props.auth.user.username,
+    name: props.auth.user.name,
+    email: props.auth.user.email,
+    instagram_url: props.auth.user.instagram_url,
+    tiktok_url: props.auth.user.tiktok_url,
+    twitter_url: props.auth.user.twitter_url,
+    facebook_url: props.auth.user.facebook_url,
+    prescreen: props.auth.user.prescreen,
+    decline_response: props.auth.user.decline_response,
 });
+
+const updateUserInfo = () => {
+    form.post(route("settings.edit"), {
+        user: props.auth.user,
+    });
+};
 
 // const state = reactive({
 //     avatar_url: null,
 // });
 
 // watchEffect(() => {
-//     (userForm.username = auth.user.value?.username),
-//         (userForm.full_name = auth.user.value?.full_name),
-//         (userForm.email = auth.user.value?.email),
-//         (userForm.instagram_url = auth.user.value?.instagram_url),
-//         (userForm.tiktok_url = auth.user.value?.tiktok_url),
-//         (userForm.twitter_url = auth.user.value?.twitter_url),
-//         (userForm.facebook_url = auth.user.value?.facebook_url);
-//     userForm.prescreen = auth.user.value?.prescreen;
-//     userForm.decline_response = auth.user.value?.decline_response;
+//     (form.username = auth.user.value?.username),
+//         (form.name = auth.user.value?.name),
+//         (form.email = auth.user.value?.email),
+//         (form.instagram_url = auth.user.value?.instagram_url),
+//         (form.tiktok_url = auth.user.value?.tiktok_url),
+//         (form.twitter_url = auth.user.value?.twitter_url),
+//         (form.facebook_url = auth.user.value?.facebook_url);
+//     form.prescreen = auth.user.value?.prescreen;
+//     form.decline_response = auth.user.value?.decline_response;
 // });
 
 // async function downloadAvatar(fileName) {
@@ -64,27 +68,27 @@ const userForm = reactive({
 // }
 
 // async function updateUserInfo() {
-//     userForm.submitting = true;
+//     form.submitting = true;
 //     const { error } = await supabase.from("profiles").upsert({
 //         id: auth.user.value?.id,
-//         full_name: userForm.full_name,
-//         email: userForm.email,
+//         name: form.name,
+//         email: form.email,
 //         instagram_url:
-//             userForm.instagram_url === "" ? null : userForm.instagram_url,
-//         tiktok_url: userForm.tiktok_url === "" ? null : userForm.tiktok_url,
-//         twitter_url: userForm.twitter_url === "" ? null : userForm.twitter_url,
+//             form.instagram_url === "" ? null : form.instagram_url,
+//         tiktok_url: form.tiktok_url === "" ? null : form.tiktok_url,
+//         twitter_url: form.twitter_url === "" ? null : form.twitter_url,
 //         facebook_url:
-//             userForm.facebook_url === "" ? null : userForm.facebook_url,
-//         prescreen: userForm.prescreen === "" ? null : userForm.prescreen,
+//             form.facebook_url === "" ? null : form.facebook_url,
+//         prescreen: form.prescreen === "" ? null : form.prescreen,
 //         decline_response:
-//             userForm.decline_response === "" ? null : userForm.decline_response,
+//             form.decline_response === "" ? null : form.decline_response,
 //     });
 
 //     if (error) {
 //         alert("Oops! Something went wrong.");
 //     }
 //     setTimeout(() => {
-//         userForm.submitting = false;
+//         form.submitting = false;
 
 //         router.back();
 //     }, 300);
@@ -114,9 +118,9 @@ const userForm = reactive({
                     type="submit"
                     @click="updateUserInfo"
                     class="underline"
-                    :disabled="userForm.submitting"
+                    :disabled="form.processing"
                 >
-                    {{ userForm.submitting ? "Submitting..." : "Save Changes" }}
+                    {{ form.processing ? "Submitting..." : "Save Changes" }}
                 </button>
             </div>
         </div>
@@ -144,7 +148,7 @@ const userForm = reactive({
                     <div>
                         <BaseInput
                             class="mb-2"
-                            v-model="userForm.username"
+                            v-model="form.username"
                             disabled
                         >
                             User Name
@@ -155,16 +159,14 @@ const userForm = reactive({
                     </div>
 
                     <div>
-                        <BaseInput v-model="userForm.full_name"
-                            >Full Name</BaseInput
-                        >
+                        <BaseInput v-model="form.name">Full Name</BaseInput>
                     </div>
 
                     <div>
                         <BaseInput
                             class="mb-2"
                             inputType="email"
-                            v-model="userForm.email"
+                            v-model="form.email"
                             disabled
                         >
                             Email
@@ -177,25 +179,23 @@ const userForm = reactive({
 
                 <div class="info-group info-grid">
                     <div>
-                        <BaseInput v-model="userForm.instagram_url"
+                        <BaseInput v-model="form.instagram_url"
                             >Instagram</BaseInput
                         >
                     </div>
 
                     <div>
-                        <BaseInput v-model="userForm.tiktok_url"
-                            >Tiktok</BaseInput
-                        >
+                        <BaseInput v-model="form.tiktok_url">Tiktok</BaseInput>
                     </div>
 
                     <div>
-                        <BaseInput v-model="userForm.twitter_url"
+                        <BaseInput v-model="form.twitter_url"
                             >Twitter</BaseInput
                         >
                     </div>
 
                     <div>
-                        <BaseInput v-model="userForm.facebook_url"
+                        <BaseInput v-model="form.facebook_url"
                             >Facebook</BaseInput
                         >
                     </div>
@@ -203,7 +203,7 @@ const userForm = reactive({
 
                 <div class="info-group info-list">
                     <div>
-                        <BaseRichText v-model="userForm.prescreen">
+                        <BaseRichText v-model="form.prescreen">
                             Pre-form Screen
                             <template v-slot:helper>
                                 Use this to let people know specific info about
@@ -216,10 +216,7 @@ const userForm = reactive({
                     </div>
 
                     <div>
-                        <BaseTextarea
-                            v-model="userForm.decline_response"
-                            rows="6"
-                        >
+                        <BaseTextarea v-model="form.decline_response" rows="6">
                             Decline Reponse
                             <template v-slot:helper>
                                 The email that will be sent to prospective

@@ -22,8 +22,19 @@ class User extends Authenticatable
         'email',
         'password',
         'username',
+        'prescreen',
+        'decline_response',
+        'stripe_customer',
+        'instagram_url',
+        'tiktok_url',
+        'twitter_url',
+        'facebook_url',
         'subscription_active',
         'terms',
+    ];
+
+    protected $attributes = [
+        'decline_response' => "Hey! Thanks for reaching out for an appointment. Unfortunately, I won't be scheduling you at this point in time. I appreciate your interest in my work and hope you'll submit again in the future!"
     ];
 
     /**

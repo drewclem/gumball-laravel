@@ -43,7 +43,8 @@ Route::delete('tags', [TagController::class, 'delete'])->middleware(['auth', 've
 Route::put('tag_relation', [TagRelationController::class, 'store'])->middleware(['auth', 'verified'])->name('tag_relation.store');
 Route::delete('tag_relation', [TagRelationController::class, 'delete'])->middleware(['auth', 'verified'])->name('tag_relation.delete');
 Route::get('settings', [RegisteredUserController::class, 'index'])->middleware(['auth', 'verified'])->name('settings');
-Route::get('settings/edit', [RegisteredUserController::class, 'update'])->middleware(['auth', 'verified'])->name('settings.update');
+Route::get('settings/edit', [RegisteredUserController::class, 'show'])->middleware(['auth', 'verified'])->name('settings.show');
+Route::post('settings', [RegisteredUserController::class, 'edit'])->middleware(['auth', 'verified'])->name('settings.edit');
 
 require __DIR__.'/submission.php';
 require __DIR__.'/collection.php';

@@ -64,7 +64,26 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
     
-    public function update(Request $request) {
+    public function show(Request $request) {
         return Inertia::render('User/SettingsEdit');
+    }
+
+    public function edit(Request $request) {
+
+        $user = $request->user();
+
+        // dd($request);
+
+        $user->update([
+            'name'=> $request->name,
+            'instagram_url'=> $request->instagram_url,
+            'tiktok_url'=> $request->tiktok_url,
+            'twitter_url'=> $request->twitter_url,
+            'facebook_url'=> $request->facebook_url,
+            'prescreen'=> $request->prescreen,
+            'decline_response'=> $request->decline_response
+        ]);
+
+        return redirect('/settings');
     }
 }
