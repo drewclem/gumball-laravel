@@ -72,8 +72,6 @@ class RegisteredUserController extends Controller
 
         $user = $request->user();
 
-        // dd($request);
-
         $user->update([
             'name'=> $request->name,
             'instagram_url'=> $request->instagram_url,
@@ -85,5 +83,27 @@ class RegisteredUserController extends Controller
         ]);
 
         return redirect('/settings');
+    }
+
+    public function uploadAvatar(Request $request) {
+
+        $user = $request->user();
+        $avatarPath = null;
+        
+        $request->validate([
+            'avatar'=> ['nullable', 'mimes:jpg,jpeg,png,gif', 'max:2048']
+            ]);
+
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->storeAs(
+                'avatars',
+                Auth::user()->username . '-avatar.' . $request->file('avatar')->getClientOriginalExtension(),
+                'public'
+            );
+        };
+
+        $user->update([
+            'avatar_path'=> $avatarPath
+        ]);
     }
 }

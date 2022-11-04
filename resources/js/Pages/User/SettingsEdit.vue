@@ -104,7 +104,7 @@ const updateUserInfo = () => {
 </script>
 
 <template>
-    <div class="max-w-4xl">
+    <form class="max-w-4xl">
         <div class="flex items-center justify-between mb-8">
             <div class="flex">
                 <BaseHeading size="h4" tag="h1">Settings</BaseHeading>
@@ -227,7 +227,7 @@ const updateUserInfo = () => {
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </template>
 
 <style scoped>

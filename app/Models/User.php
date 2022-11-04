@@ -31,6 +31,7 @@ class User extends Authenticatable
         'facebook_url',
         'subscription_active',
         'terms',
+        'avatar_path',
     ];
 
     protected $attributes = [

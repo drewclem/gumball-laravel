@@ -45,6 +45,7 @@ Route::delete('tag_relation', [TagRelationController::class, 'delete'])->middlew
 Route::get('settings', [RegisteredUserController::class, 'index'])->middleware(['auth', 'verified'])->name('settings');
 Route::get('settings/edit', [RegisteredUserController::class, 'show'])->middleware(['auth', 'verified'])->name('settings.show');
 Route::post('settings', [RegisteredUserController::class, 'edit'])->middleware(['auth', 'verified'])->name('settings.edit');
+Route::post('settings/upload', [RegisteredUserController::class, 'uploadAvatar'])->middleware(['auth', 'verified'])->name('settings.upload');
 
 require __DIR__.'/submission.php';
 require __DIR__.'/collection.php';

@@ -8,6 +8,7 @@ export default {
 <script setup>
 // utility
 import { reactive, onMounted, computed } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 import useFileList from "@/utils/file-list";
 
 // components
@@ -18,6 +19,7 @@ import BaseButton from "@/components/base/BaseButton.vue";
 import BaseDropzone from "@/components/base/BaseDropzone.vue";
 import BaseFilePreview from "@/components/base/BaseFilePreview.vue";
 import IconUserCircle from "@/components/svg/IconUserCircle.vue";
+import IconClose from "@/components/svg/IconClose.vue";
 
 const props = defineProps({
     auth: {
@@ -25,6 +27,19 @@ const props = defineProps({
         required: true,
     },
 });
+
+const form = useForm({
+    avatar: null,
+});
+
+const uploadAvatar = () => {
+    form.post(route("settings.upload"), {
+        onSuccess: () => {
+            form.reset();
+            files = [];
+        },
+    });
+};
 
 /**
  * Avatar upload
@@ -39,47 +54,12 @@ const state = reactive({
 
 function onInputChange(e) {
     addFiles(e.target.files);
-    e.target.value = null;
+    form.avatar = e.target.files[0];
 }
 
-function randomNumber(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-}
-
-async function uploadAvatar() {
-    const file = files.value[0];
-    const fileExt = file.name.split(".").pop();
-    const fileName = file.name.split(".");
-
-    const formattedName = `${fileName[0]}-${randomNumber(1, 10000)}.${fileExt}`;
-
-    state.uploading = true;
-    state.avatarButtonText = "Saving...";
-
-    try {
-        const { error } = await supabase.storage
-            .from("avatars")
-            .upload(`${formattedName}`, file.file);
-
-        const { data } = await supabase
-            .from("profiles")
-            .update({ user_avatar: formattedName })
-            .match({ id: auth.user.value.id });
-
-        state.avatarButtonText = "Save";
-        state.uploading = false;
-
-        setauth.userId(auth.user.id);
-    } catch (error) {
-        state.avatarButtonText = "Save";
-        state.uploading = false;
-
-        if (error.statusCode === "23505") {
-            alert("Image already exists");
-        }
-    }
+function cancelUpload() {
+    removeFile(0);
+    form.reset();
 }
 
 /**
@@ -163,65 +143,58 @@ let stripe = null;
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-10">
             <div class="lg:col-span-2">
                 <div>
-                    <div
-                        class="h-24 w-24 bg-gray-200 rounded-full overflow-hidden mb-2"
+                    <form @submit.prevent="uploadAvatar">
+                        <label class="cursor-pointer underline">
+                            <div
+                                class="h-24 w-24 bg-gray-200 rounded-full overflow-hidden mb-2"
+                            >
+                                <BaseImage
+                                    class="h-24 w-24 object-cover"
+                                    v-if="
+                                        auth.user.avatar_path &&
+                                        form.avatar === null
+                                    "
+                                    :src="`./${auth.user.avatar_path}`"
+                                    :alt="`${auth.user.username}`"
+                                />
+
+                                <BaseFilePreview
+                                    v-else-if="files.length > 0"
+                                    :file="files[0]"
+                                    tag="div"
+                                />
+
+                                <IconUserCircle
+                                    v-else
+                                    class="w-full h-full text-gray-400"
+                                />
+                            </div>
+                            <span v-if="form.avatar === null">
+                                Update avatar
+                            </span>
+                            <input
+                                class="sr-only"
+                                @input="onInputChange"
+                                type="file"
+                                accept="image/*"
+                            />
+                        </label>
+
+                        <div v-if="form.avatar !== null">
+                            <button class="text-green-700" type="submit">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+
+                    <button
+                        v-if="form.avatar !== null"
+                        @click="cancelUpload"
+                        type="button"
+                        class="text-red-600"
                     >
-                        <transition name="fade">
-                            <BaseImage
-                                class="h-24 w-24 object-cover"
-                                v-if="
-                                    auth.user.avatar_url && files.length === 0
-                                "
-                                :src="auth.user.avatar_url"
-                                :alt="`${auth.user.username}`"
-                            />
-
-                            <IconUserCircle
-                                v-else-if="
-                                    !auth.user.avatar_url || files.length === 0
-                                "
-                                class="w-full h-full text-gray-400"
-                            />
-
-                            <BaseFilePreview
-                                v-else-if="files.length > 0"
-                                :file="files[0]"
-                                tag="div"
-                            />
-                        </transition>
-                    </div>
-
-                    <label
-                        v-if="files.length === 0"
-                        class="cursor-pointer underline"
-                    >
-                        Update avatar
-                        <input
-                            class="sr-only"
-                            type="file"
-                            accept="image/*"
-                            @change="onInputChange"
-                        />
-                    </label>
-
-                    <div v-else>
-                        <button
-                            class="underline text-green-500 mr-3"
-                            type="button"
-                            :disabled="state.uploading"
-                            @click="uploadAvatar"
-                        >
-                            {{ state.avatarButtonText }}
-                        </button>
-                        <button
-                            @click="removeFile(files[0])"
-                            class="underline text-red-500"
-                            type="button"
-                            :disabled="state.uploading"
-                        >
-                            Cancel
-                        </button>
-                    </div>
+                        Cancel
+                    </button>
                 </div>
             </div>
 
@@ -337,9 +310,9 @@ let stripe = null;
                     </p>
 
                     <div>
-                        <BaseButton type="primary" @click="manageSubscription">
+                        <!-- <BaseButton type="primary" @click="manageSubscription">
                             Manage Subscription
-                        </BaseButton>
+                        </BaseButton> -->
                     </div>
                 </div>
             </div>
