@@ -78,12 +78,12 @@ const hasCollection = computed(() => {
                     <div
                         class="h-16 w-16 bg-gray-400 rounded-full overflow-hidden"
                     >
-                        <!-- <BaseImage
-                            v-if="state.avatar_url !== null"
-                            :src="state.avatar_url"
-                            :alt="username"
+                        <BaseImage
+                            v-if="user.avatar_path"
+                            :src="`./${user.avatar_path}`"
+                            :alt="user.username"
                             class="h-16 w-16 object-cover"
-                        /> -->
+                        />
                     </div>
                 </div>
 

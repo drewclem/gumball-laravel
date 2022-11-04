@@ -136,12 +136,12 @@ function closeMenu() {
         <div class="hidden lg:flex items-center space-x-6">
             <div class="flex items-center">
                 <div
-                    v-if="currentUser.avatar_url"
+                    v-if="currentUser.avatar_path"
                     class="h-10 w-10 rounded-full overflow-hidden mr-2"
                 >
                     <BaseImage
                         class="h-10 w-10 object-cover"
-                        :src="currentUser.avatar_url"
+                        :src="currentUser.avatar_path"
                         :alt="currentUser.username"
                     />
                 </div>

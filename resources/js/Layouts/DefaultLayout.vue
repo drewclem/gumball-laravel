@@ -1,6 +1,13 @@
 <script setup>
 import GumballLogo from "@/Components/global/GumballLogo.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
+import BaseImage from "@/Components/base/BaseImage.vue";
+
+const props = defineProps({
+    auth: {
+        type: Object,
+    },
+});
 </script>
 
 <template>
@@ -17,10 +24,22 @@ import BaseButton from "@/Components/base/BaseButton.vue";
 
             <nav class="hidden lg:flex font-body items-center">
                 <div class="flex flex-col items-end">
-                    <template v-if="$page.props.auth.user">
-                        <Link href="collections">{{
-                            $page.props.auth.user.username
-                        }}</Link>
+                    <template v-if="auth.user">
+                        <div class="flex items-center gap-1">
+                            <div
+                                v-if="auth.user.avatar_path"
+                                class="h-10 w-10 rounded-full overflow-hidden mr-2"
+                            >
+                                <BaseImage
+                                    class="h-10 w-10 object-cover"
+                                    :src="auth.user.avatar_path"
+                                    :alt="auth.user.username"
+                                />
+                            </div>
+                            <Link href="collections">{{
+                                auth.user.username
+                            }}</Link>
+                        </div>
                     </template>
 
                     <div v-else>
@@ -34,8 +53,8 @@ import BaseButton from "@/Components/base/BaseButton.vue";
                     </div>
 
                     <Link
-                        v-if="$page.props.auth.user"
-                        class="mt-2 text-xs opacity-75 hover:opacity-100"
+                        v-if="auth.user"
+                        class="text-red-600 text-xs"
                         :href="route('logout')"
                         method="post"
                         as="button"
