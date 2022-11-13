@@ -13,4 +13,8 @@ class TagRelation extends Model
         'submission_id',
         'tag_id'
     ];
+
+    public function tag() {
+        return $this->belongsTo(Tag::class);
+    }
 }

@@ -48,12 +48,8 @@ class CollectionController extends Controller
         return redirect('collections');
     }
 
-    public function scheduled_dates() {
-        // return every start_end and end_date as well as any dates between them
-    }
-
     public function show(Collection $collection) {
-        $submissions = Collection::find($collection->id)->submissions;
+        $submissions = $collection->submissions()->get();
         
         return Inertia::render('User/_collectionId', [
             'collection' => $collection,
@@ -62,7 +58,6 @@ class CollectionController extends Controller
     }
 
     public function destroy(Collection $collection) {
-        // dd($collection);
         $collection->delete();
 
         return redirect('collections');

@@ -27,7 +27,7 @@ class Submission extends Model
         return $this->hasOne(Collection::class);
     }
 
-    public function tags() {
+    public function scopeTags() {
         return $this->hasMany(TagRelation::class);
     }
 }
