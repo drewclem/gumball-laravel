@@ -75,61 +75,61 @@ let stripe = null;
 //     }
 // });
 
-// async function manageSubscription() {
-//     if (!auth.user.value.subscription_active) {
-//         try {
-//             const bodyData = {
-//                 customerId: `${auth.user.value.stripe_customer}`,
-//                 username: `${auth.user.value.username}`,
-//             };
+async function manageSubscription() {
+    if (!auth.user.value.subscription_active) {
+        try {
+            const bodyData = {
+                customerId: `${auth.user.value.stripe_customer}`,
+                username: `${auth.user.value.username}`,
+            };
 
-//             const stripeSession = await fetch(
-//                 "/.netlify/functions/create-stripe-checkout-session",
-//                 {
-//                     method: "POST",
-//                     headers: {
-//                         "Content-Type": "application/json",
-//                     },
-//                     body: JSON.stringify(bodyData),
-//                 }
-//             );
+            const stripeSession = await fetch(
+                "/.netlify/functions/create-stripe-checkout-session",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(bodyData),
+                }
+            );
 
-//             const sessionData = await stripeSession.json();
+            const sessionData = await stripeSession.json();
 
-//             if (sessionData?.url) {
-//                 window.location.href = sessionData.url;
-//             }
-//         } catch (error) {
-//             alert(error);
-//         }
-//     } else {
-//         const data = {
-//             customer: `${auth.user.value.stripe_customer}`,
-//             return_url: `${process.env.VUE_APP_BASE_URL}/${auth.user.value.username}/account`,
-//         };
+            if (sessionData?.url) {
+                window.location.href = sessionData.url;
+            }
+        } catch (error) {
+            alert(error);
+        }
+    } else {
+        const data = {
+            customer: `${auth.user.value.stripe_customer}`,
+            return_url: `${process.env.VUE_APP_BASE_URL}/${auth.user.value.username}/account`,
+        };
 
-//         try {
-//             const sessionUrl = await fetch(
-//                 "/.netlify/functions/stripe-customer-portal",
-//                 {
-//                     method: "POST",
-//                     headers: {
-//                         "Content-Type": "application/json",
-//                     },
-//                     body: JSON.stringify(data),
-//                 }
-//             );
+        try {
+            const sessionUrl = await fetch(
+                "/.netlify/functions/stripe-customer-portal",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
 
-//             const rawData = await sessionUrl.json();
+            const rawData = await sessionUrl.json();
 
-//             if (rawData) {
-//                 window.location.href = rawData.url;
-//             }
-//         } catch (error) {
-//             alert(error);
-//         }
-//     }
-// }
+            if (rawData) {
+                window.location.href = rawData.url;
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
+}
 </script>
 
 <template>
@@ -310,9 +310,9 @@ let stripe = null;
                     </p>
 
                     <div>
-                        <!-- <BaseButton type="primary" @click="manageSubscription">
+                        <BaseButton type="primary" @click="manageSubscription">
                             Manage Subscription
-                        </BaseButton> -->
+                        </BaseButton>
                     </div>
                 </div>
             </div>

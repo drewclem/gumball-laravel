@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\SubmissionResource;
 use App\Models\Submission;
+use App\Models\SubmissionUpload;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class SubmissionController extends Controller
 {
     public function store(Request $request){
+
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -18,7 +20,7 @@ class SubmissionController extends Controller
             'message' => 'required|string'
         ]);
 
-        Submission::create([
+        $submission = Submission::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -26,6 +28,31 @@ class SubmissionController extends Controller
             'collection_id' => $request->collection_id,
             'user_id'=> $request->user_id,
         ]);
+
+        if($request->has('images')) {
+            $request->validate([
+                'images' => 'nullable|array'
+            ]);
+            
+            foreach ( $request->file('images') as $image) {
+                $uuid = Str::uuid();
+                $imagePath = null;
+
+                $file = $image['file'];
+            
+                $imagePath = $file->storeAs(
+                    'submission-uploads',
+                    $uuid . '-submission.' . $file->extension(),
+                    'public'
+                );
+
+                SubmissionUpload::create([
+                    'submission_id' => $submission->id,
+                    'file_path'=>$imagePath
+                ]);
+            }
+            
+        }
 
         return redirect()->back();
     }
@@ -96,7 +123,6 @@ class SubmissionController extends Controller
         ]);
     }
 
-    // Returns all submissions in a single view
     public function inbox() {
         $submissions = Submission::all();
 

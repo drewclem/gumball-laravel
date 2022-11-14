@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class SubmissionUpload extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'submission_id',
+        'file_path'
+    ];
 }

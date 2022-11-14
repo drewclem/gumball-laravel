@@ -36,7 +36,7 @@ const form = useForm({
     email: "",
     phone: "",
     message: "",
-    images: [],
+    images: files,
     toc: false,
     recaptcha: false,
     collection_id: props?.collection[0]?.id,
@@ -47,7 +47,7 @@ const step = ref(1);
 
 const submit = () => {
     form.post(route("submission.store"), {
-        onFinish: () => (step.value = 2),
+        onSuccess: () => (step.value = 2),
     });
 };
 
@@ -186,7 +186,7 @@ const hasCollection = computed(() => {
                             <div>
                                 <p class="font-display text-sm">Add images</p>
                                 <p class="text-xs mb-4 opacity-50">
-                                    Accepted file types: jpeg, jpg, png
+                                    Accepted file types: jpeg, jpg, png, heic
                                 </p>
                                 <BaseDropzone
                                     @files-dropped="addFiles"
@@ -221,11 +221,11 @@ const hasCollection = computed(() => {
                                         v-show="files.length"
                                     >
                                         <BaseFilePreview
-                                            v-for="file of files"
+                                            v-for="(file, index) of files"
                                             :key="file.id"
                                             :file="file"
                                             tag="li"
-                                            @remove="removeFile"
+                                            @remove="removeFile(index)"
                                         />
                                     </ul>
                                 </BaseDropzone>
