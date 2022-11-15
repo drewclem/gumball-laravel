@@ -27,7 +27,12 @@ class Submission extends Model
         return $this->hasOne(Collection::class);
     }
 
+    public function scopeImages() {
+        return $this->hasMany(SubmissionUpload::class);
+    }
+
     public function scopeTags() {
         return $this->hasMany(TagRelation::class);
     }
+
 }

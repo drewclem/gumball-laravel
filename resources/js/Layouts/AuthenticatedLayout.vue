@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
 import DashboardHeader from "@/Components/global/DashboardHeader.vue";
 import BaseLink from "@/Components/base/BaseLink.vue";
@@ -32,6 +32,16 @@ const disabledDates = computed(() => {
     const datesArray = props.unavail_dates.map((date) => new Date(date));
 
     return datesArray;
+});
+
+const body = document.getElementsByTagName("body");
+
+onMounted(() => {
+    body[0].classList.add("overflow-hidden");
+});
+
+onUnmounted(() => {
+    body[0].classList.remove("overflow-hidden");
 });
 </script>
 

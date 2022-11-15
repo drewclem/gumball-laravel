@@ -1,4 +1,5 @@
 <script setup>
+import { onUnmounted } from "vue";
 import GumballLogo from "@/Components/global/GumballLogo.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
 import BaseImage from "@/Components/base/BaseImage.vue";

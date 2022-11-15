@@ -17,7 +17,6 @@ import BaseButton from "@/components/base/BaseButton.vue";
 import BaseImage from "@/components/base/BaseImage.vue";
 import BaseInput from "@/components/base/BaseInput.vue";
 import BaseModal from "@/components/base/BaseModal.vue";
-// import AccountCreateTag from "@/components/dashboard/AccountCreateTag.vue";
 
 import IconHeart from "@/components/svg/IconHeart.vue";
 import IconThumbDown from "@/components/svg/IconThumbDown.vue";
@@ -34,6 +33,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    images: {
+        type: Array,
+        default: () => [],
+    },
     user_tags: {
         type: Array,
     },
@@ -42,7 +45,6 @@ const props = defineProps({
 const newTag = ref("");
 const isUnique = ref(true);
 const showAllTags = ref(false);
-const images = ref([]);
 
 // check against new tag input to see if current phrase already exists as a tag
 const matchedTags = computed(() => {
@@ -122,28 +124,6 @@ const deleteSubmission = () => {
         Inertia.delete(route("submission.delete", props.submission));
     }
 };
-
-/**
- * Submission images
- */
-async function retrieveImages() {
-    const { data } = await supabase
-        .from("submission-uploads")
-        .select()
-        .match({ submission_id: submissionId });
-
-    if (data) {
-        data.forEach(async (image, index) => {
-            const imgData = await supabase.storage
-                .from(`submission-uploads/${submissionId}`)
-                .createSignedUrl(image.file_name, 60);
-
-            const img = await imgData.data;
-
-            images.value.push(img.signedURL);
-        });
-    }
-}
 
 /**
  * Decline submission
@@ -365,8 +345,8 @@ async function declineSubmission() {
 
                     <div class="relative">
                         <p class="text-xs opacity-50 mb-3">
-                            Automatically sends an email notifying your client
-                            they won't be selected this round.
+                            Notify your client they won't be selected this
+                            round.
                         </p>
                         <button
                             type="button"
@@ -457,7 +437,7 @@ async function declineSubmission() {
                     </div>
 
                     <div
-                        v-if="images.length > 0"
+                        v-if="images"
                         class="card-shadow bg-white p-8 lg:p-12 rounded-lg"
                     >
                         <BaseHeading size="h5" tag="h2" class="mb-5">
@@ -471,15 +451,15 @@ async function declineSubmission() {
                                 <BaseModal>
                                     <template #button>
                                         <BaseImage
-                                            class="img-list hover:scale-150 ease-in-out transform"
-                                            :src="image"
+                                            class="img-list hover:scale-125 ease-in-out transform"
+                                            :src="`/${image.file_path}`"
                                             alt="Img thumbnail"
                                         />
                                     </template>
                                     <template #content>
                                         <BaseImage
                                             class="rounded-lg"
-                                            :src="image"
+                                            :src="`/${image.file_path}`"
                                         />
                                     </template>
                                 </BaseModal>

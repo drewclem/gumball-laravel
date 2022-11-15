@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SubmissionResource;
 use App\Models\Submission;
 use App\Models\SubmissionUpload;
 use Illuminate\Http\Request;
@@ -60,9 +61,11 @@ class SubmissionController extends Controller
     public function show($collection_id, Submission $submission) {
 
         $tags = $submission->tags()->join('tags', 'tag_relations.tag_id', '=', 'tags.id')->get();
+        $images = $submission->images()->get();
 
         return Inertia::render('User/_submissionId', [
             'submission' => $submission,
+            'images' => $images,
             'tags' => $tags,
         ]);
     }

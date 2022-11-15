@@ -141,7 +141,7 @@ function closeMenu() {
                 >
                     <BaseImage
                         class="h-10 w-10 object-cover"
-                        :src="currentUser.avatar_path"
+                        :src="`/${currentUser.avatar_path}`"
                         :alt="currentUser.username"
                     />
                 </div>

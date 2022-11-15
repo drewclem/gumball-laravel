@@ -48,13 +48,9 @@ const isOpen = computed(() => {
 
     const currentformatted = current.getMilliseconds();
     const endFormatted = end.getMilliseconds();
-    console.log("current", current);
-    console.log("end", end);
 
     return current < end;
 });
-
-console.log(isOpen.value);
 
 /**
  * Submission filtering
