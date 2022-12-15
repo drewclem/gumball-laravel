@@ -7,7 +7,7 @@ export default {
 
 <script setup>
 // utility
-import { reactive, onMounted, computed } from "vue";
+import { reactive, computed } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import useFileList from "@/utils/file-list";
 
@@ -20,11 +20,16 @@ import BaseDropzone from "@/components/base/BaseDropzone.vue";
 import BaseFilePreview from "@/components/base/BaseFilePreview.vue";
 import IconUserCircle from "@/components/svg/IconUserCircle.vue";
 import IconClose from "@/components/svg/IconClose.vue";
+import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({
     auth: {
         type: Object,
         required: true,
+    },
+    has_subscription: {
+        type: Boolean,
+        default: false,
     },
 });
 
@@ -62,74 +67,9 @@ function cancelUpload() {
     form.reset();
 }
 
-/**
- * Stripe
- */
-let stripe = null;
-
-// onMounted(async () => {
-//     try {
-//         stripe = await loadStripe(process.env.VUE_APP_STRIPE_PUBLIC_KEY);
-//     } catch (err) {
-//         alert(err);
-//     }
-// });
-
-async function manageSubscription() {
-    if (!auth.user.value.subscription_active) {
-        try {
-            const bodyData = {
-                customerId: `${auth.user.value.stripe_customer}`,
-                username: `${auth.user.value.username}`,
-            };
-
-            const stripeSession = await fetch(
-                "/.netlify/functions/create-stripe-checkout-session",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(bodyData),
-                }
-            );
-
-            const sessionData = await stripeSession.json();
-
-            if (sessionData?.url) {
-                window.location.href = sessionData.url;
-            }
-        } catch (error) {
-            alert(error);
-        }
-    } else {
-        const data = {
-            customer: `${auth.user.value.stripe_customer}`,
-            return_url: `${process.env.VUE_APP_BASE_URL}/${auth.user.value.username}/account`,
-        };
-
-        try {
-            const sessionUrl = await fetch(
-                "/.netlify/functions/stripe-customer-portal",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                }
-            );
-
-            const rawData = await sessionUrl.json();
-
-            if (rawData) {
-                window.location.href = rawData.url;
-            }
-        } catch (error) {
-            alert(error);
-        }
-    }
-}
+const manageSubscriptionUrl = computed(() => {
+    return props.has_subscription ? "/billing-portal" : "/subscription";
+});
 </script>
 
 <template>
@@ -289,30 +229,30 @@ async function manageSubscription() {
                         Subscription status:
                         <span
                             :class="
-                                auth.user.subscription_active
+                                has_subscription
                                     ? 'text-green-500'
                                     : 'text-red-500'
                             "
                             >{{
-                                auth.user.subscription_active
-                                    ? "Active"
-                                    : "Inactive"
+                                has_subscription ? "Active" : "Inactive"
                             }}</span
                         >
                     </p>
 
                     <p
                         class="lg:w-1/2 text-sm opacity-50"
-                        v-if="auth.user.subscription_active"
+                        v-if="auth.user.stripe_customer && !has_subscription"
                     >
                         Your subscription is currently inactive. You can still
                         access any previous collections and submissions.
                     </p>
 
                     <div>
-                        <BaseButton type="primary" @click="manageSubscription">
-                            Manage Subscription
-                        </BaseButton>
+                        <a
+                            class="px-3 py-1 font-display text-center rounded-md border-2 border-transparent transition duration-150 ease-in-out bg-red-500 text-white"
+                            :href="manageSubscriptionUrl"
+                            >Manage Subscription</a
+                        >
                     </div>
                 </div>
             </div>

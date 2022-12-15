@@ -56,6 +56,11 @@ const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 const hasCollection = computed(() => {
     return props.collection.length > 0;
 });
+
+function onInputChange(e) {
+    addFiles(e.target.files);
+    e.target.value = null;
+}
 </script>
 
 <template>

@@ -45,10 +45,12 @@ class HandleInertiaRequests extends Middleware
         
         if($request->user()) {
 
-            $collectionDates = Collection::where('user_id', $request->user()->id)->get(['start_date', 'end_date']);
-            $active = Collection::active()->where('user_id', $request->user()->id)->get();
-            $tags = Tag::where('user_id', $request->user()->id)->get();
-            
+            $user = $request->user();
+
+            $collectionDates = Collection::where('user_id', $user->id)->get(['start_date', 'end_date']);
+            $active = Collection::active()->where('user_id', $user->id)->get();
+            $tags = Tag::where('user_id', $user->id)->get();         
+            $hasSubscription = $user->subscribed('Early Bird');   
             
             $interval = new DateInterval('P1D');
             
@@ -68,6 +70,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'unavail_dates' => $unavailDates,
+            'has_subscription' => $hasSubscription ?? false,
             'user_tags' => $tags,
             'global_active' => $active,
             'ziggy' => function () use ($request) {

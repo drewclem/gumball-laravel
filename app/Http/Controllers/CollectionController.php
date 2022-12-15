@@ -49,7 +49,7 @@ class CollectionController extends Controller
     }
 
     public function show(Collection $collection) {
-        $submissions = $collection->submissions()->get();
+        $submissions = $collection->submissions()->orderBy('created_at', 'desc')->get();
         
         return Inertia::render('User/_collectionId', [
             'collection' => $collection,

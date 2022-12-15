@@ -22,7 +22,7 @@ class Collection extends Model
         'isArchived',
     ];
 
-    public function submissions() {
+    public function scopeSubmissions() {
         return $this->hasMany(Submission::class);
     }
 

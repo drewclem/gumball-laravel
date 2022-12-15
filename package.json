@@ -23,9 +23,13 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@stripe/stripe-js": "^1.44.1",
+        "@vueup/vue-quill": "^1.0.0",
         "pinia": "^2.0.22",
         "pinia-plugin-persist": "^1.0.0",
+        "stripe": "^10.17.0",
         "uuid": "^9.0.0",
+        "vue-recaptcha": "^2.0.3",
         "vue3-datepicker": "^0.3.4"
     }
 }

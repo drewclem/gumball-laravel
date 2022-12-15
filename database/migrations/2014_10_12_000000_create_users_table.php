@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('username')->unique();
-            $table->string('stripe_customer')->unique()->nullable();
-            $table->boolean('subscription_active')->default(false);
             $table->string('email')->unique();
             $table->string('instagram_url')->nullable();
             $table->string('tiktok_url')->nullable();
