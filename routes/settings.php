@@ -8,5 +8,6 @@ Route::middleware(['auth', 'verified'])->group(function() {
   Route::get('settings/edit', [RegisteredUserController::class, 'show'])->name('settings.show');
   Route::post('settings', [RegisteredUserController::class, 'edit'])->name('settings.edit');
   Route::post('settings/upload', [RegisteredUserController::class, 'uploadAvatar'])->name('settings.upload');
+  Route::put('settings/set-view-mode', [RegisteredUserController::class, 'setViewMode'])->name('settings.view-mode');
 });
 

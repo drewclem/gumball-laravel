@@ -33,6 +33,7 @@ class User extends Authenticatable
         'facebook_url',
         'subscription_active',
         'terms',
+        'default_view',
         'avatar_path',
     ];
 
@@ -57,7 +58,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'subscription_active' => 'boolean'
+        'subscription_active' => 'boolean',
+        'default_view' => 'boolean'
     ];
 
     public function scopeTags() {
