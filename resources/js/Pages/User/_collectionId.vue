@@ -158,7 +158,7 @@ async function archiveCollection() {}
 async function deleteCollection() {
     if (
         window.confirm(
-            "Are you sure? This will remove any entries from this collection too!"
+            "Are you sure? This will remove all submissions from this collection too!"
         )
     ) {
         Inertia.delete(route("collections.destroy", props.collection));
@@ -166,7 +166,11 @@ async function deleteCollection() {
 }
 
 async function closeCollection() {
-    if (window.confirm("Are you sure? This can't be undone!")) {
+    if (
+        window.confirm(
+            "Are you sure? This will close your current collection window and cease to receive new submissions."
+        )
+    ) {
         Inertia.put(route("collections.close", [props.collection]));
     }
 }
@@ -178,7 +182,7 @@ async function updateViewMode(e) {}
     <div>
         <Head title="Collections" />
 
-        <div class="max-w-4xl">
+        <div>
             <div
                 class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 items-end lg:items-center justify-between mb-8"
             >

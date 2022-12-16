@@ -217,7 +217,7 @@ onUnmounted(() => {
             <div
                 class="px-6 py-12 lg:px-20 bg-gray-50 flex-grow h-full overflow-y-scroll"
             >
-                <div class="max-w-4xl">
+                <div class="max-w-4xl 2xl:max-w-6xl 2xl:mx-auto">
                     <slot />
                 </div>
             </div>

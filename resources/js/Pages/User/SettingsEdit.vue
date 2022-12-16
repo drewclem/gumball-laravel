@@ -42,69 +42,10 @@ const updateUserInfo = () => {
         user: props.auth.user,
     });
 };
-
-// const state = reactive({
-//     avatar_url: null,
-// });
-
-// watchEffect(() => {
-//     (form.username = auth.user.value?.username),
-//         (form.name = auth.user.value?.name),
-//         (form.email = auth.user.value?.email),
-//         (form.instagram_url = auth.user.value?.instagram_url),
-//         (form.tiktok_url = auth.user.value?.tiktok_url),
-//         (form.twitter_url = auth.user.value?.twitter_url),
-//         (form.facebook_url = auth.user.value?.facebook_url);
-//     form.prescreen = auth.user.value?.prescreen;
-//     form.decline_response = auth.user.value?.decline_response;
-// });
-
-// async function downloadAvatar(fileName) {
-//     const { error, data } = await supabase.storage
-//         .from("avatars")
-//         .createSignedUrl(fileName, 60);
-
-//     state.avatar_url = data.signedURL;
-// }
-
-// async function updateUserInfo() {
-//     form.submitting = true;
-//     const { error } = await supabase.from("profiles").upsert({
-//         id: auth.user.value?.id,
-//         name: form.name,
-//         email: form.email,
-//         instagram_url:
-//             form.instagram_url === "" ? null : form.instagram_url,
-//         tiktok_url: form.tiktok_url === "" ? null : form.tiktok_url,
-//         twitter_url: form.twitter_url === "" ? null : form.twitter_url,
-//         facebook_url:
-//             form.facebook_url === "" ? null : form.facebook_url,
-//         prescreen: form.prescreen === "" ? null : form.prescreen,
-//         decline_response:
-//             form.decline_response === "" ? null : form.decline_response,
-//     });
-
-//     if (error) {
-//         alert("Oops! Something went wrong.");
-//     }
-//     setTimeout(() => {
-//         form.submitting = false;
-
-//         router.back();
-//     }, 300);
-
-//     setauth.userId(auth.user.value.id);
-// }
-
-// onMounted(() => {
-//     if (auth.user.value.user_avatar !== null) {
-//         downloadAvatar(auth.user.value.user_avatar);
-//     }
-// });
 </script>
 
 <template>
-    <form class="max-w-4xl">
+    <form>
         <div class="flex items-center justify-between mb-8">
             <div class="flex">
                 <BaseHeading size="h4" tag="h1">Settings</BaseHeading>
@@ -130,9 +71,9 @@ const updateUserInfo = () => {
                 <div class="h-24 w-24 bg-gray-200 rounded-full overflow-hidden">
                     <transition name="fade">
                         <BaseImage
-                            v-if="auth.user.avatar_url"
+                            v-if="auth.user.avatar_path"
                             class="h-24 w-24 object-cover"
-                            :src="auth.user.avatar_url"
+                            :src="`../../${auth.user.avatar_path}`"
                             :alt="auth.user.username"
                         />
                         <IconUserCircle

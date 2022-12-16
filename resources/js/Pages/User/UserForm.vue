@@ -69,7 +69,7 @@ function onInputChange(e) {
         <div class="absolute bg-gray-100 top-0 w-full h-56" />
 
         <transition name="fade" appear>
-            <div class="relative max-w-lg mx-auto mb-12">
+            <div class="relative max-w-lg xl:max-w-2xl mx-auto mb-12">
                 <div
                     class="flex justify-between items-center py-8 lg:py-12 px-6 lg:p-11"
                 >

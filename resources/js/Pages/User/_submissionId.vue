@@ -186,7 +186,7 @@ async function declineSubmission() {
     <div>
         <Head title="Collections" />
 
-        <div class="max-w-4xl">
+        <div>
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-baseline">
                     <BaseHeading size="h4" tag="h1">Collections</BaseHeading>

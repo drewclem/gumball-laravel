@@ -15,8 +15,10 @@ module.exports = {
             display: ["Inter", "Arial", "sans-serif"],
             body: ["Hind", "sans-serif"],
         },
-
         extend: {
+            screens: {
+                "2xl": "1680px",
+            },
             colors: {
                 red: {
                     500: "#D94B4B",

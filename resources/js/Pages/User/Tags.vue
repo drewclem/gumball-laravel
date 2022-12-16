@@ -28,7 +28,7 @@ async function deleteTag(id) {
 </script>
 
 <template>
-    <div class="max-w-4xl">
+    <div>
         <Head title="Tags" />
         <div class="flex items-center justify-between mb-8">
             <div class="flex items-center">

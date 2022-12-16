@@ -142,7 +142,7 @@ async function updateViewMode(e) {
 <template>
     <div>
         <Head title="Inbox" />
-        <div class="max-w-4xl">
+        <div>
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-center">
                     <BaseHeading size="h4" tag="h1">Inbox</BaseHeading>
