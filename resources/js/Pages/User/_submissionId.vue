@@ -118,6 +118,7 @@ async function likeSubmission() {
     Inertia.put(route("submission.like", props.submission));
 }
 
+
 // delete submission
 const deleteSubmission = () => {
     if (window.confirm("This can't be undone! Are you sure?")) {
@@ -134,56 +135,19 @@ const resMessage = ref();
 const isSubmitting = ref(false);
 
 async function declineSubmission() {
-    isSubmitting.value = true;
+    isSubmitting.value = true
 
-    const data = {
-        sender: currentUser.value.email,
-        receiver: submission.value.email,
-        subject: "Thank you for contacting me. However...",
-        text: currentUser.value.decline_response,
-    };
-
-    try {
-        const message = await fetch("/.netlify/functions/send-user-email", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        });
-
-        const mailgunData = await message;
-
-        if (mailgunData.status === 200) {
-            const { error } = await supabase
-                .from("submissions")
-                .update({ is_declined: true })
-                .match({ id: submissionId });
-
-            resMessage.value = "Email sent!";
-        }
-        isSubmitting.value = false;
-    } catch (error) {
-        console.log(error.message);
-
-        isError.value = true;
-        resMessage.value = "Error sending.";
-        isSubmitting.value = false;
-    }
+    Inertia.post(route("submission.decline", props.submission));
 
     setTimeout(() => {
-        resMessage.value = null;
-        isError.value = false;
-    }, 6000);
-
-    await fetchSubmission();
-    await setCollections();
-    await setSavedSubmissions();
+        isSubmitting.value = false
+    }, 1000);
 }
 </script>
 
 <template>
     <div>
+
         <Head title="Collections" />
 
         <div>
@@ -191,13 +155,10 @@ async function declineSubmission() {
                 <div class="flex items-baseline">
                     <BaseHeading size="h4" tag="h1">Collections</BaseHeading>
 
-                    <Link
-                        class="ml-6 opacity-60"
-                        aria-label="View the list of submissions for this collection"
-                        :href="`/collections/${submission.collection_id}`"
-                    >
-                        <IconArrowLeft class="h-3 w-3 inline -mt-0.5" />
-                        Back
+                    <Link class="ml-6 opacity-60" aria-label="View the list of submissions for this collection"
+                        :href="`/collections/${submission.collection_id}`">
+                    <IconArrowLeft class="h-3 w-3 inline -mt-0.5" />
+                    Back
                     </Link>
                 </div>
             </div>
@@ -225,60 +186,35 @@ async function declineSubmission() {
                     <div>
                         <ul>
                             <li>
-                                <input
-                                    type="text"
-                                    class="border border-gray-300 rounded-md px-2 py-1 mb-2"
-                                    placeholder="Add a tag"
-                                    v-model="newTag"
-                                    @focus="showAllTags = true"
-                                />
+                                <input type="text" class="border border-gray-300 rounded-md px-2 py-1 mb-2"
+                                    placeholder="Add a tag" v-model="newTag" @focus="showAllTags = true" />
 
-                                <button
-                                    class="bg-green-100 text-green-700 p-1 rounded-full mt-2 ml-auto"
-                                    v-if="newTag.length > 0 && isUnique"
-                                    @click="createTag(newTag)"
-                                >
+                                <button class="bg-green-100 text-green-700 p-1 rounded-full mt-2 ml-auto"
+                                    v-if="newTag.length > 0 && isUnique" @click="createTag(newTag)">
                                     Create
                                 </button>
 
-                                <ul
-                                    v-if="
-                                        matchedTags.length > 0 &&
-                                        newTag.length > 0
-                                    "
-                                    class="mt-2 flex flex-col space-y-2"
-                                >
-                                    <li
-                                        v-for="tag in matchedTags"
-                                        :key="tag.id"
-                                    >
-                                        <button
-                                            class="tag border border-blue-300"
-                                            type="button"
-                                            @click="applyTag(tag.id)"
-                                        >
+                                <ul v-if="
+                                    matchedTags.length > 0 &&
+                                    newTag.length > 0
+                                " class="mt-2 flex flex-col space-y-2">
+                                    <li v-for="tag in matchedTags" :key="tag.id">
+                                        <button class="tag border border-blue-300" type="button"
+                                            @click="applyTag(tag.id)">
                                             {{ tag.label }}
                                         </button>
                                     </li>
                                 </ul>
                             </li>
 
-                            <li
-                                class="inline-block my-1"
-                                v-for="tag in tags"
-                                :key="tag.id"
-                            >
-                                <div
-                                    class="bg-blue-100 py-1 px-3 rounded-full flex space-x-2 items-center"
-                                >
+                            <li class="inline-block my-1" v-for="tag in tags" :key="tag.id">
+                                <div class="bg-blue-100 py-1 px-3 rounded-full flex space-x-2 items-center">
                                     <span>
                                         {{ tag.label }}
                                     </span>
 
-                                    <button
-                                        class="border border-gray-400 rounded-full p-0.5"
-                                        @click="deleteTag(tag.tag_relation_id)"
-                                    >
+                                    <button class="border border-gray-400 rounded-full p-0.5"
+                                        @click="deleteTag(tag.tag_relation_id)">
                                         <span class="sr-only">
                                             Delete tag {{ tag.label }}
                                         </span>
@@ -290,19 +226,12 @@ async function declineSubmission() {
                     </div>
 
                     <form @submit.prevent="toggleFavorite">
-                        <button
-                            class="flex text-base"
-                            type="submit"
-                            :disabled="submission.is_declined"
-                        >
-                            <IconHeart
-                                class="h-5 w-5 mr-2 -mt-px"
-                                :class="
-                                    submission.is_saved
-                                        ? 'text-red-500'
-                                        : 'text-gray-300'
-                                "
-                            />
+                        <button class="flex text-base" type="submit" :disabled="submission.is_declined">
+                            <IconHeart class="h-5 w-5 mr-2 -mt-px" :class="
+                                submission.is_saved
+                                    ? 'text-red-500'
+                                    : 'text-gray-300'
+                            " />
                             <span v-if="!submission.is_saved">Favorite</span>
                             <span v-else>Favorited</span>
                         </button>
@@ -310,35 +239,23 @@ async function declineSubmission() {
 
                     <hr />
 
-                    <a
-                        :href="`mailto:${submission.email}`"
+                    <a :href="`mailto:${submission.email}`"
                         class="py-0.5 border-2 border-green-500 hover:bg-green-500 hover:text-white text-center rounded-md"
                         :class="
                             submission.booked
                                 ? 'opacity-50 pointer-events-none'
                                 : ''
-                        "
-                        :disabled="submission.booked"
-                    >
+                        " :disabled="submission.booked">
                         Reply
                     </a>
 
-                    <form
-                        class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-center rounded-md"
-                        @submit.prevent="toggleBooked"
-                    >
-                        <button
-                            type="submit"
-                            :class="`${
-                                submission.is_booked
-                                    ? 'bg-blue-500 text-white'
-                                    : ''
-                            } h-full w-full py-1`"
-                            :disabled="submission.is_declined"
-                        >
-                            <span v-if="!submission.is_booked"
-                                >Mark as booked</span
-                            >
+                    <form class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-center rounded-md"
+                        @submit.prevent="toggleBooked">
+                        <button type="submit" :class="`${submission.is_booked
+                        ? 'bg-blue-500 text-white'
+                        : ''
+                        } h-full w-full py-1`" :disabled="submission.is_declined">
+                            <span v-if="!submission.is_booked">Mark as booked</span>
                             <span v-else>Booked</span>
                         </button>
                     </form>
@@ -348,86 +265,52 @@ async function declineSubmission() {
                             Notify your client they won't be selected this
                             round.
                         </p>
-                        <button
-                            type="button"
-                            class="py-0.5 border-2 border-gray-300 text-center rounded-md w-full mb-6"
+                        <button type="button" class="py-0.5 border-2 border-gray-300 text-center rounded-md w-full mb-6"
                             :class="{
                                 'hover:border-gray-400':
                                     !submission.is_declined,
-                            }"
-                            @click="declineSubmission"
-                            :disabled="submission.is_declined || isSubmitting"
-                        >
+                            }" @click="declineSubmission" :disabled="submission.is_declined || isSubmitting">
                             <span v-if="isSubmitting">Sending...</span>
-                            <span v-else-if="submission.is_declined"
-                                >Declined</span
-                            >
+                            <span v-else-if="submission.is_declined">Declined</span>
                             <span v-else>Decline</span>
                         </button>
-                        <p
-                            class="absolute bottom-0 text-xs mt-8"
-                            :class="isError ? 'text-red-500' : 'text-green-500'"
-                        >
+                        <p class="absolute bottom-0 text-xs mt-8" :class="isError ? 'text-red-500' : 'text-green-500'">
                             {{ resMessage }}
                         </p>
                     </div>
 
                     <hr />
 
-                    <button
-                        type="button"
-                        class="text-red-500 underline text-left"
-                        @click="deleteSubmission"
-                    >
+                    <button type="button" class="text-red-500 underline text-left" @click="deleteSubmission">
                         Delete
                     </button>
                 </div>
 
                 <!-- right side -->
                 <div class="order-first lg:order-last lg:w-3/4">
-                    <div
-                        class="card-shadow bg-white p-8 lg:p-12 rounded-lg mb-8"
-                    >
+                    <div class="card-shadow bg-white p-8 lg:p-12 rounded-lg mb-8">
                         <div class="flex justify-between" items-center>
-                            <BaseHeading size="h5" tag="h2" class="mb-5"
-                                >Message</BaseHeading
-                            >
+                            <BaseHeading size="h5" tag="h2" class="mb-5">Message</BaseHeading>
 
                             <div class="flex flex-row space-x-4 mb-4">
-                                <button
-                                    class="flex text-base"
-                                    @click="dislikeSubmission"
-                                >
-                                    <IconThumbDown
-                                        :class="
-                                            submission.is_liked === -1
-                                                ? 'text-red-500'
-                                                : 'text-gray-300 hover:text-gray-500'
-                                        "
-                                    />
-                                    <span
-                                        class="sr-only"
-                                        v-if="submission.is_liked === -1"
-                                    >
+                                <button class="flex text-base" @click="dislikeSubmission">
+                                    <IconThumbDown :class="
+                                        submission.is_liked === -1
+                                            ? 'text-red-500'
+                                            : 'text-gray-300 hover:text-gray-500'
+                                    " />
+                                    <span class="sr-only" v-if="submission.is_liked === -1">
                                         Disliked
                                     </span>
                                 </button>
 
-                                <button
-                                    class="flex text-base"
-                                    @click="likeSubmission"
-                                >
-                                    <IconThumbUp
-                                        :class="
-                                            submission.is_liked === 1
-                                                ? 'text-green-500'
-                                                : 'text-gray-300 hover:text-gray-500'
-                                        "
-                                    />
-                                    <span
-                                        class="sr-only"
-                                        v-if="submission.is_liked === 1"
-                                    >
+                                <button class="flex text-base" @click="likeSubmission">
+                                    <IconThumbUp :class="
+                                        submission.is_liked === 1
+                                            ? 'text-green-500'
+                                            : 'text-gray-300 hover:text-gray-500'
+                                    " />
+                                    <span class="sr-only" v-if="submission.is_liked === 1">
                                         Liked
                                     </span>
                                 </button>
@@ -436,31 +319,20 @@ async function declineSubmission() {
                         <div class="richtext" v-html="submission.message" />
                     </div>
 
-                    <div
-                        v-if="images"
-                        class="card-shadow bg-white p-8 lg:p-12 rounded-lg"
-                    >
+                    <div v-if="images" class="card-shadow bg-white p-8 lg:p-12 rounded-lg">
                         <BaseHeading size="h5" tag="h2" class="mb-5">
                             Reference media
                         </BaseHeading>
 
-                        <ul
-                            class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8"
-                        >
+                        <ul class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
                             <li v-for="(image, index) in images" :key="index">
                                 <BaseModal>
                                     <template #button>
-                                        <BaseImage
-                                            class="img-list hover:scale-125 ease-in-out transform"
-                                            :src="`/${image.file_path}`"
-                                            alt="Img thumbnail"
-                                        />
+                                        <BaseImage class="img-list hover:scale-125 ease-in-out transform"
+                                            :src="`/${image.file_path}`" alt="Img thumbnail" />
                                     </template>
                                     <template #content>
-                                        <BaseImage
-                                            class="rounded-lg"
-                                            :src="`/${image.file_path}`"
-                                        />
+                                        <BaseImage class="rounded-lg" :src="`/${image.file_path}`" />
                                     </template>
                                 </BaseModal>
                             </li>

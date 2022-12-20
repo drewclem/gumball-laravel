@@ -6,8 +6,9 @@ use App\Http\Resources\SubmissionResource;
 use App\Models\Submission;
 use App\Models\SubmissionUpload;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
+use Mailgun\Mailgun;
 
 class SubmissionController extends Controller
 {
@@ -145,5 +146,21 @@ class SubmissionController extends Controller
         $submission->delete();
 
         return redirect($redirect_url);
+    }
+
+    public function decline(Request $request, Submission $submission) {
+        $mg = Mailgun::create(env('MAILGUN_PRIVATE_KEY'));
+        $user = $request->user()->name;
+
+        $mg->messages()->send(env('MAILGUN_DOMAIN'), [
+            'from' => 'support@heygumball.com',
+            'to' => $submission->email,
+            'subject' => "Message from : $user",
+            'text' => $request->user()->decline_response
+        ]);
+
+        $submission->update([
+            'is_declined' => true
+        ]);
     }
 }
