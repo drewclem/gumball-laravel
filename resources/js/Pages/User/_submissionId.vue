@@ -8,14 +8,12 @@ export default {
 <script setup>
 // utils
 import { ref, computed } from "vue";
-import { Head, useForm } from "@inertiajs/inertia-vue3";
+import { Head } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 
 // components
 import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
 import BaseImage from "@/components/base/BaseImage.vue";
-import BaseInput from "@/components/base/BaseInput.vue";
 import BaseModal from "@/components/base/BaseModal.vue";
 
 import IconHeart from "@/components/svg/IconHeart.vue";
@@ -250,6 +248,7 @@ async function declineSubmission() {
                     </a>
 
                     <form class="border-2 border-blue-500 hover:bg-blue-500 hover:text-white text-center rounded-md"
+                        :class="{ 'pointer-events-none opacity-50': submission.is_declined }"
                         @submit.prevent="toggleBooked">
                         <button type="submit" :class="`${submission.is_booked
                         ? 'bg-blue-500 text-white'
@@ -274,9 +273,6 @@ async function declineSubmission() {
                             <span v-else-if="submission.is_declined">Declined</span>
                             <span v-else>Decline</span>
                         </button>
-                        <p class="absolute bottom-0 text-xs mt-8" :class="isError ? 'text-red-500' : 'text-green-500'">
-                            {{ resMessage }}
-                        </p>
                     </div>
 
                     <hr />
