@@ -15,7 +15,7 @@ import { useDates } from "@/utils/dates";
 // components
 import BaseHeading from "@/Components/base/BaseHeading.vue";
 import BaseText from "@/Components/base/BaseText.vue";
-import BaseChecboxToggle from "@/Components/base/BaseCheckboxToggle.vue";
+import BaseCheckboxToggle from "@/Components/base/BaseCheckboxToggle.vue";
 import BaseSelect from "@/Components/base/BaseSelect.vue";
 import SubmissionCard from "@/Components/dashboard/SubmissionCard.vue";
 import SubmissionCardLarge from "@/Components/dashboard/SubmissionCardLarge.vue";
@@ -32,6 +32,9 @@ import IconLockClosed from "@/Components/svg/IconLockClosed.vue";
 const copySuccess = ref(false);
 
 const props = defineProps({
+    auth: {
+        type: Object,
+    },
     collection: {
         type: Object,
     },
@@ -175,7 +178,9 @@ async function closeCollection() {
     }
 }
 
-async function updateViewMode(e) {}
+async function updateViewMode(e) {
+    Inertia.put(route("settings.view-mode"));
+}
 </script>
 
 <template>
@@ -209,16 +214,16 @@ async function updateViewMode(e) {}
                     <div
                         class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6"
                     >
-                        <!-- <div class="flex space-x-2 items-center text-sm">
-                        <p class="text-blue-500">Message</p>
-                        <BaseCheckboxToggle
-                            id="`viewMode`"
-                            v-model:checked="currentUser.default_view"
-                            :modelValue="currentUser.default_view"
-                            @update:checked="updateViewMode"
-                        />
-                        <p class="text-blue-500">Info</p>
-                    </div> -->
+                        <div class="flex space-x-2 items-center text-sm">
+                            <p class="text-blue-500">Info</p>
+                            <BaseCheckboxToggle
+                                id="`viewMode`"
+                                v-model:checked="auth.user.default_view"
+                                :modelValue="auth.user.default_view"
+                                @update:checked="updateViewMode"
+                            />
+                            <p class="text-blue-500">Image</p>
+                        </div>
 
                         <button
                             class="flex space-x-1 text-red-500 opacity-75 hover:opacity-100"

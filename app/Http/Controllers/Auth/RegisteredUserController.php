@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Collection;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -106,6 +107,15 @@ class RegisteredUserController extends Controller
 
         $user->update([
             'avatar_path'=> $avatarPath
+        ]);
+    }
+
+    public function setViewMode(Request $request) {
+
+        $user = $request->user();
+
+        $user->update([
+            'default_view' => !$user->default_view
         ]);
     }
 }

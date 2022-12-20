@@ -25,6 +25,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('prescreen')->nullable();
             $table->text('decline_response');
+            $table->boolean('default_view')->default(false);
             $table->string('password');
             $table->boolean('terms')->default(false);
             $table->rememberToken();
