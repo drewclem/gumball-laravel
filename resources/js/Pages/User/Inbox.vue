@@ -9,11 +9,12 @@ export default {
 // utils
 import { ref, computed } from "vue";
 import { Head } from "@inertiajs/inertia-vue3";
+import { Inertia } from "@inertiajs/inertia";
 
 // components
 import BaseHeading from "@/components/base/BaseHeading.vue";
 import BaseText from "@/components/base/BaseText.vue";
-import BaseChecboxToggle from "@/components/base/BaseCheckboxToggle.vue";
+import BaseCheckboxToggle from "@/components/base/BaseCheckboxToggle.vue";
 import CopyShareLink from "@/components/dashboard/CopyShareLink.vue";
 import SubmissionCardLarge from "@/components/dashboard/SubmissionCardLarge.vue";
 import SubmissionCard from "@/components/dashboard/SubmissionCard.vue";
@@ -28,6 +29,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    auth: {
+        type: Object,
+        required: true
+    }
 });
 
 /**
@@ -130,47 +135,32 @@ const filteredSubmissions = computed(() => {
 });
 
 async function updateViewMode(e) {
-    if (window.confirm("Would you like to set this as your default view?")) {
-        const { error } = await supabase
-            .from("profiles")
-            .update({ default_view: e })
-            .match({ id: currentUser.id });
-    }
+    Inertia.put(route("settings.view-mode"));
 }
 </script>
 
 <template>
     <div>
+
         <Head title="Inbox" />
         <div>
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-center">
                     <BaseHeading size="h4" tag="h1">Inbox</BaseHeading>
 
-                    <div
-                        class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm ml-6"
-                    >
-                        <!-- <div class="flex space-x-2 items-center text-sm">
-                        <p class="text-blue-500">Message</p>
-                        <BaseChecboxToggle
-                            id="`viewMode`"
-                            v-model:checked="currentUser.default_view"
-                            :modelValue="currentUser.default_view"
-                            @update:checked="updateViewMode"
-                        />
-                        <p class="text-blue-500">Info</p>
-                    </div> -->
+                    <div class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6">
+                        <div class="flex space-x-2 items-center text-sm">
+                            <p class="text-blue-500">Info</p>
+                            <BaseCheckboxToggle id="`viewMode`" v-model:checked="auth.user.default_view"
+                                :modelValue="auth.user.default_view" @update:checked="updateViewMode" />
+                            <p class="text-blue-500">Image</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <div
-                        class="absolute top-0 right-0 flex justify-center items-center -mt-4"
-                    >
-                        <KeywordSearch
-                            class="flex mr-4"
-                            v-model="searchPhrase"
-                        />
+                    <div class="absolute top-0 right-0 flex justify-center items-center -mt-4">
+                        <KeywordSearch class="flex mr-4" v-model="searchPhrase" />
                         <!-- <BaseSelect
                         :options="currentUser.tags"
                         v-model="filterWord"
@@ -188,17 +178,11 @@ async function updateViewMode(e) {
                 Filter
             </BaseSelect>-->
 
-                <KeywordSearch
-                    class="lg:hidden"
-                    v-model="searchPhrase"
-                    :value="searchPhrase"
-                />
+                <KeywordSearch class="lg:hidden" v-model="searchPhrase" :value="searchPhrase" />
             </div>
 
             <div>
-                <div
-                    class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4"
-                >
+                <div class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4">
                     <p class="col-span-2">Name</p>
                     <p class="col-span-2">Email</p>
                     <p>Phone</p>
@@ -212,24 +196,14 @@ async function updateViewMode(e) {
                     </div>
 
                     <div v-else-if="!filteredSubmissions.length">
-                        <BaseHeading
-                            class="text-red-500 mb-5"
-                            size="h3"
-                            tag="h2"
-                            >Uh oh!</BaseHeading
-                        >
-                        <BaseText
-                            >Looks like we couldn't find anything.</BaseText
-                        >
+                        <BaseHeading class="text-red-500 mb-5" size="h3" tag="h2">Uh oh!</BaseHeading>
+                        <BaseText>Looks like we couldn't find anything.</BaseText>
                         <BaseText size="small">Check for typos!</BaseText>
                     </div>
 
                     <template v-else>
-                        <SubmissionCard
-                            v-for="submission in filteredSubmissions"
-                            :key="submission.id"
-                            :submission="submission"
-                        />
+                        <SubmissionCard v-for="submission in filteredSubmissions" :key="submission.id"
+                            :submission="submission" />
                     </template>
                 </div>
             </div>

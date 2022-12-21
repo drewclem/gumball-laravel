@@ -50,19 +50,14 @@ onUnmounted(() => {
         <DashboardHeader :currentUser="$page.props.auth.user" />
 
         <main class="flex relative">
-            <div
-                class="hidden bg-white lg:flex h-full flex-col px-6 py-12 lg:w-[60]"
-            >
+            <div class="hidden bg-white lg:flex h-full flex-col px-6 py-12 lg:w-[60]">
                 <div class="flex-grow">
                     <div class="flex flex-col space-y-5 mb-6 lg:mb-12">
                         <BaseModal>
                             <template #button>
                                 <div
-                                    class="flex items-center group px-3 py-0.5 font-display text-center rounded-md transition duration-150 text-white ease-in-out bg-green-500 hover:bg-green-600 border-2 border-transparent"
-                                >
-                                    <IconSchedule
-                                        class="text-white w-4 h-4 opacity-75 mr-2"
-                                    />
+                                    class="flex items-center group px-3 py-0.5 font-display text-center rounded-md transition duration-150 text-white ease-in-out bg-green-500 hover:bg-green-600 border-2 border-transparent">
+                                    <IconSchedule class="text-white w-4 h-4 opacity-75 mr-2" />
                                     <span class="text-xs lg:text-base">
                                         Schedule
                                         <span class="hidden lg:inline-block">
@@ -73,13 +68,11 @@ onUnmounted(() => {
                             </template>
 
                             <template #content>
-                                <ScheduleCollection
-                                    :disabled-dates="disabledDates"
-                                />
+                                <ScheduleCollection :disabled-dates="disabledDates" />
                             </template>
                         </BaseModal>
 
-                        <BaseModal :disabled="hasActive">
+                        <!-- <BaseModal :disabled="hasActive">
                             <template #button>
                                 <div
                                     class="flex items-center px-3 lg:px-6 py-0.5 font-display text-xs lg:text-base text-center rounded-md border-2 border-transparent transition duration-150 ease-in-out border-blue-500 text-black group-hover:bg-blue-500 group-hover:text-white mb-2"
@@ -94,27 +87,21 @@ onUnmounted(() => {
                             <template #content>
                                 <OpenCollection />
                             </template>
-                        </BaseModal>
+                        </BaseModal> -->
                     </div>
 
                     <nav>
                         <ul class="flex flex-col space-y-3">
                             <li>
-                                <BaseLink
-                                    class="group py-0.5"
-                                    href="/collections"
-                                >
+                                <BaseLink class="group py-0.5" href="/collections">
                                     <template #icon>
-                                        <IconCollection
-                                            :class="
-                                                $page.props.ziggy.location.includes(
-                                                    'collections'
-                                                )
-                                                    ? 'text-green-500'
-                                                    : 'group-hover:text-gray-400'
-                                            "
-                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
-                                        />
+                                        <IconCollection :class="
+                                            $page.props.ziggy.location.includes(
+                                                'collections'
+                                            )
+                                                ? 'text-green-500'
+                                                : 'group-hover:text-gray-400'
+                                        " class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5" />
                                     </template>
                                     Collections
                                 </BaseLink>
@@ -122,36 +109,27 @@ onUnmounted(() => {
                             <li>
                                 <BaseLink class="group py-0.5" href="/inbox">
                                     <template #icon>
-                                        <IconInbox
-                                            :class="
-                                                $page.props.ziggy.location.includes(
-                                                    'inbox'
-                                                )
-                                                    ? 'text-green-500'
-                                                    : 'group-hover:text-gray-400'
-                                            "
-                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
-                                        />
+                                        <IconInbox :class="
+                                            $page.props.ziggy.location.includes(
+                                                'inbox'
+                                            )
+                                                ? 'text-green-500'
+                                                : 'group-hover:text-gray-400'
+                                        " class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5" />
                                     </template>
                                     Inbox
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink
-                                    class="group py-0.5"
-                                    href="/favorites"
-                                >
+                                <BaseLink class="group py-0.5" href="/favorites">
                                     <template #icon>
-                                        <IconHeart
-                                            :class="
-                                                $page.props.ziggy.location.includes(
-                                                    'favorites'
-                                                )
-                                                    ? 'text-green-500'
-                                                    : 'group-hover:text-gray-400'
-                                            "
-                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
-                                        />
+                                        <IconHeart :class="
+                                            $page.props.ziggy.location.includes(
+                                                'favorites'
+                                            )
+                                                ? 'text-green-500'
+                                                : 'group-hover:text-gray-400'
+                                        " class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5" />
                                     </template>
                                     Favorites
                                 </BaseLink>
@@ -159,29 +137,22 @@ onUnmounted(() => {
                             <li>
                                 <BaseLink class="group py-0.5" href="/tags">
                                     <template #icon>
-                                        <IconTag
-                                            :class="
-                                                $page.props.ziggy.location.includes(
-                                                    'tags'
-                                                )
-                                                    ? 'text-green-500'
-                                                    : 'group-hover:text-gray-400'
-                                            "
-                                            class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5"
-                                        />
+                                        <IconTag :class="
+                                            $page.props.ziggy.location.includes(
+                                                'tags'
+                                            )
+                                                ? 'text-green-500'
+                                                : 'group-hover:text-gray-400'
+                                        " class="text-gray-200 w-3 lg:w-5 h-3 lg:h-5" />
                                     </template>
                                     Tags
                                 </BaseLink>
                             </li>
                             <li>
-                                <BaseLink
-                                    class="group py-0.5"
-                                    :href="`/${$page.props.auth.user.username}`"
-                                >
+                                <BaseLink class="group py-0.5" :href="`/${$page.props.auth.user.username}`">
                                     <template #icon>
                                         <IconForm
-                                            class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5"
-                                        />
+                                            class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5" />
                                     </template>
                                     Live Form
                                 </BaseLink>
@@ -193,30 +164,21 @@ onUnmounted(() => {
                 <footer class="flex flex-col space-y-3">
                     <BaseLink class="group py-0.5" href="/settings">
                         <template #icon>
-                            <IconUser
-                                class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5"
-                            />
+                            <IconUser class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5" />
                         </template>
                         Account
                     </BaseLink>
 
                     <div class="base-wrapper mx-auto">
-                        <Link
-                            class="text-sm lg:text-base opacity-50 hover:opacity-100"
-                            :href="route('logout')"
-                            method="post"
-                            as="button"
-                            theme="secondary"
-                        >
-                            Sign Out
+                        <Link class="text-sm lg:text-base opacity-50 hover:opacity-100" :href="route('logout')"
+                            method="post" as="button" theme="secondary">
+                        Sign Out
                         </Link>
                     </div>
                 </footer>
             </div>
 
-            <div
-                class="px-6 py-12 lg:px-20 bg-gray-50 flex-grow h-full overflow-y-scroll"
-            >
+            <div class="px-6 py-12 lg:px-20 bg-gray-50 flex-grow h-full overflow-y-scroll">
                 <div class="max-w-4xl 2xl:max-w-6xl 2xl:mx-auto">
                     <slot />
                 </div>

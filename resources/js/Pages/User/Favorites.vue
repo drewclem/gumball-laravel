@@ -9,6 +9,7 @@ export default {
 <script setup>
 // utils
 import { ref, computed } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-vue3";
 
 // components
@@ -27,6 +28,10 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    auth: {
+        type: Object,
+        required: true
+    }
 });
 
 /**
@@ -77,29 +82,28 @@ const filteredSubmissions = computed(() => {
             return submission;
     });
 });
+
+async function updateViewMode(e) {
+    Inertia.put(route("settings.view-mode"));
+}
 </script>
 
 <template>
     <div>
+
         <Head title="Favorites" />
         <div>
             <div class="flex items-center justify-between mb-8">
                 <div class="flex items-center">
                     <BaseHeading size="h4" tag="h1">Favorites</BaseHeading>
 
-                    <div
-                        class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm ml-6"
-                    >
-                        <!-- <div class="flex space-x-2 items-center text-sm">
-                        <p class="text-blue-500">Message</p>
-                        <BaseCheckboxToggle
-                            id="`viewMode`"
-                            v-model:checked="currentUser.default_view"
-                            :modelValue="currentUser.default_view"
-                            @update:checked="updateViewMode"
-                        />
-                        <p class="text-blue-500">Info</p>
-                    </div> -->
+                    <div class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6">
+                        <div class="flex space-x-2 items-center text-sm">
+                            <p class="text-blue-500">Info</p>
+                            <BaseCheckboxToggle id="`viewMode`" v-model:checked="auth.user.default_view"
+                                :modelValue="auth.user.default_view" @update:checked="updateViewMode" />
+                            <p class="text-blue-500">Image</p>
+                        </div>
                     </div>
                 </div>
 
@@ -141,9 +145,7 @@ const filteredSubmissions = computed(() => {
             </div>
 
             <div>
-                <div
-                    class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4"
-                >
+                <div class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4">
                     <p class="col-span-2">Name</p>
                     <p class="col-span-2">Email</p>
                     <p>Phone</p>
@@ -156,24 +158,14 @@ const filteredSubmissions = computed(() => {
                     </div>
 
                     <div v-else-if="!filteredSubmissions.length">
-                        <BaseHeading
-                            class="text-red-500 mb-5"
-                            size="h3"
-                            tag="h2"
-                            >Uh oh!</BaseHeading
-                        >
-                        <BaseText
-                            >Looks like we couldn't find anything.</BaseText
-                        >
+                        <BaseHeading class="text-red-500 mb-5" size="h3" tag="h2">Uh oh!</BaseHeading>
+                        <BaseText>Looks like we couldn't find anything.</BaseText>
                         <BaseText size="small">Check for typos!</BaseText>
                     </div>
 
                     <template v-else>
-                        <SubmissionCard
-                            v-for="submission in filteredSubmissions"
-                            :key="submission.id"
-                            :submission="submission"
-                        />
+                        <SubmissionCard v-for="submission in filteredSubmissions" :key="submission.id"
+                            :submission="submission" />
                     </template>
                 </div>
             </div>

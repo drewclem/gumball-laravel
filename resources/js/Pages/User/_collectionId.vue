@@ -240,9 +240,9 @@ async function updateViewMode(e) {
 
                 <div class="relative hidden lg:block">
                     <div class="absolute top-0 right-0 flex justify-center items-center -mt-4">
-                        <form @submit.prevent="submitSearch">
+                        <!-- <form @submit.prevent="submitSearch">
                             <KeywordSearch class="flex mr-4" v-model="searchInput" />
-                        </form>
+                        </form> -->
                         <!-- <BaseSelect
                             :options="currentUser.tags"
                             v-model="filterWord"
