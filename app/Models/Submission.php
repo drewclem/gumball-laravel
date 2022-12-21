@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Submission extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'collection_id',
@@ -33,6 +35,10 @@ class Submission extends Model
 
     public function scopeTags() {
         return $this->hasMany(TagRelation::class);
+    }
+
+    public function searchableAs() {
+        return 'submissions_index';
     }
 
 }

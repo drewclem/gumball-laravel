@@ -4,6 +4,7 @@ use App\Http\Controllers\LiveFormController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\TagRelationController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BillingPortalController;
 use App\Http\Controllers\ManageSubscriptionController;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,7 @@ Route::inertia('sign-in', 'Auth/SignIn')->name('sign-in');
 Route::inertia('create-account', 'Auth/CreateAccount')->name('create-account');
 Route::inertia('terms-of-service', 'TermsAndConditions')->name('terms-of-service');
 Route::inertia('privacy-policy', 'PrivacyPolicy')->name('privacy-policy');
+Route::put('search', [SearchController::class, 'search'])->middleware(['auth', 'verified'])->name('search');
 
 Route::get('favorites', [SubmissionController::class, 'showFavorites'])->middleware(['auth', 'verified'])->name('favorites');
 Route::get('inbox', [SubmissionController::class, 'inbox'])->middleware(['auth', 'verified'])->name('inbox');
