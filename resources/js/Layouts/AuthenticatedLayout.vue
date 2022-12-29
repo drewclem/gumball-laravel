@@ -18,6 +18,14 @@ import IconSchedule from "@/Components/svg/IconSchedule.vue";
 import IconLock from "@/Components/svg/IconLock.vue";
 
 const props = defineProps({
+    auth: {
+        type: Object,
+        required: true,
+    },
+    has_subscription: {
+        type: Boolean,
+        default: false
+    },
     unavail_dates: {
         type: Array,
     },
@@ -47,12 +55,12 @@ onUnmounted(() => {
 
 <template>
     <div class="min-h-screen">
-        <DashboardHeader :currentUser="$page.props.auth.user" />
+        <DashboardHeader :current-user="auth.user" />
 
         <main class="flex relative">
             <div class="hidden bg-white lg:flex h-full flex-col px-6 py-12 lg:w-[60]">
                 <div class="flex-grow">
-                    <div class="flex flex-col space-y-5 mb-6 lg:mb-12">
+                    <div v-if="has_subscription" class="flex flex-col space-y-5 mb-6 lg:mb-12">
                         <BaseModal>
                             <template #button>
                                 <div
@@ -92,7 +100,7 @@ onUnmounted(() => {
 
                     <nav>
                         <ul class="flex flex-col space-y-3">
-                            <li>
+                            <li v-if="has_subscription">
                                 <BaseLink class="group py-0.5" href="/collections">
                                     <template #icon>
                                         <IconCollection :class="
@@ -154,7 +162,7 @@ onUnmounted(() => {
                                         <IconForm
                                             class="text-gray-200 group-hover:text-gray-300 w-3 lg:w-5 h-3 lg:h-5" />
                                     </template>
-                                    Live Form
+                                    Request Form
                                 </BaseLink>
                             </li>
                         </ul>
