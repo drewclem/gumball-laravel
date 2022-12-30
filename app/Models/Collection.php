@@ -19,7 +19,7 @@ class Collection extends Model
         'user_id',
         'start_date',
         'end_date',
-        'isArchived',
+        'is_archived',
     ];
 
     public function scopeSubmissions() {
@@ -32,9 +32,13 @@ class Collection extends Model
     }
     
     public function scopeActive() {
-        $current_date = Carbon::now()->toDateTimeString();
+        $mutable = Carbon::now()->subDay();
+
+        $current_date = $mutable->toDateTimeString();
         
-        $active = Collection::whereRaw('? between start_date and end_date', [$current_date]);
+        $active = Collection::whereRaw('? between start_date and end_date', [$current_date])->orWhere(function($query) use($current_date) {
+            $query->where('start_date', '>', $current_date)->where('end_date', null);
+        });
 
         return $active;
     }

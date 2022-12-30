@@ -42,6 +42,9 @@ const props = defineProps({
     submissions: {
         type: Array,
     },
+    has_subscription: {
+        type: Boolean
+    }
 });
 
 const { currentDate } = useDates();
@@ -224,13 +227,13 @@ async function updateViewMode(e) {
                             <p class="text-blue-500">Image</p>
                         </div>
 
-                        <button class="flex space-x-1 text-red-500 opacity-75 hover:opacity-100"
+                        <button v-if="has_subscription" class="flex space-x-1 text-red-500 opacity-75 hover:opacity-100"
                             @click="deleteCollection">
                             <IconDelete class="h-4 w-4 mr-2" />
                             <span>Delete</span>
                         </button>
 
-                        <button v-if="isOpen" class="flex space-x-1 text-blue-500 opacity-75 hover:opacity-100"
+                        <button v-if="isOpen && has_subscription" class="flex space-x-1 text-blue-500 opacity-75 hover:opacity-100"
                             @click="closeCollection">
                             <IconLockClosed class="h-4 w-4 mr-2" />
                             <span>Close</span>

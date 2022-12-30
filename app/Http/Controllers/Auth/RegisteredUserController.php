@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Collection;
+use App\Actions\StoreCollectionAction;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class RegisteredUserController extends Controller
 {
@@ -40,7 +41,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request, StoreCollectionAction $createCollection)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -61,6 +62,14 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         $user->createAsStripeCustomer();
+
+        $current_date = Carbon::now()->toDateTimeString();
+        
+        $createCollection->handle([
+            'user' => $user,
+            'start_date' => $current_date,
+            'end_date' => null
+        ]);
 
         Auth::login($user);
 
