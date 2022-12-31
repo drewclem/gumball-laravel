@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SubmissionResource;
+use App\Actions\GetSubmissionTagsAction;
 use App\Models\Submission;
 use App\Models\SubmissionUpload;
 use Illuminate\Http\Request;
@@ -117,16 +118,26 @@ class SubmissionController extends Controller
         }
     }
 
-    public function showFavorites() {
+    public function showFavorites(GetSubmissionTagsAction $action) {
         $submissions = Submission::where('is_saved', 1)->get();
+
+        foreach($submissions as $submission) {
+            $submission->tags = $action->handle($submission);
+            $submission->images = $submission->images()->get();
+        }
 
         return Inertia::render('User/Favorites', [
             'submissions' => $submissions,
         ]);
     }
 
-    public function inbox() {
+    public function inbox(GetSubmissionTagsAction $action) {
         $submissions = Submission::all();
+
+        foreach($submissions as $submission) {
+            $submission->tags = $action->handle($submission);
+            $submission->images = $submission->images()->get();
+        }
 
         return Inertia::render('User/Inbox', [
             'submissions' => $submissions,

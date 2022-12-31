@@ -1,5 +1,5 @@
 <template>
-    <div class="relative flex flex-col">
+    <div class="base-select relative flex flex-col">
         <label class="absolute text-xs -mt-5 ml-3 text-gray-500" :for="id">
             <slot>Select an option</slot> <span v-if="isRequired">*</span>
         </label>
@@ -50,3 +50,9 @@ const props = defineProps({
     },
 });
 </script>
+
+<style scoped>
+.base-select {
+    min-width: 8rem;
+}
+</style>

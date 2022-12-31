@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Actions\GetSubmissionTagsAction;
 use App\Models\Collection;
 use App\Actions\StoreCollectionAction;
 use Inertia\Inertia;
@@ -48,8 +49,13 @@ class CollectionController extends Controller
         return redirect('collections');
     }
 
-    public function show(Collection $collection) {
+    public function show(Collection $collection, GetSubmissionTagsAction $action) {
         $submissions = $collection->submissions()->orderBy('created_at', 'desc')->get();
+
+        foreach($submissions as $submission) {
+            $submission->tags = $action->handle($submission);
+            $submission->images = $submission->images()->get();
+        }
         
         return Inertia::render('User/_collectionId', [
             'collection' => $collection,

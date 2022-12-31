@@ -169,9 +169,9 @@ async function declineSubmission() {
                         <p>{{ submission.name }}</p>
                     </div>
 
-                    <div>
+                    <div class="overflow-hidden">
                         <BaseHeading size="h5" tag="h2">Email</BaseHeading>
-                        <p>{{ submission.email }}</p>
+                        <p class="truncate">{{ submission.email }}</p>
                     </div>
 
                     <div>

@@ -3,7 +3,6 @@
 namespace App\Actions;
 
 use App\Models\Collection;
-use Illuminate\Http\Request;
 
 class StoreCollectionAction {
 

@@ -44,6 +44,9 @@ const props = defineProps({
     },
     has_subscription: {
         type: Boolean
+    },
+    user_tags: {
+        type: Array
     }
 });
 
@@ -132,35 +135,33 @@ const filteredSubmissions = computed(() => {
             });
         }
 
-        // if (
-        //     (filterWord !== null || filterWord !== "null") &&
-        //     (searchPhrase !== null || searchPhrase !== "")
-        // ) {
-        //     const search = searchPhrase?.value?.toLowerCase();
-        //     const filter = filterWord?.value?.toLowerCase();
+        if (
+            (filterWord.value !== null || filterWord.value !== "null") &&
+            (searchPhrase.value !== null || searchPhrase.value !== "")
+        ) {
+            const search = searchPhrase?.value?.toLowerCase();
+            const filter = filterWord?.value?.toLowerCase();
 
-        //     const email = submission.email?.toLowerCase();
-        //     const name = submission.name?.toLowerCase();
-        //     const message = submission.message?.toLowerCase();
+            const email = submission.email?.toLowerCase();
+            const name = submission.name?.toLowerCase();
+            const message = submission.message?.toLowerCase();
 
-        //     submission.tags.filter((tag) => {
-        //         const label = tag.label.toLowerCase();
-        //         if (
-        //             label.includes(filter) &&
-        //             (email.includes(search) ||
-        //                 name.includes(search) ||
-        //                 message.includes(search) ||
-        //                 submission.phone.includes(search))
-        //         )
-        //             matched = true;
-        //     });
-        // }
+            submission.tags.filter((tag) => {
+                const label = tag.label.toLowerCase();
+                if (
+                    label.includes(filter) &&
+                    (email.includes(search) ||
+                        name.includes(search) ||
+                        message.includes(search) ||
+                        submission.phone.includes(search))
+                )
+                    matched = true;
+            });
+        }
 
         if (matched) return submission;
     });
 });
-
-const searchInput = ref();
 
 const searchResults = ref([])
 
@@ -243,32 +244,30 @@ async function updateViewMode(e) {
 
                 <div class="relative hidden lg:block">
                     <div class="absolute top-0 right-0 flex justify-center items-center -mt-4">
-                        <!-- <form @submit.prevent="submitSearch">
-                            <KeywordSearch class="flex mr-4" v-model="searchInput" />
-                        </form> -->
-                        <!-- <BaseSelect
-                            :options="currentUser.tags"
+                        <KeywordSearch class="flex mr-4" v-model="searchPhrase" />
+                        <BaseSelect
+                            :options="user_tags"
                             v-model="filterWord"
                         >
                             Filter
-                        </BaseSelect> -->
+                        </BaseSelect>
                     </div>
                 </div>
 
-                <!-- <BaseSelect
+                <BaseSelect
                     class="w-full lg:hidden"
-                    :options="currentUser.tags"
+                    :options="user_tags"
                     v-model="filterWord"
                 >
                     Filter
-                </BaseSelect> -->
+                </BaseSelect>
 
                 <input ref="search"
                     class="lg:hidden py-2 px-4 border border-gray-300 rounded-full h-[34px] w-full bg-transparent focus:bg-white focus:border-gray-500"
                     type="text" placeholder="Search" v-model="searchPhrase" />
             </div>
 
-            <div>
+            <div v-if="!auth.user.default_view">
                 <div class="grid grid-cols-6 px-5 gap-2 py-3 lg:px-8 text-sm lg:text-base lg:py-4 opacity-40 mb-4">
                     <p class="col-span-2">Name</p>
                     <p class="col-span-2">Email</p>
@@ -277,7 +276,6 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="flex flex-col space-y-6">
-                    <!-- <p class="opacity-50" v-if="loading">Loading...</p> -->
 
                     <div v-if="!submissions.length">
                         <p class="mb-5">No submissions yet! Share that link!</p>
@@ -301,7 +299,7 @@ async function updateViewMode(e) {
                 </div>
             </div>
 
-            <!-- <div v-else>
+            <div v-else>
                 <div
                     class="
                         grid grid-cols-5
@@ -321,7 +319,6 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="flex flex-col space-y-8">
-                    <p class="opacity-50" v-if="loading">Loading...</p>
 
                     <div v-if="!submissions.length">
                         <p class="mb-5">No submissions yet! Share that link!</p>
@@ -350,7 +347,7 @@ async function updateViewMode(e) {
                         />
                     </template>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
