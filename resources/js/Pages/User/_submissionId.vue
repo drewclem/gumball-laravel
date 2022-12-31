@@ -212,7 +212,7 @@ async function declineSubmission() {
                                     </span>
 
                                     <button class="border border-gray-400 rounded-full p-0.5"
-                                        @click="deleteTag(tag.tag_relation_id)">
+                                        @click="deleteTag(tag.id)">
                                         <span class="sr-only">
                                             Delete tag {{ tag.label }}
                                         </span>
