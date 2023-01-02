@@ -68,9 +68,9 @@ defineProps({
             </BaseHeading>
 
             <div class="grid md:grid-cols-5 items-center gap-12">
-                <div class="col-span-2">
+                <div class="md:col-span-2">
                     <div
-                        class="flex flex-col space-y-10 bg-white card-shadow rounded-lg p-12"
+                        class="flex flex-col space-y-10 bg-white card-shadow rounded-lg p-8 md:p-12"
                     >
                         <div>
                             <BaseHeading
@@ -127,7 +127,7 @@ defineProps({
                 </div>
 
                 <div
-                    class="col-span-3 flex flex-col space-y-10 bg-white card-shadow rounded-lg p-12"
+                    class="md:col-span-3 order-first md:order-last flex flex-col space-y-10 bg-white card-shadow rounded-lg p-8 md:p-12"
                 >
                     <div>
                         <BaseHeading size="h4" tag="h3" class="text-red-500">
