@@ -37,7 +37,7 @@ class Collection extends Model
         $current_date = $mutable->toDateTimeString();
         
         $active = Collection::whereRaw('? between start_date and end_date', [$current_date])->orWhere(function($query) use($current_date) {
-            $query->where('start_date', '<=', $current_date)->where('end_date', null);
+            $query->where('start_date', '>=', $current_date)->where('end_date', null);
         });
 
         return $active;
