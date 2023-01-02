@@ -20,6 +20,7 @@ import BaseCheckboxToggle from "@/components/base/BaseCheckboxToggle.vue";
 import SubmissionCard from "@/components/dashboard/SubmissionCard.vue";
 import SubmissionCardLarge from "@/components/dashboard/SubmissionCardLarge.vue";
 import KeywordSearch from "@/components/dashboard/KeywordSearch.vue";
+import IconArrowLeft from "@/Components/svg/IconArrowLeft.vue";
 import IconSearch from "@/components/svg/IconSearch.vue";
 import CopyShareLink from "@/components/dashboard/CopyShareLink.vue";
 
@@ -30,11 +31,11 @@ const props = defineProps({
     },
     auth: {
         type: Object,
-        required: true
+        required: true,
     },
     user_tags: {
         type: Array,
-    }
+    },
 });
 
 /**
@@ -146,18 +147,43 @@ async function updateViewMode(e) {
 
 <template>
     <div>
-
         <Head title="Favorites" />
-        <div>
-            <div class="flex items-center justify-between mb-8">
-                <div class="flex items-center">
-                    <BaseHeading size="h4" tag="h1">Favorites</BaseHeading>
 
-                    <div class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6">
+        <div>
+            <div
+                class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 items-end lg:items-center justify-between mb-8"
+            >
+                <div
+                    class="flex flex-col lg:flex-row w-full space-y-2 lg:space-y-0"
+                >
+                    <div
+                        class="flex justify-between items-center w-full lg:w-auto"
+                    >
+                        <BaseHeading size="h4" tag="h1">
+                            Collections
+                        </BaseHeading>
+
+                        <Link
+                            class="ml-6 opacity-60"
+                            href="/collections"
+                            aria-label="Go back to account info page"
+                        >
+                            <IconArrowLeft class="h-3 w-3 inline" />
+                            Back
+                        </Link>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6"
+                    >
                         <div class="flex space-x-2 items-center text-sm">
                             <p class="text-blue-500">Info</p>
-                            <BaseCheckboxToggle id="`viewMode`" v-model:checked="auth.user.default_view"
-                                :modelValue="auth.user.default_view" @update:checked="updateViewMode" />
+                            <BaseCheckboxToggle
+                                id="`viewMode`"
+                                v-model:checked="auth.user.default_view"
+                                :modelValue="auth.user.default_view"
+                                @update:checked="updateViewMode"
+                            />
                             <p class="text-blue-500">Image</p>
                         </div>
                     </div>
@@ -165,21 +191,13 @@ async function updateViewMode(e) {
 
                 <div class="relative hidden lg:block">
                     <div
-                        class="
-                            absolute
-                            top-0
-                            right-0
-                            flex
-                            justify-center
-                            items-center
-                            -mt-4
-                        "
+                        class="absolute top-0 right-0 flex justify-center items-center -mt-4"
                     >
-                        <KeywordSearch class="flex mr-4" v-model="searchPhrase" />
-                        <BaseSelect
-                            :options="user_tags"
-                            v-model="filterWord"
-                        >
+                        <KeywordSearch
+                            class="flex mr-4"
+                            v-model="searchPhrase"
+                        />
+                        <BaseSelect :options="user_tags" v-model="filterWord">
                             Filter
                         </BaseSelect>
                     </div>
@@ -193,15 +211,19 @@ async function updateViewMode(e) {
                     Filter
                 </BaseSelect>
 
-                <KeywordSearch
-                    class="lg:hidden"
+                <input
+                    ref="search"
+                    class="lg:hidden py-2 px-4 border border-gray-300 rounded-full h-[34px] w-full bg-transparent focus:bg-white focus:border-gray-500"
+                    type="text"
+                    placeholder="Search"
                     v-model="searchPhrase"
-                    :value="searchPhrase"
                 />
             </div>
 
             <div v-if="!auth.user.default_view">
-                <div class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4">
+                <div
+                    class="grid grid-cols-6 gap-2 card-padding text-sm lg:text-base opacity-40 mb-4"
+                >
                     <p class="col-span-2">Name</p>
                     <p class="col-span-2">Email</p>
                     <p>Phone</p>
@@ -214,32 +236,31 @@ async function updateViewMode(e) {
                     </div>
 
                     <div v-else-if="!filteredSubmissions.length">
-                        <BaseHeading class="text-red-500 mb-5" size="h3" tag="h2">Uh oh!</BaseHeading>
-                        <BaseText>Looks like we couldn't find anything.</BaseText>
+                        <BaseHeading
+                            class="text-red-500 mb-5"
+                            size="h3"
+                            tag="h2"
+                            >Uh oh!</BaseHeading
+                        >
+                        <BaseText
+                            >Looks like we couldn't find anything.</BaseText
+                        >
                         <BaseText size="small">Check for typos!</BaseText>
                     </div>
 
                     <template v-else>
-                        <SubmissionCard v-for="submission in filteredSubmissions" :key="submission.id"
-                            :submission="submission" />
+                        <SubmissionCard
+                            v-for="submission in filteredSubmissions"
+                            :key="submission.id"
+                            :submission="submission"
+                        />
                     </template>
                 </div>
             </div>
 
             <div v-else>
                 <div
-                    class="
-                        grid grid-cols-5
-                        px-5
-                        gap-4
-                        py-3
-                        lg:px-8
-                        text-sm
-                        lg:text-base
-                        lg:py-4
-                        opacity-40
-                        mb-4
-                    "
+                    class="grid grid-cols-5 px-5 gap-4 py-3 lg:px-8 text-sm lg:text-base lg:py-4 opacity-40 mb-4"
                 >
                     <p class="col-span-1">Thumbnail</p>
                     <p class="col-span-4">Message</p>
@@ -252,10 +273,16 @@ async function updateViewMode(e) {
                     </div>
 
                     <div v-else-if="!filteredSubmissions.length">
-                        <BaseHeading class="text-red-500 mb-5" size="h3" tag="h2">
+                        <BaseHeading
+                            class="text-red-500 mb-5"
+                            size="h3"
+                            tag="h2"
+                        >
                             Uh oh!
                         </BaseHeading>
-                        <BaseText> Looks like we couldn't find anything. </BaseText>
+                        <BaseText>
+                            Looks like we couldn't find anything.
+                        </BaseText>
                         <BaseText size="small">Check for typos!</BaseText>
                     </div>
 

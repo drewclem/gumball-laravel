@@ -11,7 +11,7 @@ import { ref, computed, nextTick } from "vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { useDates } from "@/utils/dates";
-import axios from 'axios'
+import axios from "axios";
 
 // components
 import BaseHeading from "@/Components/base/BaseHeading.vue";
@@ -43,11 +43,11 @@ const props = defineProps({
         type: Array,
     },
     has_subscription: {
-        type: Boolean
+        type: Boolean,
     },
     user_tags: {
-        type: Array
-    }
+        type: Array,
+    },
 });
 
 const { currentDate } = useDates();
@@ -163,17 +163,19 @@ const filteredSubmissions = computed(() => {
     });
 });
 
-const searchResults = ref([])
+const searchResults = ref([]);
 
 function submitSearch() {
-    axios.put('/search', {
-        search: searchInput.value
-    }).then(res => {
-        this.filteredSubmissions = res.data.submissions
-    })
+    axios
+        .put("/search", {
+            search: searchInput.value,
+        })
+        .then((res) => {
+            this.filteredSubmissions = res.data.submissions;
+        });
 }
 
-async function archiveCollection() { }
+async function archiveCollection() {}
 
 async function deleteCollection() {
     if (
@@ -202,40 +204,60 @@ async function updateViewMode(e) {
 
 <template>
     <div>
-
         <Head title="Collections" />
 
         <div>
             <div
-                class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 items-end lg:items-center justify-between mb-8">
-                <div class="flex flex-col lg:flex-row w-full space-y-2 lg:space-y-0">
-                    <div class="flex justify-between items-center w-full lg:w-auto">
+                class="flex flex-col lg:flex-row space-y-6 lg:space-y-0 items-end lg:items-center justify-between mb-8"
+            >
+                <div
+                    class="flex flex-col lg:flex-row w-full space-y-2 lg:space-y-0"
+                >
+                    <div
+                        class="flex justify-between items-center w-full lg:w-auto"
+                    >
                         <BaseHeading size="h4" tag="h1">
                             Collections
                         </BaseHeading>
 
-                        <Link class="ml-6 opacity-60" href="/collections" aria-label="Go back to account info page">
-                        <IconArrowLeft class="h-3 w-3 inline" />
-                        Back
+                        <Link
+                            class="ml-6 opacity-60"
+                            href="/collections"
+                            aria-label="Go back to account info page"
+                        >
+                            <IconArrowLeft class="h-3 w-3 inline" />
+                            Back
                         </Link>
                     </div>
 
-                    <div class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6">
+                    <div
+                        class="bg-white rounded-full px-4 py-2 shadow-inner flex space-x-6 text-sm lg:ml-6"
+                    >
                         <div class="flex space-x-2 items-center text-sm">
                             <p class="text-blue-500">Info</p>
-                            <BaseCheckboxToggle id="`viewMode`" v-model:checked="auth.user.default_view"
-                                :modelValue="auth.user.default_view" @update:checked="updateViewMode" />
+                            <BaseCheckboxToggle
+                                id="`viewMode`"
+                                v-model:checked="auth.user.default_view"
+                                :modelValue="auth.user.default_view"
+                                @update:checked="updateViewMode"
+                            />
                             <p class="text-blue-500">Image</p>
                         </div>
 
-                        <button v-if="has_subscription" class="flex space-x-1 text-red-500 opacity-75 hover:opacity-100"
-                            @click="deleteCollection">
+                        <button
+                            v-if="has_subscription"
+                            class="flex space-x-1 text-red-500 opacity-75 hover:opacity-100"
+                            @click="deleteCollection"
+                        >
                             <IconDelete class="h-4 w-4 mr-2" />
                             <span>Delete</span>
                         </button>
 
-                        <button v-if="isOpen && has_subscription" class="flex space-x-1 text-blue-500 opacity-75 hover:opacity-100"
-                            @click="closeCollection">
+                        <button
+                            v-if="isOpen && has_subscription"
+                            class="flex space-x-1 text-blue-500 opacity-75 hover:opacity-100"
+                            @click="closeCollection"
+                        >
                             <IconLockClosed class="h-4 w-4 mr-2" />
                             <span>Close</span>
                         </button>
@@ -243,12 +265,14 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="relative hidden lg:block">
-                    <div class="absolute top-0 right-0 flex justify-center items-center -mt-4">
-                        <KeywordSearch class="flex mr-4" v-model="searchPhrase" />
-                        <BaseSelect
-                            :options="user_tags"
-                            v-model="filterWord"
-                        >
+                    <div
+                        class="absolute top-0 right-0 flex justify-center items-center -mt-4"
+                    >
+                        <KeywordSearch
+                            class="flex mr-4"
+                            v-model="searchPhrase"
+                        />
+                        <BaseSelect :options="user_tags" v-model="filterWord">
                             Filter
                         </BaseSelect>
                     </div>
@@ -262,13 +286,19 @@ async function updateViewMode(e) {
                     Filter
                 </BaseSelect>
 
-                <input ref="search"
+                <input
+                    ref="search"
                     class="lg:hidden py-2 px-4 border border-gray-300 rounded-full h-[34px] w-full bg-transparent focus:bg-white focus:border-gray-500"
-                    type="text" placeholder="Search" v-model="searchPhrase" />
+                    type="text"
+                    placeholder="Search"
+                    v-model="searchPhrase"
+                />
             </div>
 
             <div v-if="!auth.user.default_view">
-                <div class="grid grid-cols-6 px-5 gap-2 py-3 lg:px-8 text-sm lg:text-base lg:py-4 opacity-40 mb-4">
+                <div
+                    class="grid grid-cols-6 px-5 gap-2 py-3 lg:px-8 text-sm lg:text-base lg:py-4 opacity-40 mb-4"
+                >
                     <p class="col-span-2">Name</p>
                     <p class="col-span-2">Email</p>
                     <p>Phone</p>
@@ -276,14 +306,17 @@ async function updateViewMode(e) {
                 </div>
 
                 <div class="flex flex-col space-y-6">
-
                     <div v-if="!submissions.length">
                         <p class="mb-5">No submissions yet! Share that link!</p>
                         <CopyShareLink />
                     </div>
 
                     <div v-else-if="!filteredSubmissions.length">
-                        <BaseHeading class="text-red-500 mb-5" size="h3" tag="h2">
+                        <BaseHeading
+                            class="text-red-500 mb-5"
+                            size="h3"
+                            tag="h2"
+                        >
                             Uh oh!
                         </BaseHeading>
                         <BaseText>
@@ -293,33 +326,24 @@ async function updateViewMode(e) {
                     </div>
 
                     <template v-else>
-                        <SubmissionCard v-for="submission in filteredSubmissions" :key="submission.id"
-                            :submission="submission" />
+                        <SubmissionCard
+                            v-for="submission in filteredSubmissions"
+                            :key="submission.id"
+                            :submission="submission"
+                        />
                     </template>
                 </div>
             </div>
 
             <div v-else>
                 <div
-                    class="
-                        grid grid-cols-5
-                        px-5
-                        gap-4
-                        py-3
-                        lg:px-8
-                        text-sm
-                        lg:text-base
-                        lg:py-4
-                        opacity-40
-                        mb-4
-                    "
+                    class="grid grid-cols-5 px-5 gap-4 py-3 lg:px-8 text-sm lg:text-base lg:py-4 opacity-40 mb-4"
                 >
                     <p class="col-span-1 truncate">Thumbnail</p>
                     <p class="col-span-4 truncate">Message</p>
                 </div>
 
                 <div class="flex flex-col space-y-8">
-
                     <div v-if="!submissions.length">
                         <p class="mb-5">No submissions yet! Share that link!</p>
                         <CopyShareLink />

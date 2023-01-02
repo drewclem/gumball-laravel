@@ -46,7 +46,7 @@ defineProps({
                                     'collections'
                                 ),
                         }"
-                        href="collections"
+                        href="/collections"
                     >
                         <template #icon>
                             <IconCollection
@@ -63,7 +63,7 @@ defineProps({
                             'router-link-active':
                                 $page.props.ziggy.location.includes('inbox'),
                         }"
-                        href="inbox"
+                        href="/inbox"
                     >
                         <template #icon>
                             <IconInbox
@@ -82,7 +82,7 @@ defineProps({
                                     'favorites'
                                 ),
                         }"
-                        href="favorites"
+                        href="/favorites"
                     >
                         <template #icon>
                             <IconHeart
@@ -93,7 +93,7 @@ defineProps({
                     </BaseLink>
                 </li>
                 <li>
-                    <BaseLink class="group" :href="currentUser.username">
+                    <BaseLink class="group" :href="`/${currentUser.username}`">
                         <template #icon>
                             <IconForm
                                 class="text-gray-200 group-hover:text-gray-300 w-5 h-5"
@@ -161,7 +161,7 @@ defineProps({
                             'router-link-active':
                                 $page.props.ziggy.location.includes('account'),
                         }"
-                        href="settings"
+                        href="/settings"
                     >
                         <template #icon>
                             <IconUser
