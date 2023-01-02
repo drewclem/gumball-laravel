@@ -3,6 +3,7 @@ import { ref, computed, watch } from "vue";
 import { useGlobalLayout } from "@/stores/global";
 
 import GumballLogo from "@/Components/global/GumballLogo.vue";
+import MobileMenuUser from "@/Components/global/MobileMenuUser.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
 import BaseImage from "@/Components/base/BaseImage.vue";
 import MenuIcon from "@/components/svg/MenuIcon.vue";
@@ -22,10 +23,6 @@ const closeButtonRef = ref(null);
 const isOpen = ref(false);
 
 const { hasOpenModal, toggleMobileMenu } = useGlobalLayout();
-
-const path = computed(() => {
-    return route.path;
-});
 
 watch(props.ziggy.location, (newPath, oldPath) => {
     if (newPath !== oldPath) isOpen.value = false;
@@ -146,7 +143,10 @@ function closeMenu() {
 
                                 <div class="h-screen w-full bg-white">
                                     <div class="flex flex-col h-full">
-                                        <div v-if="!user">
+                                        <div
+                                            v-if="!auth.user"
+                                            class="flex flex-col h-full justify-between"
+                                        >
                                             <nav role="navigation">
                                                 <ul class="nav">
                                                     <li>
@@ -187,8 +187,7 @@ function closeMenu() {
                                         </div>
                                         <MobileMenuUser
                                             v-else
-                                            :user="user"
-                                            :currentUser="user"
+                                            :current-user="auth.user"
                                         />
                                     </div>
                                 </div>
