@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Actions\GetSubmissionTagsAction;
 use App\Models\Collection;
+use App\Actions\StoreCollectionAction;
 use Inertia\Inertia;
 use Carbon\Carbon;
 
@@ -20,17 +22,16 @@ class CollectionController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request, StoreCollectionAction $action) {
         $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'date|nullable'
         ]);
 
-        Collection::create([
-            'user_id' => $request->user()->id,
+        $collection = $action->handle([
+            'user' => $request->user(),
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'is_archived' => $request->is_archived
         ]);
 
         return redirect('/collections');
@@ -48,8 +49,13 @@ class CollectionController extends Controller
         return redirect('collections');
     }
 
-    public function show(Collection $collection) {
+    public function show(Collection $collection, GetSubmissionTagsAction $action) {
         $submissions = $collection->submissions()->orderBy('created_at', 'desc')->get();
+
+        foreach($submissions as $submission) {
+            $submission->tags = $action->handle($submission);
+            $submission->images = $submission->images()->get();
+        }
         
         return Inertia::render('User/_collectionId', [
             'collection' => $collection,

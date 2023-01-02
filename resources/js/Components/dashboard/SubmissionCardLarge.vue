@@ -1,69 +1,20 @@
 <script setup>
-// utils
-import { onMounted, reactive } from "vue";
-
 // components
-import BaseButton from "@/components/base/BaseButton.vue";
-import IconChevronDown from "@/components/svg/IconChevronDown.vue";
 import IconThumbDown from "@/components/svg/IconThumbDown.vue";
 import IconThumbUp from "@/components/svg/IconThumbUp.vue";
 import IconDecline from "@/components/svg/IconDecline.vue";
-
-const route = useRoute();
 
 const props = defineProps({
     submission: {
         type: Object,
         required: true,
-    },
-});
-
-const state = reactive({
-    isOpen: false,
-    thumbnailUrl: null,
-});
-
-// simple function to take the date returned from Supbase (yyyy-mm-dd) and format it to MMM-YY
-function formatDate(date) {
-    const dateObj = new Date(date);
-
-    const dateFormatted = new Date(
-        dateObj.getTime() - dateObj.getTimezoneOffset() * -60000
-    );
-
-    return `${dateFormatted.toLocaleString("default", {
-        month: "short",
-    })} ${dateFormatted.toLocaleString("default", {
-        day: "numeric",
-    })}`;
-}
-
-async function retrieveImages() {
-    const { data } = await supabase
-        .from("submission-uploads")
-        .select()
-        .limit(1)
-        .match({ submission_id: props.submission.id });
-
-    if (data.length) {
-        const imgData = await supabase.storage
-            .from(`submission-uploads/${props.submission.id}`)
-            .createSignedUrl(data[0].file_name, 60);
-
-        const img = await imgData.data;
-
-        state.thumbnailUrl = img.signedURL;
     }
-}
-
-onMounted(() => {
-    retrieveImages();
 });
 </script>
 
 <template>
     <Link
-        :to="`/collections/${submission.collection_id}/${submission.id}`"
+        :href="`/collections/${submission.collection_id}/submissions/${submission.id}`"
         class="relative bg-white card-shadow rounded-lg w-full px-5 pt-4 pb-6 lg:px-8 lg:py-5 text-sm lg:text-base"
     >
         <div
@@ -96,9 +47,9 @@ onMounted(() => {
             <div class="col-span-1">
                 <div class="relative">
                     <img
-                        v-if="state.thumbnailUrl"
+                        v-if="submission.images.length > 0"
                         class="h-12 w-12 lg:h-24 lg:w-24 object-cover rounded-md"
-                        :src="state.thumbnailUrl"
+                        :src="`/${submission.images[0].file_path}`"
                     />
                     <div
                         v-else
@@ -121,7 +72,7 @@ onMounted(() => {
                         />
                     </div>
 
-                    <ul
+                    <!-- <ul
                         v-if="submission && submission.tags.length > 0"
                         class="flex space-x-3 mt-2"
                     >
@@ -132,7 +83,7 @@ onMounted(() => {
                         >
                             {{ tag.label }}
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>

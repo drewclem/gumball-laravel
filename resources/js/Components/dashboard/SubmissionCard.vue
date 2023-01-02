@@ -79,7 +79,7 @@ function formatDate(date) {
                 </p>
             </div>
 
-            <ul
+            <!-- <ul
                 v-if="submission.tags && submission.tags.length > 0"
                 class="flex space-x-3 mt-2"
             >
@@ -90,7 +90,7 @@ function formatDate(date) {
                 >
                     {{ tag.label }}
                 </li>
-            </ul>
+            </ul> -->
         </div>
     </Link>
 </template>

@@ -11,6 +11,7 @@ import BaseImage from "@/Components/base/BaseImage.vue";
 import BaseHeading from "@/Components/base/BaseHeading.vue";
 import BaseText from "@/Components/base/BaseText.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
+import BaseCheckListItem from "@/Components/base/BaseCheckListItem.vue";
 
 import ScheduleGraphic from "@/Components/svg/ScheduleGraphic.vue";
 import SearchGraphic from "@/Components/svg/SearchGraphic.vue";
@@ -54,6 +55,138 @@ defineProps({
                     <div>
                         <BaseButton href="create-account" theme="primary">
                             Get Started
+                        </BaseButton>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="base-wrapper flex flex-col items-center my-24 lg:my-52">
+            <BaseHeading size="h2" class="mb-8">
+                Pricing that fits
+                <span class="text-red-500">your</span> needs.
+            </BaseHeading>
+
+            <div class="grid md:grid-cols-5 items-center gap-12">
+                <div class="md:col-span-2">
+                    <div
+                        class="flex flex-col space-y-10 bg-white card-shadow rounded-lg p-8 md:p-12"
+                    >
+                        <div>
+                            <BaseHeading
+                                size="h4"
+                                tag="h3"
+                                class="text-red-500"
+                            >
+                                Hobby
+                            </BaseHeading>
+                            <p class="opacity-75">
+                                Get up and running in minutes!
+                            </p>
+                        </div>
+
+                        <div>
+                            <p
+                                class="flex items-start font-bold text-7xl text-green-500 leading-[58px]"
+                            >
+                                <span class="text-3xl">$</span>
+                                <span>0</span>
+                                <span
+                                    class="mt-auto text-black text-3xl align-bottom"
+                                >
+                                    /mo
+                                </span>
+                            </p>
+                        </div>
+
+                        <ul class="flex flex-col space-y-4">
+                            <BaseCheckListItem
+                                >Dedicated inbox</BaseCheckListItem
+                            >
+                            <BaseCheckListItem>
+                                Instant search & filtering
+                            </BaseCheckListItem>
+                            <BaseCheckListItem>
+                                Collect reference material
+                            </BaseCheckListItem>
+                            <BaseCheckListItem>
+                                Easy backlog management
+                            </BaseCheckListItem>
+                        </ul>
+
+                        <div class="flex">
+                            <BaseButton
+                                href="create-account"
+                                class="w-full"
+                                theme="subdued"
+                            >
+                                Create an account
+                            </BaseButton>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="md:col-span-3 order-first md:order-last flex flex-col space-y-10 bg-white card-shadow rounded-lg p-8 md:p-12"
+                >
+                    <div>
+                        <BaseHeading size="h4" tag="h3" class="text-red-500">
+                            Artisan
+                        </BaseHeading>
+                        <p class="opacity-75">
+                            Automate your books and scheduling, manage<br />
+                            appointments, and more!
+                        </p>
+                    </div>
+
+                    <div>
+                        <p
+                            class="flex items-start font-bold text-8xl text-green-500 leading-[72px]"
+                        >
+                            <span class="text-3xl">$</span>
+                            <span>9</span>
+
+                            <span class="text-3xl">99</span>
+                            <span
+                                class="mt-auto text-black text-3xl align-bottom"
+                            >
+                                /mo
+                            </span>
+                        </p>
+                    </div>
+
+                    <ul class="flex flex-col space-y-4">
+                        <BaseCheckListItem>
+                            Automate your booking windows
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Instant search & filtering
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Collect reference material
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Automated appointment reminders
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Custom form builder
+                            <template #helper> Coming soon! </template>
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Appointment management
+                            <template #helper>
+                                Integrate directly w/ your Google Calendar!
+                            </template>
+                        </BaseCheckListItem>
+                    </ul>
+
+                    <div class="flex">
+                        <BaseButton
+                            href="create-account"
+                            class="w-full"
+                            theme="tertiary"
+                        >
+                            Create an account
                         </BaseButton>
                     </div>
                 </div>
@@ -159,6 +292,61 @@ defineProps({
             </div>
         </section>
 
-        <PricingSignup :showPricing="true" />
+        <section class="narrow-wrapper mb-20">
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2 space-y-10 lg:space-y-0 items-center"
+            >
+                <div class="grid grid-cols-2 gap-4 lg:order-last">
+                    <div
+                        class="lg:w-3/4 lg:border-l border-gray-200 lg:px-6 mb-8 lg:mb-0"
+                    >
+                        <IconReply class="w-8 h-8 mb-4" />
+
+                        <BaseHeading class="mb-2" size="h5" tag="h3">
+                            One-click reply
+                        </BaseHeading>
+
+                        <BaseText
+                            >Reply to requests easily with a single
+                            click.</BaseText
+                        >
+                    </div>
+
+                    <div class="lg:w-3/4 lg:border-l border-gray-200 lg:pl-6">
+                        <IconSorting class="w-8 h-8 mb-4" />
+
+                        <BaseHeading class="mb-2" size="h5" tag="h3">
+                            Backlog Sorting
+                        </BaseHeading>
+
+                        <BaseText>
+                            View requests by date, keyword, or all at once. Your
+                            pick!
+                        </BaseText>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-8 lg:w-3/4">
+                    <div>
+                        <BaseHeading class="mb-3" size="h4" tag="h2">
+                            Ready to get started?
+                        </BaseHeading>
+
+                        <BaseText>
+                            Sign up today and see how much better managing your
+                            booking requests can be!
+                        </BaseText>
+                    </div>
+
+                    <div>
+                        <BaseButton href="create-account">
+                            Create an Account
+                        </BaseButton>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- <PricingSignup :showPricing="true" /> -->
     </div>
 </template>

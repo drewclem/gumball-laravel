@@ -1,24 +1,15 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useGlobalLayout } from "@/stores/global";
+import { storeToRefs } from "pinia";
 
 import GumballLogo from "@/Components/global/GumballLogo.vue";
-import GumballLogoMark from "@/Components/global/GumballLogoMark.vue";
-import BaseButton from "@/Components/base/BaseButton.vue";
-import BaseLink from "@/Components/base/BaseLink.vue";
 import BaseImage from "@/Components/base/BaseImage.vue";
 import MobileMenuUser from "@/Components/global/MobileMenuUser.vue";
-
-import IconCollection from "@/Components/svg/IconCollection.vue";
-import IconSchedule from "@/Components/svg/IconSchedule.vue";
-import IconInbox from "@/Components/svg/IconInbox.vue";
 import MenuIcon from "@/Components/svg/MenuIcon.vue";
 import IconClose from "@/Components/svg/IconClose.vue";
-import IconHeart from "@/Components/svg/IconHeart.vue";
-import IconForm from "@/Components/svg/IconForm.vue";
-import IconUser from "@/Components/svg/IconUser.vue";
-import IconLock from "@/Components/svg/IconLock.vue";
 
-defineProps({
+const props = defineProps({
     currentUser: {
         type: Object,
         required: true,
@@ -32,19 +23,10 @@ const openButtonRef = ref(null);
 const closeButtonRef = ref(null);
 
 const isOpen = ref(false);
-const isMobileMenuOpen = false;
 
-/**
- * Watch for route change to close menu
- */
-// const route = useRoute();
-// const path = computed(() => {
-//     return route.path;
-// });
-
-// watch(path, (newPath, oldPath) => {
-//     toggleMobileMenu(false);
-// });
+const { toggleMobileMenu } = useGlobalLayout();
+const global = useGlobalLayout();
+const { isMobileMenuOpen, hasOpenModal } = storeToRefs(global);
 
 function openMenu() {
     toggleMobileMenu(true);
@@ -68,11 +50,7 @@ function closeMenu() {
         class="px-6 py-3 lg:p-6 flex justify-between w-full items-center border-b-2 border-gray-100"
     >
         <div id="top">
-            <Link
-                v-if="currentUser"
-                href="/inbox"
-                class="block w-40 lg:w-48"
-            >
+            <Link v-if="currentUser" href="/inbox" class="block w-40 lg:w-48">
                 <GumballLogo class="w-full" />
             </Link>
         </div>
@@ -123,7 +101,7 @@ function closeMenu() {
                             <div class="flex flex-col h-screen w-full bg-white">
                                 <MobileMenuUser
                                     :user="currentUser"
-                                    :currentUser="currentUser"
+                                    :current-user="currentUser"
                                 />
                             </div>
                         </div>

@@ -38,6 +38,9 @@ const props = defineProps({
     user_tags: {
         type: Array,
     },
+    has_subscription: {
+        type: Boolean
+    }
 });
 
 const newTag = ref("");
@@ -169,9 +172,9 @@ async function declineSubmission() {
                         <p>{{ submission.name }}</p>
                     </div>
 
-                    <div>
+                    <div class="overflow-hidden">
                         <BaseHeading size="h5" tag="h2">Email</BaseHeading>
-                        <p>{{ submission.email }}</p>
+                        <p class="truncate">{{ submission.email }}</p>
                     </div>
 
                     <div>
@@ -212,7 +215,7 @@ async function declineSubmission() {
                                     </span>
 
                                     <button class="border border-gray-400 rounded-full p-0.5"
-                                        @click="deleteTag(tag.tag_relation_id)">
+                                        @click="deleteTag(tag.id)">
                                         <span class="sr-only">
                                             Delete tag {{ tag.label }}
                                         </span>
@@ -259,20 +262,24 @@ async function declineSubmission() {
                         </button>
                     </form>
 
-                    <div class="relative">
+                    <div class="relative group">
                         <p class="text-xs opacity-50 mb-3">
                             Notify your client they won't be selected this
                             round.
                         </p>
-                        <button type="button" class="py-0.5 border-2 border-gray-300 text-center rounded-md w-full mb-6"
+                        <button type="button" class="py-0.5 border-2 border-gray-300 text-center rounded-md w-full"
                             :class="{
                                 'hover:border-gray-400':
                                     !submission.is_declined,
-                            }" @click="declineSubmission" :disabled="submission.is_declined || isSubmitting">
+                            }" @click="declineSubmission" :disabled="submission.is_declined || isSubmitting || !has_subscription">
                             <span v-if="isSubmitting">Sending...</span>
                             <span v-else-if="submission.is_declined">Declined</span>
                             <span v-else>Decline</span>
                         </button>
+
+                        <div v-if="!has_subscription" role="alert" class="absolute bg-white py-1 px-3 rounded-lg mt-2 card-shadow  text-sm hidden group-hover:block">
+                            Requires active subscription
+                        </div>
                     </div>
 
                     <hr />
