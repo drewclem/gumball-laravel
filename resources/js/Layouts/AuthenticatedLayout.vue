@@ -60,8 +60,8 @@ onUnmounted(() => {
         <main class="flex relative">
             <div class="hidden bg-white lg:flex h-full flex-col px-6 py-12 lg:w-[60]">
                 <div class="flex-grow">
-                    <div  class="flex flex-col space-y-5 mb-6 lg:mb-12">
-                        <BaseModal v-if="has_subscription">
+                    <div  class="flex flex-col mb-6 lg:mb-12">
+                        <BaseModal :disabled="!has_subscription">
                             <template #button>
                                 <div
                                     class="flex items-center group px-3 py-0.5 font-display text-center rounded-md transition duration-150 text-white ease-in-out bg-green-500 hover:bg-green-600 border-2 border-transparent">
@@ -77,6 +77,10 @@ onUnmounted(() => {
 
                             <template #content>
                                 <ScheduleCollection :disabled-dates="disabledDates" />
+                            </template>
+
+                            <template v-if="!has_subscription" #tooltip>
+                                Activate your subscription to begin scheduling your books!
                             </template>
                         </BaseModal>
 

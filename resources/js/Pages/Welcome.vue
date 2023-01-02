@@ -11,6 +11,7 @@ import BaseImage from "@/Components/base/BaseImage.vue";
 import BaseHeading from "@/Components/base/BaseHeading.vue";
 import BaseText from "@/Components/base/BaseText.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
+import BaseCheckListItem from "@/Components/base/BaseCheckListItem.vue";
 
 import ScheduleGraphic from "@/Components/svg/ScheduleGraphic.vue";
 import SearchGraphic from "@/Components/svg/SearchGraphic.vue";
@@ -54,6 +55,138 @@ defineProps({
                     <div>
                         <BaseButton href="create-account" theme="primary">
                             Get Started
+                        </BaseButton>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="base-wrapper flex flex-col items-center my-24 lg:my-52">
+            <BaseHeading size="h2" class="mb-8">
+                Pricing that fits
+                <span class="text-red-500">your</span> needs.
+            </BaseHeading>
+
+            <div class="grid md:grid-cols-5 items-center gap-12">
+                <div class="col-span-2">
+                    <div
+                        class="flex flex-col space-y-10 bg-white card-shadow rounded-lg p-12"
+                    >
+                        <div>
+                            <BaseHeading
+                                size="h4"
+                                tag="h3"
+                                class="text-red-500"
+                            >
+                                Hobby
+                            </BaseHeading>
+                            <p class="opacity-75">
+                                Get up and running in minutes!
+                            </p>
+                        </div>
+
+                        <div>
+                            <p
+                                class="flex items-start font-bold text-7xl text-green-500 leading-[58px]"
+                            >
+                                <span class="text-3xl">$</span>
+                                <span>0</span>
+                                <span
+                                    class="mt-auto text-black text-3xl align-bottom"
+                                >
+                                    /mo
+                                </span>
+                            </p>
+                        </div>
+
+                        <ul class="flex flex-col space-y-4">
+                            <BaseCheckListItem
+                                >Dedicated inbox</BaseCheckListItem
+                            >
+                            <BaseCheckListItem>
+                                Instant search & filtering
+                            </BaseCheckListItem>
+                            <BaseCheckListItem>
+                                Collect reference material
+                            </BaseCheckListItem>
+                            <BaseCheckListItem>
+                                Easy backlog management
+                            </BaseCheckListItem>
+                        </ul>
+
+                        <div class="flex">
+                            <BaseButton
+                                href="create-account"
+                                class="w-full"
+                                theme="subdued"
+                            >
+                                Create an account
+                            </BaseButton>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="col-span-3 flex flex-col space-y-10 bg-white card-shadow rounded-lg p-12"
+                >
+                    <div>
+                        <BaseHeading size="h4" tag="h3" class="text-red-500">
+                            Artisan
+                        </BaseHeading>
+                        <p class="opacity-75">
+                            Automate your books and scheduling, manage<br />
+                            appointments, and more!
+                        </p>
+                    </div>
+
+                    <div>
+                        <p
+                            class="flex items-start font-bold text-8xl text-green-500 leading-[72px]"
+                        >
+                            <span class="text-3xl">$</span>
+                            <span>9</span>
+
+                            <span class="text-3xl">99</span>
+                            <span
+                                class="mt-auto text-black text-3xl align-bottom"
+                            >
+                                /mo
+                            </span>
+                        </p>
+                    </div>
+
+                    <ul class="flex flex-col space-y-4">
+                        <BaseCheckListItem>
+                            Automate your booking windows
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Instant search & filtering
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Collect reference material
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Automated appointment reminders
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Custom form builder
+                            <template #helper> Coming soon! </template>
+                        </BaseCheckListItem>
+                        <BaseCheckListItem>
+                            Appointment management
+                            <template #helper>
+                                Integrate directly w/ your Google Calendar!
+                            </template>
+                        </BaseCheckListItem>
+                    </ul>
+
+                    <div class="flex">
+                        <BaseButton
+                            href="create-account"
+                            class="w-full"
+                            theme="tertiary"
+                        >
+                            Create an account
                         </BaseButton>
                     </div>
                 </div>
@@ -159,6 +292,6 @@ defineProps({
             </div>
         </section>
 
-        <PricingSignup :showPricing="true" />
+        <!-- <PricingSignup :showPricing="true" /> -->
     </div>
 </template>

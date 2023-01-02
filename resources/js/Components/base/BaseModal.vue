@@ -1,41 +1,50 @@
 <template>
-    <button
-        class="open-button group"
-        @click="openModal"
-        ref="openButtonRef"
-        type="button"
-        :disabled="disabled"
-    >
-        <slot name="button" />
-        <Teleport v-if="isOpen" to="body">
-            <div class="modal-wrapper" @keydown.esc="closeModal">
-                <div class="modal-content card-shadow">
-                    <button
-                        class="absolute shadow-md bg-red-500 -mt-3 -ml-3 p-1 rounded-full left-0 top-0 text-white"
-                        @click="closeModal"
-                        ref="closeButtonRef"
-                        type="button"
-                    >
-                        <IconClose class="h-4 w-4" alt="close menu" />
-                    </button>
-                    <slot name="content" />
+    <div class="group">
+        <button
+            class="open-button group"
+            @click="openModal"
+            ref="openButtonRef"
+            type="button"
+            :disabled="disabled"
+        >
+            <slot name="button" />
+            
+            <Teleport v-if="isOpen" to="body">
+                <div class="modal-wrapper" @keydown.esc="closeModal">
+                    <div class="modal-content card-shadow">
+                        <button
+                            class="absolute shadow-md bg-red-500 -mt-3 -ml-3 p-1 rounded-full left-0 top-0 text-white"
+                            @click="closeModal"
+                            ref="closeButtonRef"
+                            type="button"
+                        >
+                            <IconClose class="h-4 w-4" alt="close menu" />
+                        </button>
+                        <slot name="content" />
+                    </div>
                 </div>
-            </div>
-        </Teleport>
-    </button>
+            </Teleport>
+        </button>
+
+
+        <div role="alert" v-if="$slots.tooltip" class="absolute bg-white py-1 px-3 rounded-lg card-shadow top-0 mt-3 text-sm hidden group-hover:block">
+            <slot name="tooltip" />
+        </div>
+    </div>      
 </template>
 
 <script setup>
+import { nextTick, ref } from "vue";
+import { useGlobalLayout } from "@/stores/global";
+
+import IconClose from "@/Components/svg/IconClose.vue";
+
 defineProps({
     disabled: {
         type: Boolean,
         default: false,
     },
 });
-import { nextTick, ref } from "vue";
-import { useGlobalLayout } from "@/stores/global";
-
-import IconClose from "@/Components/svg/IconClose.vue";
 
 const { toggleModal, toggleMobileMenu } = useGlobalLayout();
 const isOpen = ref(false);
