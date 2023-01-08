@@ -36,7 +36,7 @@ defineProps({
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="rounded-2xl overflow-hidden lg:order-last">
                     <BaseImage
-                        src="/hero_image.jpg"
+                        src="/images/hero_image.jpg"
                         alt="A woman works efficiently at a laptop"
                     />
                 </div>
