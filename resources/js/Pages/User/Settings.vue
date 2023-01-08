@@ -37,6 +37,8 @@ const form = useForm({
     avatar: null,
 });
 
+const { files, addFiles, removeFile } = useFileList();
+
 const uploadAvatar = () => {
     form.post(route("settings.upload"), {
         onSuccess: () => {
@@ -49,7 +51,6 @@ const uploadAvatar = () => {
 /**
  * Avatar upload
  */
-const { files, addFiles, removeFile } = useFileList();
 
 const state = reactive({
     avatarButtonText: "Save",
