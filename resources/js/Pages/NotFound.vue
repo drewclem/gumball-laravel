@@ -6,8 +6,8 @@ export default {
 </script>
 
 <script setup>
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseText from "@/components/base/BaseText.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import BaseText from "@/Components/base/BaseText.vue";
 import NotFoundGraphic from "@/Components/svg/NotFoundGraphic.vue";
 </script>
 
