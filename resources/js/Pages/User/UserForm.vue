@@ -12,7 +12,7 @@ import useFileList from "@/utils/file-list";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
 // recaptcha
-import { VueRecaptcha } from "vue-recaptcha";
+// import { VueRecaptcha } from "vue-recaptcha";
 
 // components
 import BaseHeading from "@/Components/base/BaseHeading.vue";
@@ -238,13 +238,13 @@ function onInputChange(e) {
 
                             <div class="border-t-2 border-gray-100" />
 
-                            <div>
+                            <!-- <div>
                                 <VueRecaptcha
                                     :sitekey="sitekey"
                                     :load-recaptcha-script="true"
                                     @verify="form.recaptcha = true"
                                 />
-                            </div>
+                            </div> -->
 
                             <div class="relative">
                                 <input
@@ -275,7 +275,10 @@ function onInputChange(e) {
                                     class="w-full"
                                     theme="tertiary"
                                     type="submit"
-                                    :disabled="form.processing || !form.toc"
+                                    :disabled="
+                                        form.processing ||
+                                        (!form.toc && !form.recaptcha)
+                                    "
                                 >
                                     Submit
                                 </BaseButton>
