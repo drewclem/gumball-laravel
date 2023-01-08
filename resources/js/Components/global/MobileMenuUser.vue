@@ -1,20 +1,20 @@
 <script setup>
 // components
-import BaseLink from "@/components/base/BaseLink.vue";
-import BaseModal from "@/components/base/BaseModal.vue";
-import ScheduleCollection from "@/components/dashboard/ScheduleCollection.vue";
-// import OpenCollection from "@/components/dashboard/OpenCollection.vue";
+import BaseLink from "@/Components/base/BaseLink.vue";
+import BaseModal from "@/Components/base/BaseModal.vue";
+import ScheduleCollection from "@/Components/dashboard/ScheduleCollection.vue";
+// import OpenCollection from "@/Components/dashboard/OpenCollection.vue";
 
 // icons
-import IconCollection from "@/components/svg/IconCollection.vue";
-import IconSchedule from "@/components/svg/IconSchedule.vue";
-import IconInbox from "@/components/svg/IconInbox.vue";
-import MenuIcon from "@/components/svg/MenuIcon.vue";
-import IconClose from "@/components/svg/IconClose.vue";
-import IconHeart from "@/components/svg/IconHeart.vue";
-import IconForm from "@/components/svg/IconForm.vue";
-import IconUser from "@/components/svg/IconUser.vue";
-import IconLock from "@/components/svg/IconLock.vue";
+import IconCollection from "@/Components/svg/IconCollection.vue";
+import IconSchedule from "@/Components/svg/IconSchedule.vue";
+import IconInbox from "@/Components/svg/IconInbox.vue";
+import MenuIcon from "@/Components/svg/MenuIcon.vue";
+import IconClose from "@/Components/svg/IconClose.vue";
+import IconHeart from "@/Components/svg/IconHeart.vue";
+import IconForm from "@/Components/svg/IconForm.vue";
+import IconUser from "@/Components/svg/IconUser.vue";
+import IconLock from "@/Components/svg/IconLock.vue";
 
 defineProps({
     user: {

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-import IconCopy from "@/components/svg/IconCopy.vue";
+import IconCopy from "@/Components/svg/IconCopy.vue";
 
 const copySuccess = ref(false);
 

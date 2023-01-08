@@ -12,14 +12,14 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import useFileList from "@/utils/file-list";
 
 // components
-import BaseImage from "@/components/base/BaseImage.vue";
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseLink from "@/components/base/BaseLink.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
-import BaseDropzone from "@/components/base/BaseDropzone.vue";
-import BaseFilePreview from "@/components/base/BaseFilePreview.vue";
-import IconUserCircle from "@/components/svg/IconUserCircle.vue";
-import IconClose from "@/components/svg/IconClose.vue";
+import BaseImage from "@/Components/base/BaseImage.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import BaseLink from "@/Components/base/BaseLink.vue";
+import BaseButton from "@/Components/base/BaseButton.vue";
+import BaseDropzone from "@/Components/base/BaseDropzone.vue";
+import BaseFilePreview from "@/Components/base/BaseFilePreview.vue";
+import IconUserCircle from "@/Components/svg/IconUserCircle.vue";
+import IconClose from "@/Components/svg/IconClose.vue";
 import { Inertia } from "@inertiajs/inertia";
 
 const props = defineProps({

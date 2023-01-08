@@ -13,16 +13,16 @@ import { Inertia } from "@inertiajs/inertia";
 import { Head } from "@inertiajs/inertia-vue3";
 
 // components
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseSelect from "@/components/base/BaseSelect.vue";
-import BaseText from "@/components/base/BaseText.vue";
-import BaseCheckboxToggle from "@/components/base/BaseCheckboxToggle.vue";
-import SubmissionCard from "@/components/dashboard/SubmissionCard.vue";
-import SubmissionCardLarge from "@/components/dashboard/SubmissionCardLarge.vue";
-import KeywordSearch from "@/components/dashboard/KeywordSearch.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import BaseSelect from "@/Components/base/BaseSelect.vue";
+import BaseText from "@/Components/base/BaseText.vue";
+import BaseCheckboxToggle from "@/Components/base/BaseCheckboxToggle.vue";
+import SubmissionCard from "@/Components/dashboard/SubmissionCard.vue";
+import SubmissionCardLarge from "@/Components/dashboard/SubmissionCardLarge.vue";
+import KeywordSearch from "@/Components/dashboard/KeywordSearch.vue";
 import IconArrowLeft from "@/Components/svg/IconArrowLeft.vue";
-import IconSearch from "@/components/svg/IconSearch.vue";
-import CopyShareLink from "@/components/dashboard/CopyShareLink.vue";
+import IconSearch from "@/Components/svg/IconSearch.vue";
+import CopyShareLink from "@/Components/dashboard/CopyShareLink.vue";
 
 const props = defineProps({
     submissions: {

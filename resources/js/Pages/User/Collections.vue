@@ -9,7 +9,7 @@ export default {
 import { Head } from "@inertiajs/inertia-vue3";
 import CollectionCard from "@/Components/dashboard/CollectionCard.vue";
 
-import BaseHeading from "@/components/base/BaseHeading.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
 
 const props = defineProps({
     collections: {

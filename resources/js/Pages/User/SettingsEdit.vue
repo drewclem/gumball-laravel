@@ -9,14 +9,14 @@ export default {
 import { useForm } from "@inertiajs/inertia-vue3";
 
 // components
-import BaseImage from "@/components/base/BaseImage.vue";
-import BaseLink from "@/components/base/BaseLink.vue";
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseRichText from "@/components/base/BaseRichText.vue";
-import BaseTextarea from "@/components/base/BaseTextarea.vue";
-import BaseInput from "@/components/base/BaseInput.vue";
-import IconArrowLeft from "@/components/svg/IconArrowLeft.vue";
-import IconUserCircle from "@/components/svg/IconUserCircle.vue";
+import BaseImage from "@/Components/base/BaseImage.vue";
+import BaseLink from "@/Components/base/BaseLink.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import BaseRichText from "@/Components/base/BaseRichText.vue";
+import BaseTextarea from "@/Components/base/BaseTextarea.vue";
+import BaseInput from "@/Components/base/BaseInput.vue";
+import IconArrowLeft from "@/Components/svg/IconArrowLeft.vue";
+import IconUserCircle from "@/Components/svg/IconUserCircle.vue";
 
 const props = defineProps({
     auth: {

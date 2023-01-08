@@ -28,10 +28,10 @@
 import { reactive } from "vue";
 
 // components
-import BaseModal from "@/components/base/BaseModal.vue";
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseInput from "@/components/base/BaseInput.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
+import BaseModal from "@/Components/base/BaseModal.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import BaseInput from "@/Components/base/BaseInput.vue";
+import BaseButton from "@/Components/base/BaseButton.vue";
 
 const state = reactive({
     newTag: "",

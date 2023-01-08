@@ -7,8 +7,8 @@ export default {
 
 <script setup>
 // components
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import IconClose from "@/components/svg/IconClose.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import IconClose from "@/Components/svg/IconClose.vue";
 import { Head } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";
 

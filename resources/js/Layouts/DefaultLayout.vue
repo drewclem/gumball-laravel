@@ -6,7 +6,7 @@ import GumballLogo from "@/Components/global/GumballLogo.vue";
 import MobileMenuUser from "@/Components/global/MobileMenuUser.vue";
 import BaseButton from "@/Components/base/BaseButton.vue";
 import BaseImage from "@/Components/base/BaseImage.vue";
-import MenuIcon from "@/components/svg/MenuIcon.vue";
+import MenuIcon from "@/Components/svg/MenuIcon.vue";
 import IconClose from "@/Components/svg/IconClose.vue";
 
 const props = defineProps({

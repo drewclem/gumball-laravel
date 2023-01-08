@@ -3,8 +3,8 @@
 import { ref, nextTick, reactive } from "vue";
 
 // components
-import IconSearch from "@/components/svg/IconSearch.vue";
-import IconClose from "@/components/svg/IconClose.vue";
+import IconSearch from "@/Components/svg/IconSearch.vue";
+import IconClose from "@/Components/svg/IconClose.vue";
 
 defineProps({
     modelValue: {

@@ -5,12 +5,12 @@ import { useDates } from "@/utils/dates";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 // components
-import BaseHeading from "@/components/base/BaseHeading.vue";
-import BaseText from "@/components/base/BaseText.vue";
-import BaseButton from "@/components/base/BaseButton.vue";
-import IconArrowLeft from "@/components/svg/IconArrowLeft.vue";
+import BaseHeading from "@/Components/base/BaseHeading.vue";
+import BaseText from "@/Components/base/BaseText.vue";
+import BaseButton from "@/Components/base/BaseButton.vue";
+import IconArrowLeft from "@/Components/svg/IconArrowLeft.vue";
 import Datepicker from "vue3-datepicker";
-import CopyShareLink from "@/components/dashboard/CopyShareLink.vue";
+import CopyShareLink from "@/Components/dashboard/CopyShareLink.vue";
 
 const { currentDate, tomorrowDate } = useDates();
 

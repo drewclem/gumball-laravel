@@ -1,14 +1,14 @@
 <script setup>
 // components
-import IconThumbDown from "@/components/svg/IconThumbDown.vue";
-import IconThumbUp from "@/components/svg/IconThumbUp.vue";
-import IconDecline from "@/components/svg/IconDecline.vue";
+import IconThumbDown from "@/Components/svg/IconThumbDown.vue";
+import IconThumbUp from "@/Components/svg/IconThumbUp.vue";
+import IconDecline from "@/Components/svg/IconDecline.vue";
 
 const props = defineProps({
     submission: {
         type: Object,
         required: true,
-    }
+    },
 });
 </script>
 
