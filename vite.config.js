@@ -22,11 +22,6 @@ export default defineConfig({
         noExternal: ["@inertiajs/server"],
     },
     build: {
-        commonjsOptions: {
-            include: [
-                /node_modules/
-            ]
-        },
         rollupOptions: {
             external: [
                 "vue-recaptcha",
