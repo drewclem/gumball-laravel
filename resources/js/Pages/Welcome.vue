@@ -292,6 +292,22 @@ defineProps({
             </div>
         </section>
 
+        <section class="narrow-wrapper my-24 lg:my-52">
+            <div class="grid md:grid-cols-3 gap-12">
+                <div>
+                    <BaseHeading size="h2">From the founder</BaseHeading>
+                </div>
+                <iframe
+                    class="video md:col-span-2 shadow-md"
+                    src="https://www.youtube.com/embed/bIIAcLp0-NQ?controls=0"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        </section>
+
         <section class="narrow-wrapper mb-20">
             <div
                 class="grid grid-cols-1 lg:grid-cols-2 space-y-10 lg:space-y-0 items-center"
@@ -346,7 +362,12 @@ defineProps({
                 </div>
             </div>
         </section>
-
-        <!-- <PricingSignup :showPricing="true" /> -->
     </div>
 </template>
+
+<style>
+.video {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+}
+</style>
