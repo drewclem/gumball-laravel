@@ -21,13 +21,4 @@ export default defineConfig({
     ssr: {
         noExternal: ["@inertiajs/server"],
     },
-    build: {
-        rollupOptions: {
-            external: [
-                "vue-recaptcha",
-                "@vueup/vue-quill",
-                "@vueup/vue-quill/dist/vue-quill.snow.css",
-            ],
-        },
-    },
 });
