@@ -23,11 +23,11 @@ export default defineConfig({
     },
     build: {
         rollupOptions: {
-            // external: [
-            //     "vue-recaptcha",
-            //     "@vueup/vue-quill",
-            //     "@vueup/vue-quill/dist/vue-quill.snow.css",
-            // ],
+            external: [
+                "vue-recaptcha",
+                "@vueup/vue-quill",
+                "@vueup/vue-quill/dist/vue-quill.snow.css",
+            ],
         },
     },
 });
