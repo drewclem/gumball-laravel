@@ -26,7 +26,7 @@ export default defineConfig({
             external: [
                 "vue-recaptcha",
                 "@vueup/vue-quill",
-                "@vueup/vue-quill/dist/vue-quill.snow.css",
+                // "@vueup/vue-quill/dist/vue-quill.snow.css",
             ],
         },
     },
