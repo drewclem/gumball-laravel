@@ -7,7 +7,7 @@ export default ({ mode }) => {
 
     return defineConfig({
         server: {
-            host: process.env.VITE_APP_SERVER,
+            host: "localhost",
         },
         plugins: [
             laravel({
