@@ -107,11 +107,9 @@ class RegisteredUserController extends Controller
             ]);
 
         if ($request->hasFile('avatar')) {
-            $avatarPath = $request->file('avatar')->storeAs(
-                'avatars',
-                Auth::user()->username . '-avatar.' . $request->file('avatar')->getClientOriginalExtension(),
-                'public'
-            );
+            $result = $request->file('avatar')->storeOnCloudinary('avatars');
+
+            $avatarPath = $result->getSecurePath();
         };
 
         $user->update([

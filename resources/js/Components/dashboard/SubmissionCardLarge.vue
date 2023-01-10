@@ -49,7 +49,7 @@ const props = defineProps({
                     <img
                         v-if="submission.images.length > 0"
                         class="h-12 w-12 lg:h-24 lg:w-24 object-cover rounded-md"
-                        :src="`/${submission.images[0].file_path}`"
+                        :src="submission.images[0].file_path"
                     />
                     <div
                         v-else

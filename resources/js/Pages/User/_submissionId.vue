@@ -425,14 +425,14 @@ async function declineSubmission() {
                                     <template #button>
                                         <BaseImage
                                             class="img-list hover:scale-125 ease-in-out transform"
-                                            :src="`/${image.file_path}`"
+                                            :src="image.file_path"
                                             alt="Img thumbnail"
                                         />
                                     </template>
                                     <template #content>
                                         <BaseImage
                                             class="rounded-lg"
-                                            :src="`/${image.file_path}`"
+                                            :src="image.file_path"
                                         />
                                     </template>
                                 </BaseModal>

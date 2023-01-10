@@ -86,7 +86,7 @@ function onInputChange(e) {
                     >
                         <BaseImage
                             v-if="user.avatar_path"
-                            :src="`./${user.avatar_path}`"
+                            :src="user.avatar_path"
                             :alt="user.username"
                             class="h-16 w-16 object-cover"
                         />
@@ -276,10 +276,7 @@ function onInputChange(e) {
                                     class="w-full"
                                     theme="tertiary"
                                     type="submit"
-                                    :disabled="
-                                        form.processing ||
-                                        (!form.toc && !form.recaptcha)
-                                    "
+                                    :disabled="form.processing || !form.toc"
                                 >
                                     Submit
                                 </BaseButton>
