@@ -276,7 +276,10 @@ function onInputChange(e) {
                                     class="w-full"
                                     theme="tertiary"
                                     type="submit"
-                                    :disabled="form.processing || !form.toc"
+                                    :disabled="
+                                        form.processing ||
+                                        (!form.toc && !form.recaptcha)
+                                    "
                                 >
                                     Submit
                                 </BaseButton>
