@@ -13,7 +13,7 @@ class CollectionController extends Controller
 {
     public function index() {
 
-        $collections = Collection::withCount(['submissions', 'booked'])->where('user_id', auth()->id())->orderBy('start_date', 'desc')->get();
+        $collections = Collection::withCount(['submissions', 'booked'])->where('user_id', auth()->id())->orderBy('start_date', 'asc')->get();
         $active = Collection::active()->withCount(['submissions', 'booked'])->where('user_id', auth()->id())->get();
 
         return Inertia::render('User/Collections', [
@@ -50,7 +50,7 @@ class CollectionController extends Controller
     }
 
     public function show(Collection $collection, GetSubmissionTagsAction $action) {
-        $submissions = $collection->submissions()->orderBy('created_at', 'desc')->get();
+        $submissions = $collection->submissions()->orderBy('created_at')->get();
 
         foreach($submissions as $submission) {
             $submission->tags = $action->handle($submission);
