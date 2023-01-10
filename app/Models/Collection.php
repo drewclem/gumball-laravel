@@ -32,12 +32,12 @@ class Collection extends Model
     }
     
     public function scopeActive() {
-        $mutable = Carbon::now()->subDay();
+        $initNow = Carbon::now();
 
-        $current_date = $mutable->toDateTimeString();
+        $current_date = $initNow->toDateTimeString();
         
         $active = Collection::whereRaw('? between start_date and end_date', [$current_date])->orWhere(function($query) use($current_date) {
-            $query->where('start_date', '>=', $current_date)->where('end_date', null);
+            $query->where('start_date', '<=', $current_date)->where('end_date', null);
         });
 
         return $active;

@@ -117,8 +117,8 @@ class SubmissionController extends Controller
         }
     }
 
-    public function showFavorites(GetSubmissionTagsAction $action) {
-        $submissions = Submission::where('is_saved', 1)->get();
+    public function showFavorites(Request $request, GetSubmissionTagsAction $action) {
+        $submissions = Submission::where('is_saved', 1)->where('user_id', $request->user()->id)->orderBy('created_at', 'asc')->get();
 
         foreach($submissions as $submission) {
             $submission->tags = $action->handle($submission);
@@ -130,8 +130,9 @@ class SubmissionController extends Controller
         ]);
     }
 
-    public function inbox(GetSubmissionTagsAction $action) {
-        $submissions = Submission::all();
+    public function inbox(Request $request, GetSubmissionTagsAction $action) {
+        // dd($request->user());
+        $submissions = Submission::where('user_id', $request->user()->id)->orderBy('created_at', 'asc')->get();
 
         foreach($submissions as $submission) {
             $submission->tags = $action->handle($submission);
