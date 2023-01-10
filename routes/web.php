@@ -7,6 +7,7 @@ use App\Http\Controllers\TagRelationController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\BillingPortalController;
 use App\Http\Controllers\ManageSubscriptionController;
+use App\Http\Controllers\FileUploadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -48,6 +49,8 @@ Route::delete('tag_relation', [TagRelationController::class, 'delete'])->middlew
 
 Route::get('/billing-portal', BillingPortalController::class)->name('billing-portal');
 Route::get('/subscription', ManageSubscriptionController::class)->name('subscription');
+
+Route::post('/upload', [FileUploadController::class, 'store']);
 
 require __DIR__.'/submission.php';
 require __DIR__.'/collection.php';
