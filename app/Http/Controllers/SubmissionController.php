@@ -21,6 +21,8 @@ class SubmissionController extends Controller
             'message' => 'required|string'
         ]);
 
+        // dd($request);
+
         $submission = Submission::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -40,12 +42,9 @@ class SubmissionController extends Controller
                 $imagePath = null;
 
                 $file = $image['file'];
-            
-                $imagePath = $file->storeAs(
-                    'submission-uploads',
-                    $uuid . '-submission.' . $file->extension(),
-                    'public'
-                );
+
+                $result = $file->storeOnCloudinary('submission-uploads');
+                $imagePath = $result->getSecurePath();
 
                 SubmissionUpload::create([
                     'submission_id' => $submission->id,

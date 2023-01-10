@@ -95,7 +95,7 @@ const manageSubscriptionUrl = computed(() => {
                                         auth.user.avatar_path &&
                                         form.avatar === null
                                     "
-                                    :src="`./${auth.user.avatar_path}`"
+                                    :src="auth.user.avatar_path"
                                     :alt="`${auth.user.username}`"
                                 />
 

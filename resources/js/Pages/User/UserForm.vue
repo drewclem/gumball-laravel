@@ -86,7 +86,7 @@ function onInputChange(e) {
                     >
                         <BaseImage
                             v-if="user.avatar_path"
-                            :src="`./${user.avatar_path}`"
+                            :src="user.avatar_path"
                             :alt="user.username"
                             class="h-16 w-16 object-cover"
                         />
