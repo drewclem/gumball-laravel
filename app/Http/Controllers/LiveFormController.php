@@ -17,8 +17,7 @@ class LiveFormController extends Controller
         if(User::where('username', $username)->exists()) {
             
             $user = User::where('username', $username)->get(['username', 'id', 'prescreen', 'avatar_path']);
-            $collection = Collection::active()->where('user_id', $user[0]->id)->get(['id']);
-
+            $collection = Collection::active()->where('user_id', $user[0]->id)->first(['id']);
             
             return Inertia::render('User/UserForm', [
                 'user' => $user[0],

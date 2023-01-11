@@ -40,7 +40,7 @@ const form = useForm({
     images: files,
     toc: false,
     recaptcha: false,
-    collection_id: props.collection_id.id,
+    collection_id: props.collection_id?.id,
     user_id: props.user.id,
 });
 
@@ -57,7 +57,7 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-    console.log(props.collection_id.id);
+    console.log(props.collection_id?.id);
 });
 
 const submit = () => {
