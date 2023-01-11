@@ -7,7 +7,7 @@ export default {
 
 <script setup>
 // utils
-import { computed, ref } from "vue";
+import { computed, ref, onBeforeMount } from "vue";
 import useFileList from "@/utils/file-list";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
@@ -26,7 +26,7 @@ import BaseFilePreview from "@/Components/base/BaseFilePreview.vue";
 import InputError from "@/Components/InputError.vue";
 
 const props = defineProps({
-    collection: Array,
+    collection_id: Array,
     user: Object,
 });
 
@@ -40,11 +40,21 @@ const form = useForm({
     images: files,
     toc: false,
     recaptcha: false,
-    collection_id: props?.collection[0]?.id,
+    collection_id: props.collection_id.id,
     user_id: props.user.id,
 });
 
 const step = ref(1);
+const showForm = ref(true);
+
+onBeforeMount(() => {
+    if (
+        props.user.prescreen !== null &&
+        (props.user.prescreen.length > 0 || props.user.prescreen.length > 11) &&
+        props.user.prescreen !== ""
+    )
+        showForm.value = false;
+});
 
 const submit = () => {
     form.post(route("submission.store"), {
@@ -55,7 +65,7 @@ const submit = () => {
 const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const hasCollection = computed(() => {
-    return props.collection.length > 0;
+    return props.collection_id !== null;
 });
 
 function onInputChange(e) {
@@ -111,196 +121,205 @@ function onInputChange(e) {
                         <BaseText>Please try again later.</BaseText>
                     </div>
 
-                    <div
-                        class="flex flex-col space-y-6"
-                        v-else-if="hasCollection && user.prescreen !== null"
-                    >
-                        <BaseHeading size="h3" tag="h2">
-                            Read first:
-                        </BaseHeading>
-
-                        <div v-html="user.prescreen" />
-
-                        <div>
-                            <BaseButton
-                                @click="showForm = true"
-                                theme="tertiary"
-                            >
-                                Confirm
-                            </BaseButton>
-                        </div>
-                    </div>
-
-                    <div v-else>
-                        <form
-                            v-if="step === 1"
-                            class="flex flex-col gap-8"
-                            @submit.prevent="submit"
-                        >
-                            <div class="relative">
-                                <BaseInput v-model="form.name" required>
-                                    Name
-                                </BaseInput>
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.name"
-                                />
-                            </div>
-
-                            <div class="relative">
-                                <BaseInput
-                                    v-model="form.email"
-                                    input-type="email"
-                                    required
-                                >
-                                    Email
-                                </BaseInput>
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.email"
-                                />
-                            </div>
-
-                            <div class="relative">
-                                <BaseInput
-                                    v-model="form.phone"
-                                    input-type="tel"
-                                    required
-                                >
-                                    Phone
-                                </BaseInput>
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.phone"
-                                />
-                            </div>
-
-                            <div class="relative">
-                                <BaseRichText v-model="form.message" required>
-                                    Message
-                                </BaseRichText>
-
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.message"
-                                />
-                            </div>
-
-                            <div>
-                                <p class="font-display text-sm">Add images</p>
-                                <p class="text-xs mb-4 opacity-50">
-                                    Accepted file types: jpeg, jpg, png, heic
-                                </p>
-                                <BaseDropzone
-                                    @files-dropped="addFiles"
-                                    #default="{ dropZoneActive }"
-                                >
-                                    <label class="text-sm" for="file-input">
-                                        <span v-if="dropZoneActive">
-                                            <span>Drop Them Here</span>
-                                        </span>
-                                        <span v-else>
-                                            <span>Drag Your Files Here</span>
-                                            <span class="text-sm">
-                                                or
-                                                <strong class="text-red-500"
-                                                    ><em>click here</em></strong
-                                                >
-                                                to select files
-                                            </span>
-                                        </span>
-
-                                        <input
-                                            type="file"
-                                            id="file-input"
-                                            accept="image/*"
-                                            multiple
-                                            @change="onInputChange"
-                                        />
-                                    </label>
-
-                                    <ul
-                                        class="grid grid-cols-4 gap-2 mt-3"
-                                        v-show="files.length"
-                                    >
-                                        <BaseFilePreview
-                                            v-for="(file, index) of files"
-                                            :key="file.id"
-                                            :file="file"
-                                            tag="li"
-                                            @remove="removeFile(index)"
-                                        />
-                                    </ul>
-                                </BaseDropzone>
-                            </div>
-
-                            <div class="border-t-2 border-gray-100" />
-
-                            <div>
-                                <VueRecaptcha
-                                    :sitekey="sitekey"
-                                    :load-recaptcha-script="true"
-                                    @verify="form.recaptcha = true"
-                                />
-                            </div>
-
-                            <div class="relative">
-                                <input
-                                    id="terms"
-                                    name="terms"
-                                    v-model="form.toc"
-                                    type="checkbox"
-                                    class="mr-1"
-                                />
-                                <label for="terms">
-                                    I agree to the
-                                    <Link
-                                        href="/terms-and-conditions"
-                                        class="text-blue-500 underline"
-                                    >
-                                        terms and conditions
-                                    </Link>
-                                    of Heygumball
-                                </label>
-                                <InputError
-                                    class="mt-2"
-                                    :message="form.errors.terms"
-                                />
-                            </div>
-
-                            <div class="lg:ml-auto">
-                                <BaseButton
-                                    class="w-full"
-                                    theme="tertiary"
-                                    type="submit"
-                                    :disabled="
-                                        form.processing ||
-                                        (!form.toc && !form.recaptcha)
-                                    "
-                                >
-                                    Submit
-                                </BaseButton>
-                            </div>
-                        </form>
-
-                        <div v-else>
-                            <BaseHeading
-                                tag="h2"
-                                size="h3"
-                                class="text-green-500 mb-5"
-                            >
-                                Thanks for submitting!
+                    <template v-else>
+                        <div class="flex flex-col space-y-6" v-if="!showForm">
+                            <BaseHeading size="h3" tag="h2">
+                                Read first:
                             </BaseHeading>
 
-                            <BaseText>
-                                <span> @{{ user.username }} </span>
-                                will be in touch!
-                            </BaseText>
+                            <div v-html="user.prescreen" />
+
+                            <div>
+                                <BaseButton
+                                    @click="showForm = true"
+                                    theme="tertiary"
+                                >
+                                    Confirm
+                                </BaseButton>
+                            </div>
                         </div>
-                    </div>
+
+                        <div v-else>
+                            <form
+                                v-if="step === 1"
+                                class="flex flex-col gap-8"
+                                @submit.prevent="submit"
+                            >
+                                <div class="relative">
+                                    <BaseInput v-model="form.name" required>
+                                        Name
+                                    </BaseInput>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.name"
+                                    />
+                                </div>
+
+                                <div class="relative">
+                                    <BaseInput
+                                        v-model="form.email"
+                                        input-type="email"
+                                        required
+                                    >
+                                        Email
+                                    </BaseInput>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.email"
+                                    />
+                                </div>
+
+                                <div class="relative">
+                                    <BaseInput
+                                        v-model="form.phone"
+                                        input-type="tel"
+                                        required
+                                    >
+                                        Phone
+                                    </BaseInput>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.phone"
+                                    />
+                                </div>
+
+                                <div class="relative">
+                                    <BaseRichText
+                                        v-model="form.message"
+                                        required
+                                    >
+                                        Message
+                                    </BaseRichText>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.message"
+                                    />
+                                </div>
+
+                                <div>
+                                    <p class="font-display text-sm">
+                                        Add images
+                                    </p>
+                                    <p class="text-xs mb-4 opacity-50">
+                                        Accepted file types: jpeg, jpg, png,
+                                        heic
+                                    </p>
+                                    <BaseDropzone
+                                        @files-dropped="addFiles"
+                                        #default="{ dropZoneActive }"
+                                    >
+                                        <label class="text-sm" for="file-input">
+                                            <span v-if="dropZoneActive">
+                                                <span>Drop Them Here</span>
+                                            </span>
+                                            <span v-else>
+                                                <span
+                                                    >Drag Your Files Here</span
+                                                >
+                                                <span class="text-sm">
+                                                    or
+                                                    <strong class="text-red-500"
+                                                        ><em
+                                                            >click here</em
+                                                        ></strong
+                                                    >
+                                                    to select files
+                                                </span>
+                                            </span>
+
+                                            <input
+                                                type="file"
+                                                id="file-input"
+                                                accept="image/*"
+                                                multiple
+                                                @change="onInputChange"
+                                            />
+                                        </label>
+
+                                        <ul
+                                            class="grid grid-cols-4 gap-2 mt-3"
+                                            v-show="files.length"
+                                        >
+                                            <BaseFilePreview
+                                                v-for="(file, index) of files"
+                                                :key="file.id"
+                                                :file="file"
+                                                tag="li"
+                                                @remove="removeFile(index)"
+                                            />
+                                        </ul>
+                                    </BaseDropzone>
+                                </div>
+
+                                <div class="border-t-2 border-gray-100" />
+
+                                <div>
+                                    <VueRecaptcha
+                                        :sitekey="sitekey"
+                                        :load-recaptcha-script="true"
+                                        @verify="form.recaptcha = true"
+                                    />
+                                </div>
+
+                                <div class="relative">
+                                    <input
+                                        id="terms"
+                                        name="terms"
+                                        v-model="form.toc"
+                                        type="checkbox"
+                                        class="mr-1"
+                                    />
+                                    <label for="terms">
+                                        I agree to the
+                                        <Link
+                                            href="/terms-and-conditions"
+                                            class="text-blue-500 underline"
+                                        >
+                                            terms and conditions
+                                        </Link>
+                                        of Heygumball
+                                    </label>
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.terms"
+                                    />
+                                </div>
+
+                                <div class="lg:ml-auto">
+                                    <BaseButton
+                                        class="w-full"
+                                        theme="tertiary"
+                                        type="submit"
+                                        :disabled="
+                                            form.processing ||
+                                            (!form.toc && !form.recaptcha)
+                                        "
+                                    >
+                                        Submit
+                                    </BaseButton>
+                                </div>
+                            </form>
+
+                            <div v-else>
+                                <BaseHeading
+                                    tag="h2"
+                                    size="h3"
+                                    class="text-green-500 mb-5"
+                                >
+                                    Thanks for submitting!
+                                </BaseHeading>
+
+                                <BaseText>
+                                    <span> @{{ user.username }} </span>
+                                    will be in touch!
+                                </BaseText>
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </div>
         </transition>

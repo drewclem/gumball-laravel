@@ -33,7 +33,10 @@ const form = useForm({
     tiktok_url: props.auth.user.tiktok_url,
     twitter_url: props.auth.user.twitter_url,
     facebook_url: props.auth.user.facebook_url,
-    prescreen: props.auth.user.prescreen,
+    prescreen:
+        props.auth.user.prescreen === "<p><br></p>"
+            ? null
+            : props.auth.user.prescreen,
     decline_response: props.auth.user.decline_response,
 });
 
@@ -73,7 +76,7 @@ const updateUserInfo = () => {
                         <BaseImage
                             v-if="auth.user.avatar_path"
                             class="h-24 w-24 object-cover"
-                            :src="`../../${auth.user.avatar_path}`"
+                            :src="auth.user.avatar_path"
                             :alt="auth.user.username"
                         />
                         <IconUserCircle
