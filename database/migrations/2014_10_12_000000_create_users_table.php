@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('twitter_url')->nullable();
             $table->string('facebook_url')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('prescreen')->nullable();
-            $table->text('decline_response');
+            $table->text('prescreen')->nullable();
+            $table->text('decline_response')->nullable();
             $table->boolean('default_view')->default(false);
             $table->string('password');
             $table->boolean('terms')->default(false);

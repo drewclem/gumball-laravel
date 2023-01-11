@@ -59,7 +59,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'subscription_active' => 'boolean',
-        'default_view' => 'boolean'
+        'default_view' => 'boolean',
+        'prescreen' => 'string'
     ];
 
     public function scopeTags() {
