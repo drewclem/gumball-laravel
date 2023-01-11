@@ -21,7 +21,7 @@ class LiveFormController extends Controller
             
             return Inertia::render('User/UserForm', [
                 'user' => $user[0],
-                'collection_id' => $collection ? $collection[0] : null
+                'collection_id' => $collection ? $collection : null
                 ]);
         } else {
             return Inertia::render('NotFound');

@@ -39,8 +39,14 @@ class Collection extends Model
         $active = Collection::where('start_date', '<=', $current_date)
             ->where(function($query) use ($current_date) {
                 return $query->where('end_date', '>=', $current_date)
-                    ->orWhereNull('end_date');
+                    ->orWhere('end_date', '=', null);
             });
+
+        // $active = Collection::whereRaw('? between start_date and end_date', [$current_date])
+        //     ->orWhere(function($query) use($current_date) {
+        //         return $query->where('start_date', '<=', $current_date)
+        //         ->where('end_date', null);
+        // });
 
         return $active;
     }
