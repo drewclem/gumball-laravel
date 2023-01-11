@@ -8,13 +8,14 @@ use App\Models\Collection;
 use App\Actions\StoreCollectionAction;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 {
     public function index() {
 
-        $collections = Collection::withCount(['submissions', 'booked'])->where('user_id', auth()->id())->orderBy('start_date', 'asc')->get();
-        $active = Collection::active()->withCount(['submissions', 'booked'])->where('user_id', auth()->id())->get();
+        $collections = Collection::withCount(['submissions', 'booked'])->where('user_id', Auth::user()->id)->orderBy('start_date', 'asc')->get();
+        $active = Collection::active()->withCount(['submissions', 'booked'])->where('user_id', Auth::user()->id)->get();
 
         return Inertia::render('User/Collections', [
             'collections' => $collections,
