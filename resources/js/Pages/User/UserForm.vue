@@ -7,7 +7,7 @@ export default {
 
 <script setup>
 // utils
-import { computed, ref, onBeforeMount } from "vue";
+import { computed, ref, onBeforeMount, onMounted } from "vue";
 import useFileList from "@/utils/file-list";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
@@ -54,6 +54,10 @@ onBeforeMount(() => {
         props.user.prescreen !== ""
     )
         showForm.value = false;
+});
+
+onMounted(() => {
+    console.log(props.collection_id.id);
 });
 
 const submit = () => {
