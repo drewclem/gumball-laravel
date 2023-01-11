@@ -32,7 +32,7 @@ class SubmissionController extends Controller
             'user_id'=> $request->user_id,
         ]);
 
-        if($request->has('images')) {
+        if(count($request->images) > 0) {
             $request->validate([
                 'images' => 'nullable|array'
             ]);

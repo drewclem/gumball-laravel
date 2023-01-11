@@ -60,7 +60,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-screen overflow-none">
         <DashboardHeader :current-user="auth.user" />
 
         <main class="flex relative">
