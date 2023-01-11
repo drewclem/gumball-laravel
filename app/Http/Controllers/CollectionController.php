@@ -15,7 +15,7 @@ class CollectionController extends Controller
     public function index() {
 
         $collections = Collection::withCount(['submissions', 'booked'])->where('user_id', Auth::user()->id)->orderBy('start_date', 'asc')->get();
-        $active = Collection::active()->withCount(['submissions', 'booked'])->where('user_id', Auth::user()->id)->get();
+        $active = Collection::active()->withCount(['submissions', 'booked'])->where('user_id', Auth::user()->id)->first();
 
         return Inertia::render('User/Collections', [
             'collections' => $collections,

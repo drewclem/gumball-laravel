@@ -1,7 +1,4 @@
 <script setup>
-// utility
-import { ref, toRefs, onMounted } from "vue";
-
 // components
 import AccountCardGrid from "@/Components/dashboard/AccountCardGrid.vue";
 
@@ -10,35 +7,10 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-});
-
-const { collection } = toRefs(props);
-
-const isActive = ref(false);
-
-function checkIsActive() {
-    const currentDate = new Date();
-    const startDate = new Date(collection.value.start_date);
-    const endDate = new Date(collection.value.end_date);
-
-    const currentDateFormatted = currentDate.getTime();
-    const startDateFormatted =
-        startDate.getTime() - startDate.getTimezoneOffset() * -60000;
-    const endDateFormatted =
-        endDate.getTime() - endDate.getTimezoneOffset() * -60000;
-
-    if (
-        (startDateFormatted < currentDateFormatted &&
-            endDateFormatted > currentDateFormatted) ||
-        (startDateFormatted < currentDateFormatted &&
-            collection.value.end_date === null)
-    ) {
-        isActive.value = true;
-    }
-}
-
-onMounted(() => {
-    checkIsActive();
+    isActive: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 // format collection dates

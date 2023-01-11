@@ -21,7 +21,7 @@ const props = defineProps({
 });
 
 const reducedCollections = props?.collections.filter((collection) => {
-    return collection?.id !== props.active[0]?.id;
+    return collection?.id !== props.active?.id;
 });
 </script>
 
@@ -47,11 +47,7 @@ const reducedCollections = props?.collections.filter((collection) => {
                     v-if="collections.length > 0"
                     class="flex flex-col space-y-6"
                 >
-                    <CollectionCard
-                        v-if="active.length > 0"
-                        :collection="active[0]"
-                        is-active
-                    />
+                    <CollectionCard :collection="active" is-active />
                     <CollectionCard
                         v-for="collection in reducedCollections"
                         :key="collection.id"
