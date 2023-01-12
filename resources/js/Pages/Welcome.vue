@@ -167,6 +167,7 @@ defineProps({
                         </BaseCheckListItem>
                         <BaseCheckListItem>
                             Automated appointment reminders
+                            <template #helper> Coming soon! </template>
                         </BaseCheckListItem>
                         <BaseCheckListItem>
                             Custom form builder
@@ -174,9 +175,7 @@ defineProps({
                         </BaseCheckListItem>
                         <BaseCheckListItem>
                             Appointment management
-                            <template #helper>
-                                Integrate directly w/ your Google Calendar!
-                            </template>
+                            <template #helper> Coming soon! </template>
                         </BaseCheckListItem>
                     </ul>
 
